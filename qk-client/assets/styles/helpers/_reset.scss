@@ -1,23 +1,91 @@
 @import "variables";
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  border: 0;
+  font-family: inherit;
+  font-size: 100%;
   margin: 0;
   padding: 0;
-  border: 0;
-  font-size: 100%;
-  font-family: inherit;
   vertical-align: baseline;
 }
 
@@ -25,8 +93,17 @@ time, mark, audio, video {
   outline: 0;
 }
 
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
   display: block;
 }
 
@@ -34,17 +111,21 @@ body {
   line-height: 1;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 
-blockquote, q {
+blockquote,
+q {
   quotes: none;
 }
 
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: "";
   content: none;
 }
 
@@ -53,24 +134,24 @@ table {
   border-spacing: 0;
 }
 
-input[type=search]::-webkit-search-cancel-button,
-input[type=search]::-webkit-search-decoration,
-input[type=search]::-webkit-search-results-button,
-input[type=search]::-webkit-search-results-decoration {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  appearance: none;
+  appearance: none;
 }
 
-input[type=search] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+input[type="search"] {
+  appearance: none;
+  appearance: none;
   box-sizing: content-box;
 }
 
 textarea {
   overflow: auto;
-  vertical-align: top;
   resize: vertical;
+  vertical-align: top;
 }
 
 audio,
@@ -78,8 +159,8 @@ canvas,
 video {
   display: inline-block;
   *display: inline;
-  *zoom: 1;
   max-width: 100%;
+  *zoom: 1;
 }
 
 audio:not([controls]) {
@@ -93,8 +174,8 @@ audio:not([controls]) {
 
 html {
   font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 a:focus {
@@ -108,7 +189,7 @@ a:hover {
 
 img {
   border: 0;
-  -ms-interpolation-mode: bicubic;
+  interpolation-mode: bicubic;
 }
 
 figure {
@@ -127,9 +208,9 @@ fieldset {
 
 legend {
   border: 0;
+  *margin-left: -7px;
   padding: 0;
   white-space: normal;
-  *margin-left: -7px;
 }
 
 button,
@@ -156,7 +237,7 @@ button,
 html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button;
+  appearance: button;
   cursor: pointer;
   *overflow: visible;
 }
@@ -169,19 +250,19 @@ html input[disabled] {
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
-  padding: 0;
   *height: 13px;
+  padding: 0;
   *width: 13px;
 }
 
 input[type="search"] {
-  -webkit-appearance: textfield;
+  appearance: textfield;
   box-sizing: content-box;
 }
 
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 button::-moz-focus-inner,
@@ -200,7 +281,7 @@ table {
   border-spacing: 0;
 }
 
-::-moz-selection {
+::selection {
   background: #b3d4fc;
   text-shadow: none;
 }
@@ -225,9 +306,9 @@ textarea {
 }
 
 .chromeframe {
-  margin: 0.2em 0;
   background: #ccc;
   color: #000;
+  margin: 0.2em 0;
   padding: 0.2em 0;
 }
 
@@ -237,15 +318,14 @@ html {
 
 body {
   background-color: $color-secondary;
-  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-  "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 2rem;
-  line-height: 1.5;
   color: $color-primary;
+  font-family: $font-primary;
+  font-size: 1.6rem;
+  font-weight: $font-weight-md;
+  line-height: 1.5;
 }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
