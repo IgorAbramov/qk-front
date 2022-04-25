@@ -1,3 +1,6 @@
+import "../assets/styles/helpers/_reset.scss"
+import "../assets/styles/_globals.scss"
+
 function MyApp({ Component, pageProps }) {
    return <Component {...pageProps} />
 }
