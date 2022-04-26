@@ -9,7 +9,7 @@
   height: 100%;
   justify-content: center;
   position: relative;
-  width: 50%;
+  width: 55%;
 
   h1 {
     align-self: flex-start;
@@ -38,15 +38,19 @@
   }
 }
 
+.forgot {
+  form {
+    button:last-child {
+      margin-top: 12rem;
+    }
+  }
+}
+
 .textRow {
   align-items: center;
   display: flex;
   justify-content: space-between;
   margin-bottom: 2.5rem;
-}
-
-.wrapper {
-  padding: 0 10rem;
 }
 
 .copyright {
@@ -56,4 +60,11 @@
   justify-content: space-between;
   position: absolute;
   width: 90%;
+}
+
+.buttonRow {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }

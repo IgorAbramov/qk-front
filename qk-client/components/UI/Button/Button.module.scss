@@ -50,12 +50,22 @@
   background-color: $color-secondary;
   border: 1px solid $color-highlight;
   color: $color-highlight;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, fill 0.2s ease-in-out;
+
+  svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
 
   &:hover,
   &:focus {
     background-color: rgba($color-highlight, 0.7);
     border: 1px solid rgba($color-highlight, 0.7);
     color: $color-secondary;
+
+    svg {
+      background-color: transparent;
+      fill: $color-secondary;
+    }
   }
 }

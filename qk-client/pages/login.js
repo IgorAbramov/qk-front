@@ -1,10 +1,13 @@
 import Image from "next/image"
 
-import logo from "../../assets/images/qk-logo-xl.svg"
-import AuthForm from "../../components/AuthForm/AuthForm"
-import Heading from "../../components/UI/Heading/Heading"
+import logo from "../assets/images/qk-logo-xl.svg"
+import AuthForm from "../components/AuthForm/AuthForm"
+import Heading from "../components/UI/Heading/Heading"
 
 export default function Auth() {
+
+   // TODO: Declare callback axios post request to API and pass to AuthForm
+
    return (
       <div className="auth">
          <div className="container">

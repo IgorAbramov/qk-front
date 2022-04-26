@@ -25,5 +25,5 @@ Button.propTypes = {
    semiBold: PropTypes.bool,
    blue: PropTypes.bool,
    white: PropTypes.bool,
-   children: PropTypes.string.isRequired
+   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
 }
