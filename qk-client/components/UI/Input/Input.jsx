@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import Text from "../Text/Text"
 import styles from "./Input.module.scss"
 
-const Input = ({ email, password, checkbox, inputName, passwordRepeat, placeholder, error, hidePassword, checkboxText, ...otherProps }) => {
+const Input = ({ email, password, checkbox, text, inputName, passwordRepeat, placeholder, error, hidePassword, checkboxText, ...otherProps }) => {
    if (email) return (
       <input {...otherProps} className={`${styles.input}
       ${error ? styles.error : ""}`}
@@ -29,16 +29,22 @@ const Input = ({ email, password, checkbox, inputName, passwordRepeat, placehold
       </div>
    )
 
-   if (checkbox) {
-      return (
-         <div className={styles.checkboxContainer}>
-            <input {...otherProps} className={`${styles.checkbox}`}
+   if (checkbox) return (
+      <div className={styles.checkboxContainer}>
+         <input {...otherProps} className={`${styles.checkbox}`}
                    name={inputName}
                    type="checkbox"/>
-            <Text medium>{checkboxText}</Text>
-         </div>
-      )
-   }
+         <Text medium>{checkboxText}</Text>
+      </div>
+   )
+
+   if (text) return (
+      <input {...otherProps} className={`${styles.input}
+      ${error ? styles.error : ""}`}
+             name={inputName}
+             placeholder={placeholder}
+             type="text"/>
+   )
 }
 
 export default Input
@@ -47,6 +53,7 @@ Input.propTypes = {
    email: PropTypes.bool,
    password: PropTypes.bool,
    checkbox: PropTypes.bool,
+   text: PropTypes.bool,
    inputName: PropTypes.string,
    passwordRepeat: PropTypes.bool,
    placeholder: PropTypes.string,

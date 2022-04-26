@@ -1,10 +1,10 @@
 import Image from "next/image"
 
-import logo from "../assets/images/qk-logo-xl.svg"
-import AuthForm from "../components/AuthForm/AuthForm"
-import Heading from "../components/UI/Heading/Heading"
+import logo from "../../assets/images/qk-logo-xl.svg"
+import AuthForm from "../../components/AuthForm/AuthForm"
+import Heading from "../../components/UI/Heading/Heading"
 
-export default function ForgotPassword() {
+export default function ConfirmEmail() {
 
    // TODO: Declare callback axios post request to API and pass to AuthForm
 
@@ -12,7 +12,7 @@ export default function ForgotPassword() {
       <div className="auth">
          <div className="container">
             <div className="auth__wrapper">
-               <AuthForm forgot/>
+               <AuthForm twoFactor/>
                <div className="logo">
                   <Image alt="Qualkey" height={293} src={logo}
                          width={426}/>
