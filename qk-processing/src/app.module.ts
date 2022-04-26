@@ -35,7 +35,7 @@ const dmmf = ((prisma as any)._dmmf as DMMFClass);
         authenticate: async (email: string, password: string) => {
           if (email !== "" && password !== "") {
             const user = await prisma.user.findUnique({ where: { email: email } });
-            if (user) {
+            if (user && user.role === "SUPER_ADMIN") {
               if (await argon.verify(
                 user?.password,
                 password,
