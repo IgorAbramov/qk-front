@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  qk-front:
+    command: prod
+  qk-processing:
+    image: nestjs-api-prod:1.0.0
+    build:
+      context: ./qk-processing/
+      target: production
+    command: npm run start:prod
