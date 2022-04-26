@@ -1,38 +1,44 @@
 @import "assets/styles/helpers/variables";
 @import "assets/styles/helpers/mixins";
 
-.login {
+.loginPage {
+  align-items: center;
   background-color: $color-secondary;
-  width: 50%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
   justify-content: center;
   position: relative;
+  width: 50%;
 
   h1 {
-    margin-bottom: 5rem;
     align-self: flex-start;
+    margin-bottom: 5rem;
   }
 
   form {
     padding: 0 1.5rem;
-  }
 
-  input[type="email"],
-  input[type="password"] {
-    margin-bottom: 1.2rem;
-    width: calc(100% - 5rem);
-  }
+    input[type="email"],
+    input[type="password"] {
+      margin-bottom: 1.2rem;
+      width: calc(100% - 5rem);
+    }
 
-  button {
-    display: block;
-    margin: 0 auto 1.5rem;
+    div + p,
+    input[type="email"] + p {
+      margin-bottom: 1rem;
+      margin-top: -0.8rem;
+    }
+
+    button {
+      display: block;
+      margin: 0 auto 1.5rem;
+    }
   }
 }
 
-.flex {
+.textRow {
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -43,8 +49,11 @@
   padding: 0 10rem;
 }
 
-.text {
+.copyright {
+  align-items: center;
+  bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
   position: absolute;
-  bottom: 0;
   width: 90%;
 }

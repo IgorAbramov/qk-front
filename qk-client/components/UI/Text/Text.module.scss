@@ -12,7 +12,8 @@
 .blue {
   color: $color-highlight-dark;
 
-  &:hover {
+  &:hover,
+  &:focus {
     text-decoration: underline;
   }
 }

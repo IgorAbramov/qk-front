@@ -9,13 +9,15 @@ import styles from "./AuthForm.module.scss"
 const AuthForm = ({ login, forgot, twoFactor, newPassword }) => {
    if (login) {
       return (
-         <div className={styles.login}>
+         <div className={styles.loginPage}>
             <div className={styles.wrapper}>
                <Heading blue h1>Login</Heading>
                <form>
                   <Input email placeholder="Email"/>
+                  {/*<Text error small>Wrong email</Text>*/}
                   <Input password placeholder="Password"/>
-                  <div className={styles.flex}>
+                  {/*<Text error small>Wrong password</Text>*/}
+                  <div className={styles.textRow}>
                      <Input checkbox checkboxText="Remember me" inputName="rememberMe"/>
                      <Text blue medium link="/auth/forgot">Forgot Password?</Text>
                   </div>
@@ -23,7 +25,7 @@ const AuthForm = ({ login, forgot, twoFactor, newPassword }) => {
                   <Button bold thin white>Login as a University</Button>
                </form>
             </div>
-            <div className={`${styles.flex} ${styles.text}`}>
+            <div className={styles.copyright}>
                <Text small>Copyright &copy; 2021 <span>QualKey Limited</span> All rights reserved.</Text>
                <Text small underline link="/terms">Terms & Conditions</Text>
             </div>
