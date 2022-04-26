@@ -1,5 +1,5 @@
 import "../assets/styles/helpers/_reset.scss"
-import "../assets/styles/globals.scss"
+import "../assets/styles/_globals.scss"
 import Head from "next/head"
 
 function MyApp({ Component, pageProps }) {

@@ -1,25 +1,19 @@
 import PropTypes from "prop-types"
 
-import style from "./Button.module.scss"
+import styles from "./Button.module.scss"
 
-const Button = ({ thin, wide, children }) => {
-   if (thin) {
-      return (
-         <button className={`${style.btn} ${style.thin}`}>
-            {children}
-         </button>
-      )
-   }
-
-   if (wide) {
-      return (
-         <button className={`${style.btn} ${style.wide}`}>
-            {children}
-         </button>
-      )
-   }
-
-   return null
+const Button = ({ thin, wide, bold, semiBold, blue, white, children, ...otherProps }) => {
+   return (
+      <button {...otherProps} className={`${styles.btn}
+         ${thin ? styles.thin : ""}
+         ${wide ? styles.wide : ""}
+         ${bold ? styles.bold : ""}
+         ${semiBold ? styles.semiBold : ""}
+         ${blue ? styles.blue : ""}
+         ${white ? styles.white : ""}`}>
+         {children}
+      </button>
+   )
 }
 
 export default Button
@@ -27,5 +21,9 @@ export default Button
 Button.propTypes = {
    thin: PropTypes.bool,
    wide: PropTypes.bool,
+   bold: PropTypes.bool,
+   semiBold: PropTypes.bool,
+   blue: PropTypes.bool,
+   white: PropTypes.bool,
    children: PropTypes.string.isRequired
 }

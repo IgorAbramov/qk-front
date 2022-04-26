@@ -1,0 +1,50 @@
+@import "assets/styles/helpers/variables";
+@import "assets/styles/helpers/mixins";
+
+.login {
+  background-color: $color-secondary;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  h1 {
+    margin-bottom: 5rem;
+    align-self: flex-start;
+  }
+
+  form {
+    padding: 0 1.5rem;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    margin-bottom: 1.2rem;
+    width: calc(100% - 5rem);
+  }
+
+  button {
+    display: block;
+    margin: 0 auto 1.5rem;
+  }
+}
+
+.flex {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.wrapper {
+  padding: 0 10rem;
+}
+
+.text {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}

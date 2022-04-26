@@ -1,5 +1,6 @@
-@import "./helpers/variables";
-@import "./helpers/mixins";
+@import "assets/styles/helpers/variables";
+@import "assets/styles/helpers/mixins";
+@import "auth";
 
 .container {
   margin: 0 auto;
