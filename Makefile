@@ -1,4 +1,4 @@
-.PHONY: go build build-prod start start-prod stop restart shell shell-front shell-db shell-pg migrate
+.PHONY: go build build-prod start start-prod stop restart shell shell-front shell-db shell-pg migrate dump
 
 DOCKER_COMPOSE=docker-compose
 DOCKER_COMPOSE_RUN=$(DOCKER_COMPOSE) run --rm --no-deps
@@ -9,6 +9,10 @@ DOCKER_COMPOSE_PROD=$(DOCKER_COMPOSE) -f docker-compose.yml -f docker-compose.pr
 processing = qk_processing
 db = qualkey_db
 front = qk_front
+
+dev_db_user = qualkey
+dev_dv_volume = qk_pgdata
+dev_db_dump = qk_db-dev-dump.sql
 
 ## One command to setup and start the project
 go: build start migrate
@@ -59,3 +63,8 @@ shell-pg:
 ## Run migrations
 migrate:
 	docker exec -t $(processing) sh -c "npx prisma migrate dev"
+
+## Restore admin database
+dump:
+	docker cp db.docker/$(dev_db_dump) $(db):/$(dev_dv_volume)
+	cat db.docker/$(dev_db_dump) | docker exec -i $(db) psql -U $(dev_db_user)
