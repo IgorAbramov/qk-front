@@ -1,17 +1,15 @@
 version: '3.8'
 services:
-  qk-front:
+  qk_front:
     command: dev
     volumes:
       - ./qk-front/:/usr/src/app
       - /usr/src/app/node_modules
       - /usr/src/app/.next
-  qk-processing:
-    image: nestjs-api-dev:1.0.0
+  qk_processing:
     build:
       context: ./qk-processing/
-      target: development
-    command: npm run start:debug
+    command: npm run start:dev
     volumes:
-      - ./qk-processing/:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./qk-processing/:/app
+      - /app/node_modules
