@@ -15,7 +15,7 @@ dev_dv_volume = qk_pgdata
 dev_db_dump = qk_db-dev-dump.sql
 
 ## One command to setup and start the project
-go: build start migrate
+go: build start migrate dump
 
 ## Build project
 build:
