@@ -1,4 +1,4 @@
-.PHONY: build build-prod start start-prod stop restart shell shell-front shell-db migrate
+.PHONY: go build build-prod start start-prod stop restart shell shell-front shell-db shell-pg migrate
 
 DOCKER_COMPOSE=docker-compose
 DOCKER_COMPOSE_RUN=$(DOCKER_COMPOSE) run --rm --no-deps
@@ -51,6 +51,10 @@ shell-front:
 ## Open db container command line
 shell-db:
 	docker exec -it $(db) bash
+
+## Open postgres cli in db container
+shell-pg:
+	docker exec -ti $(db) bash -c "psql -U qualkey"
 
 ## Run migrations
 migrate:
