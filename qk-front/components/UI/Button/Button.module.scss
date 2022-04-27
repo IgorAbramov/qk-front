@@ -50,11 +50,15 @@
   background-color: $color-secondary;
   border: 1px solid $color-highlight;
   color: $color-highlight;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, fill 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
   svg {
     height: 2.4rem;
     width: 2.4rem;
+
+    path {
+      transition: stroke 0.2s ease-in-out;
+    }
   }
 
   &:hover,
@@ -65,7 +69,10 @@
 
     svg {
       background-color: transparent;
-      fill: $color-secondary;
+
+      path {
+        stroke: $color-secondary;
+      }
     }
   }
 }

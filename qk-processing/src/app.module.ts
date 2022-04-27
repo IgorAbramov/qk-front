@@ -5,13 +5,13 @@ import { ConfigModule } from "@nestjs/config";
 import { PrismaClient } from "@prisma/client";
 import { DMMFClass } from "@prisma/client/runtime";
 import AdminJS, { CurrentAdmin } from "adminjs";
+import * as argon from "argon2";
 
 import { AuthModule } from "./auth/auth.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { UserModule } from "./user/user.module";
 
 AdminJS.registerAdapter({ Database, Resource });
-import * as argon from "argon2";
 const prisma = new PrismaClient();
 const dmmf = ((prisma as any)._dmmf as DMMFClass);
 
@@ -33,13 +33,15 @@ const dmmf = ((prisma as any)._dmmf as DMMFClass);
       },
       auth: {
         authenticate: async (email: string, password: string) => {
-          const user = await prisma.user.findUnique({ where: { email: email } });
           if (email !== "" && password !== "") {
-            if (await argon.verify(
-                user?.hash,
+            const user = await prisma.user.findUnique({ where: { email: email } });
+            if (user && user.role === "SUPER_ADMIN") {
+              if (await argon.verify(
+                user?.password,
                 password,
-            )) {
-              return Promise.resolve<CurrentAdmin>({ email: email });
+              )) {
+                return Promise.resolve<CurrentAdmin>({ email: email });
+              }
             }
           }
         },

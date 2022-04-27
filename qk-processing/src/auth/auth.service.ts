@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import * as argon from "argon2";
+import { Response } from "express";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { AuthDto } from "./dto";
@@ -22,11 +23,11 @@ export class AuthService {
       return await this.prisma.user.create({
         data: {
           email: dto.email,
-
-          hash,
+          password: hash,
+          role: "ADMIN",
         },
         select: {
-          id: true,
+          uuid: true,
           email: true,
           createdAt: true,
         },
@@ -41,24 +42,28 @@ export class AuthService {
       throw error;
     }
   }
-  async login(dto: AuthDto) {
+  async login(dto: AuthDto, response: Response) {
     const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
 
     if (!user)
       throw new ForbiddenException("User with such email is not registered");
 
     const pwMatches = await argon.verify(
-      user.hash,
+      user.password,
       dto.password,
     );
 
     if (!pwMatches)
       throw new ForbiddenException("Password incorrect");
 
-    return this.signToken(user.id, user.email);
+    const frontendDomain = this.config.get<string>("FRONTEND_DOMAIN");
+    const jwtToken = await this.signToken(user.uuid, user.email);
+    response.cookie("jwt", jwtToken, { httpOnly: true, domain: frontendDomain });
+    
+    return { role: user.role };
   }
 
-  async signToken(userId: number, email: string): Promise<{ access_token: string }> {
+  async signToken(userId: string, email: string): Promise<string> {
     const payload = {
       sub: userId,
       email,
@@ -66,11 +71,9 @@ export class AuthService {
 
     const secret = this.config.get("JWT_SECRET");
 
-    const token = await this.jwt.signAsync(payload, {
+    return this.jwt.signAsync(payload, {
       expiresIn: "1h",
       secret: secret,
     });
-
-    return { access_token: token };
   }
 }
