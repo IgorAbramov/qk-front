@@ -7,7 +7,7 @@ import { Response } from "express";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { AuthDto } from "./dto";
-import { RouteProvider } from "./helper/route-provider";
+import { RouteProvider } from "./provider/route.provider";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require("bcryptjs");

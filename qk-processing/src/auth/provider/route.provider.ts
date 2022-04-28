@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 
-import { RoleNotFoundException } from "../exceptions/role-not-found.exception";
+import { RoleNotFoundException } from "../exception/role-not-found.exception";
 
 const routeMapping = new Map([
   ["STUDENT", "/student-dashboard"],
