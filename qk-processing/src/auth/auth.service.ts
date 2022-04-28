@@ -27,7 +27,7 @@ export class AuthService {
         data: {
           email: dto.email,
           password: hash,
-          role: "ADMIN",
+          role: "STUDENT",
         },
         select: {
           uuid: true,
