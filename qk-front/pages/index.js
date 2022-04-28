@@ -1,22 +1,20 @@
 import { useState } from "react"
 
+import axios from "axios"
 import Image from "next/image"
 import { useRecoilState } from "recoil"
 
 import logo from "../assets/images/qk-logo-xl.png"
-import { formValidationErrorsState } from "../atoms/formValidationErrorsState"
-import { initialLoginFormState, loginFormState } from "../atoms/loginFormState"
-import AuthForm from "../components/AuthForms/AuthForm"
+import { initialLoginFormState, loginFormState, formValidationErrorsState } from "../atoms"
+import AuthForms from "../components/AuthForms/AuthForms"
 import Heading from "../components/UI/Heading/Heading"
-import { validate } from "../utils"
+import { processingUrl, validate } from "../utils"
 
 export default function Home() {
 
    const [formData, setFormData] = useRecoilState(loginFormState)
    const [formErrors, setFormErrors] = useRecoilState(formValidationErrorsState)
    const [success, setSuccess] = useState(false)
-
-   console.log(formErrors)
 
    const handleFormChange = ({ target }) => {
       const { name, value, type, checked } = target
@@ -35,14 +33,28 @@ export default function Home() {
 
    const handleFormSubmit = event => {
       event.preventDefault()
-      setFormErrors(validate(formData, setFormData, setSuccess, initialLoginFormState))
+
+      console.log(formData)
+
+      const validation = validate(formData, setFormData, initialLoginFormState)
+      if (Object.keys(validation).length) {
+         setFormErrors(validation)
+      } else {
+         axios.post(`${processingUrl}/auth/login`, { formData })
+            .then(response => {
+               console.log(response)
+            })
+            .catch(error => {
+               console.log(error)
+            })
+      }
    }
 
    return (
       <div className="auth">
          <div className="container authenticate">
             <div className="auth__wrapper">
-               <AuthForm login changeFormHandler={handleFormChange} submitFormHandler={handleFormSubmit}/>
+               <AuthForms login changeFormHandler={handleFormChange} submitFormHandler={handleFormSubmit}/>
                <div className="logo">
                   <div className="logo__image-wrapper">
                      <Image priority alt="Qualkey" layout="fill"

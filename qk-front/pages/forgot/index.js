@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import logo from "../../assets/images/qk-logo-xl.png"
-import AuthForm from "../../components/AuthForms/AuthForm"
+import AuthForms from "../../components/AuthForms/AuthForms"
 import Heading from "../../components/UI/Heading/Heading"
 
 export default function ForgotPassword() {
@@ -12,7 +12,7 @@ export default function ForgotPassword() {
       <div className="auth">
          <div className="container authenticate">
             <div className="auth__wrapper">
-               <AuthForm forgot/>
+               <AuthForms forgot/>
                <div className="logo">
                   <div className="logo__image-wrapper">
                      <Image alt="Qualkey" layout="fill" src={logo}/>

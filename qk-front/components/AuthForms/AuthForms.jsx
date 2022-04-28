@@ -8,7 +8,7 @@ import Text from "../UI/Text/Text"
 import styles from "./AuthForm.module.scss"
 import LoginForm from "./FormTypes/LoginForm"
 
-const AuthForm = ({ login, forgot, twoFactor, newPassword, changeFormHandler, submitFormHandler }) => {
+const AuthForms = ({ login, forgot, twoFactor, newPassword, changeFormHandler, submitFormHandler }) => {
 
    const router = useRouter()
 
@@ -107,9 +107,9 @@ const AuthForm = ({ login, forgot, twoFactor, newPassword, changeFormHandler, su
    )
 }
 
-export default AuthForm
+export default AuthForms
 
-AuthForm.propTypes = {
+AuthForms.propTypes = {
    login: PropTypes.bool,
    forgot: PropTypes.bool,
    twoFactor: PropTypes.bool,

@@ -1,4 +1,4 @@
-export const validate = (formData, formDataCb, successCb, initialValues ) => {
+export const validate = (formData, formDataCb, initialValues ) => {
    const email = formData?.email.trim()
    const password = formData?.password.trim()
 
@@ -18,7 +18,7 @@ export const validate = (formData, formDataCb, successCb, initialValues ) => {
    }
    if (Object.keys(errors).length) return errors
    else {
-      successCb(true)
       formDataCb(initialValues)
+      return true
    }
 }

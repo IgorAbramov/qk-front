@@ -1,8 +1,7 @@
 import PropTypes from "prop-types"
 import { useRecoilValue } from "recoil"
 
-import { formValidationErrorsState } from "../../../atoms/formValidationErrorsState"
-import { loginFormState } from "../../../atoms/loginFormState"
+import { formValidationErrorsState, loginFormState } from "../../../atoms"
 import Button from "../../UI/Button/Button"
 import Heading from "../../UI/Heading/Heading"
 import Input from "../../UI/Input/Input"
@@ -14,8 +13,6 @@ const LoginForm = ({ submitFormHandler, changeFormHandler }) => {
    const formError = useRecoilValue(formValidationErrorsState)
    const loginForm = useRecoilValue(loginFormState)
 
-   console.log(loginForm, formError)
-   
    return (
       <div className={styles.loginPage}>
          <div className={styles.wrapper}>
@@ -33,7 +30,8 @@ const LoginForm = ({ submitFormHandler, changeFormHandler }) => {
                          onChange={changeFormHandler}/>
                   <Text blue medium link="/forgot">Forgot Password?</Text>
                </div>
-               <Button blue bold thin>Login</Button>
+               <Button blue bold thin
+                       type="submit">Login</Button>
             </form>
          </div>
          <div className={styles.copyright}>
