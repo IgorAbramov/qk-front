@@ -4,10 +4,10 @@ import { NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  
+
   const configService = app.get(ConfigService);
   app.enableCors({ origin: configService.get<string>("FRONTEND_URL") });
 

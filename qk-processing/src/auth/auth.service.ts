@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
+import { Role } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Response } from "express";
 
@@ -20,7 +21,7 @@ export class AuthService {
         private routeProvider: RouteProvider,
   ) {}
 
-  async register(dto: AuthDto) {
+  async register(dto: AuthDto): Promise<{ uuid: string, email: string, createdAt: Date }> {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(dto.password, salt);
 
@@ -29,7 +30,7 @@ export class AuthService {
         data: {
           email: dto.email,
           password: hash,
-          role: "STUDENT",
+          role: Role.STUDENT,
         },
         select: {
           uuid: true,
@@ -47,7 +48,8 @@ export class AuthService {
       throw error;
     }
   }
-  async login(dto: AuthDto, response: Response):Promise<string> {
+
+  async login(dto: AuthDto, response: Response): Promise<string> {
     const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
 
     if (!user)
