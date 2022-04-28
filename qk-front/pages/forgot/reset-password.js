@@ -1,12 +1,12 @@
 import Image from "next/image"
 
 import logo from "../../assets/images/qk-logo-xl.png"
-import AuthForm from "../../components/AuthForm/AuthForm"
+import AuthForm from "../../components/AuthForms/AuthForm"
 import Heading from "../../components/UI/Heading/Heading"
 
 export default function ResetPassword() {
 
-   // TODO: Declare callback axios post request to API and pass to AuthForm
+   // TODO: Declare callback axios post request to API and pass to AuthForms
 
    return (
       <div className="auth">
