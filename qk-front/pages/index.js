@@ -1,20 +1,21 @@
-import { useState } from "react"
-
 import axios from "axios"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { useRecoilState } from "recoil"
 
 import logo from "../assets/images/qk-logo-xl.png"
-import { initialLoginFormState, loginFormState, formValidationErrorsState } from "../atoms"
+import { formValidationErrorsState, initialLoginFormState, loadingState, loginFormState } from "../atoms"
 import AuthForms from "../components/AuthForms/AuthForms"
 import Heading from "../components/UI/Heading/Heading"
 import { processingUrl, validate } from "../utils"
 
 export default function Home() {
 
+   const router = useRouter()
+
    const [formData, setFormData] = useRecoilState(loginFormState)
-   const [formErrors, setFormErrors] = useRecoilState(formValidationErrorsState)
-   const [success, setSuccess] = useState(false)
+   const [, setFormErrors] = useRecoilState(formValidationErrorsState)
+   const [, setLoading] = useRecoilState(loadingState)
 
    const handleFormChange = ({ target }) => {
       const { name, value, type, checked } = target
@@ -33,19 +34,25 @@ export default function Home() {
 
    const handleFormSubmit = event => {
       event.preventDefault()
-
-      console.log(formData)
+      setFormErrors({})
 
       const validation = validate(formData, setFormData, initialLoginFormState)
       if (Object.keys(validation).length) {
          setFormErrors(validation)
       } else {
-         axios.post(`${processingUrl}/auth/login`, { formData })
+         setLoading(true)
+         axios.post(`${processingUrl}/auth/login`, formData)
             .then(response => {
-               console.log(response)
+               router.push(response.data)
             })
             .catch(error => {
-               console.log(error)
+               setLoading(false)
+               console.log(error.response.data.message)
+               if (error.response?.data?.message.includes("credentials")) {
+                  setFormErrors({ email: error.response.data.message })
+               } else {
+                  setFormErrors({ email: "Unexpected error" })
+               }
             })
       }
    }
