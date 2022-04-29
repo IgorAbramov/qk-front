@@ -1,6 +1,5 @@
-import { Controller, Get, HttpCode, HttpStatus, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, UseGuards } from "@nestjs/common";
 import { Role } from "@prisma/client";
-import { Request } from "express";
 
 import { Roles } from "../auth/decorator";
 import { JwtGuard, RolesGuard } from "../auth/guard";

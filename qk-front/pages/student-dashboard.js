@@ -8,9 +8,9 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
-export default function StudentDashboard({ value, statusCode }) {
+export default function StudentDashboard({ value, serverErrorMessage }) {
    
-   if (statusCode) return <Error statusCode={statusCode}/>
+   if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
    return <Heading blue h2>{value}</Heading>
 }
@@ -25,6 +25,6 @@ export const getServerSideProps = async ({ req }) => {
       const { data: value } = response
       return { props: { value } }
    } catch (error) {
-      return { props: { statusCode: error.response.status } }
+      return { props: { serverErrorMessage: error.response.statusText } }
    }
 }

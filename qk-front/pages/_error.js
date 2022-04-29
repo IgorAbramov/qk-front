@@ -1,11 +1,14 @@
 import Heading from "../components/UI/Heading/Heading"
 
-export default function Error({ statusCode }) {
+export default function Error({ statusCode, serverErrorMessage }) {
    return (
       <Heading h2>
          {statusCode
             ? `An error ${statusCode} occurred on server`
-            : "An error occurred on client"}
+            : serverErrorMessage
+               ? serverErrorMessage
+               : "An error occurred on client"
+         }
       </Heading>
    )
 }
