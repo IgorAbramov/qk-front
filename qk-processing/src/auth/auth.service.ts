@@ -73,8 +73,6 @@ export class AuthService {
     const jwtShort = this.config.get<string>("JWT_EXPIRATION_SHORT");
     const jwtLong = this.config.get<string>("JWT_EXPIRATION_LONG");
 
-    console.log(!rememberMe ? jwtShort : jwtLong);
-
     return this.jwt.signAsync(payload, {
       expiresIn: !rememberMe ? jwtShort : jwtLong,
       secret: secret,
