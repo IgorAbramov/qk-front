@@ -80,9 +80,9 @@ enum InsitutionStatus {
 
 model Institution {
     uuid            String @id @default(uuid())
-    status          InsitutionStatus
+    status          InsitutionStatus @default(ACTIVE)
     emailDomain     String @unique
-    logoUrl         String
+    logoUrl         String?
     name            String
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
@@ -99,7 +99,7 @@ enum UploadStatus {
 
 model Upload {
     uuid                        String @id @default(uuid())
-    status                      UploadStatus
+    status                      UploadStatus @default(PENDING)
     uploadedBy                  String // User uuid
     confirmationsRequestedFrom  String // array with user_uuids
     confirmedBy                 String // array with user_uuids
@@ -112,7 +112,7 @@ model Upload {
 model CredentialShare {
     uuid                        String @id @default(uuid())
     recipientEmail              String
-    viewsCount                  Int
+    viewsCount                  Int @default(0)
     credentialUuid              String
     temporaryPassword           String
     expiresAt                   DateTime
@@ -142,7 +142,7 @@ enum CredentialChangeRequestStatus {
 
 model CredentialChangeRequest {
     uuid                        String @id @default(uuid())
-    status                      CredentialChangeRequestStatus
+    status                      CredentialChangeRequestStatus @default(PENDING)
     requestedBy                 String // User uuid
     confirmedBy                 String // User uuid
     changedFrom                 String // array with changes from   1;Peter;Dinklage
@@ -164,7 +164,7 @@ enum TransactionStatus {
 
 model Transaction {
     uuid                        String @id @default(uuid())
-    status                      TransactionStatus
+    status                      TransactionStatus @default(NEW)
     credentialUuid              String
     fee                         String?
     hash                        String?
