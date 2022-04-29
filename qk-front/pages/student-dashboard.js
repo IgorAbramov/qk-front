@@ -1,22 +1,30 @@
+import axios from "axios"
 import getConfig from "next/config"
 
 import Heading from "../components/UI/Heading/Heading"
+import Error from "./_error"
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
-export default function StudentDashboard({ json }) {
-   console.log(json)
-   return <Heading blue h2>Student dashboard page</Heading>
+export default function StudentDashboard({ json, statusCode }) {
+   
+   if (statusCode) return <Error statusCode={statusCode}/>
+
+   return <Heading blue h2>Student dashboard page + {json.ok}</Heading>
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ req }) => {
+   console.log(req.headers.cookie)
    try {
-      const res = await fetch(`${apiUrl}/auth/test1`)
-      const json = await res.json()
+      const testResponse = await axios.get(`${apiUrl}/auth/test1`, {
+         withCredentials: true,
+         headers: { Cookie: req.headers.cookie }
+      })
+      const { data: json } = testResponse
       return { props: { json } }
    } catch (error) {
-      return { notFound: true }
+      return { props: { statusCode: error.response.status } }
    }
 }
