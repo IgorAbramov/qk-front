@@ -14,6 +14,8 @@ const LoginForm = ({ submitFormHandler, changeFormHandler }) => {
    const loginForm = useRecoilValue(loginFormState)
    const loading = useRecoilValue(loadingState)
 
+   console.log(loading)
+
    return (
       <div className={styles.loginPage}>
          <div className={styles.wrapper}>
@@ -34,6 +36,7 @@ const LoginForm = ({ submitFormHandler, changeFormHandler }) => {
                </div>
                <Button blue bold loading
                        thin
+                       disabled={loading}
                        type="submit">
                   {loading
                      ? <svg fill="#fff" height="30" viewBox="0 0 120 30"

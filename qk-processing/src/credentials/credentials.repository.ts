@@ -8,14 +8,11 @@ export class CredentialsRepository {
   constructor(private readonly prisma: PrismaService) {
   }
 
-  async getStudentCredentials(user: User): Promise<Credential[]> {
-    return this.prisma.credential.findMany({
-      where: { studentUuid: user.uuid },
-      orderBy: { updatedAt: "asc" },
-    });
+  getStudentCredentials(user: User): string {
+    return JSON.stringify(`Student dashboard page! Welcome, ${user.email}`);
   }
 
-  getInstitutionCredentials(): string {
-    return JSON.stringify("Institution dashboard page!");
+  getInstitutionCredentials(user: User): string {
+    return JSON.stringify(`Institution dashboard page! Welcome, ${user.email}`);
   }
 }
