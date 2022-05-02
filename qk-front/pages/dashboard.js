@@ -25,7 +25,6 @@ export const getServerSideProps = async ({ req }) => {
       const { data: value } = response
       return { props: { value } }
    } catch (error) {
-      console.log(error)
       return { props: { serverErrorMessage: error.response.statusText } }
    }
 }
