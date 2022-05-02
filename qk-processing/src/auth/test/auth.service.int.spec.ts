@@ -38,10 +38,10 @@ describe("AuthService Int", () => {
     });
   });
 
-  describe("Login User", () => {
-    it("Should login existent user", async () => {
-      const user = await authService.login(newUserMock, response);
-    });
-  });
+  // describe("Login User", () => {
+  //   it("Should login existent user", async () => {
+  //     const user = await authService.login(newUserMock, response);
+  //   });
+  // });
   
 });

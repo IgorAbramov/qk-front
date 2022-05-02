@@ -1,7 +1,9 @@
+import { ForbiddenException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Role, User } from "@prisma/client";
+import { response } from "express";
 
 import { PrismaService } from "../../prisma/prisma.service";
 import { AuthService } from "../auth.service";
@@ -72,13 +74,19 @@ describe("AuthService Unit Test", () => {
   });
 
   // describe("login() - unit", () => {
-  //   const loginUser: AuthDto = {
+  //   const userIncorrectPassword: AuthDto = {
   //     email: "email@email.com",
-  //     password: "student",
+  //     password: "incorrect-pswrd",
   //     rememberMe: false,
   //   };
-  //   it("Should login user", async () => {
-  //     expect(await service.login(loginUser, response)).toEqual("");
+  //   it("Should login user and set jwt", async () => {
+  //     expect(await service.login(userIncorrectPassword, response)).toHaveBeenCalled();
   //   });
   // });
+
+  describe("signToken() - unit", () => {
+    it("Should sign jwt for user", async () => {
+      expect(await service.signToken("uuid123", "a@k.com", Role.STUDENT, true)).toEqual(mockSignToken);
+    });
+  });
 });
