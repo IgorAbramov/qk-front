@@ -59,7 +59,7 @@ export default function Home() {
       }
    }
 
-   // Stop loading screen.
+   // Stop spinner (loading).
    useEffect(() => {
       setLoading(false)
    }, [])

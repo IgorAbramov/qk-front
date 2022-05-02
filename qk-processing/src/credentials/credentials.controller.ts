@@ -13,7 +13,6 @@ export class CredentialsController {
     @HttpCode(HttpStatus.OK)
     @Get()
   getCredentials(@GetUser() user: User):string {
-    console.log(user);
     return this.credentialsService.getCredentials(user);
   }
 }
