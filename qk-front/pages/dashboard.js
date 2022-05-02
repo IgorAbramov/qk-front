@@ -20,11 +20,12 @@ export const getServerSideProps = async ({ req }) => {
    try {
       const response = await axios.get(`${apiUrl}/credentials`, {
          withCredentials: true,
-         headers: { Cookie: req.headers.cookie }
+         headers: { Cookie: req.headers.cookie || "" }
       })
       const { data: value } = response
       return { props: { value } }
    } catch (error) {
+      console.log(error)
       return { props: { serverErrorMessage: error.response.statusText } }
    }
 }
