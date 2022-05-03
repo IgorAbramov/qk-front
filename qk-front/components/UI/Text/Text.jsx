@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import styles from "./Text.module.scss"
 
-const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar, sidebarMin, active, children }) => {
+const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar, sidebarMin, active, children, ...otherProps }) => {
    if (link) return (
       <Link href={link}>
          <a className={`${styles.text} ${styles.link}
@@ -22,7 +22,7 @@ const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar
    )
 
    return (
-      <p className={`${styles.text}
+      <p {...otherProps} className={`${styles.text}
       ${underline ? styles.underline : ""}
       ${blue ? styles.blue : ""}
       ${grey ? styles.grey : ""}
