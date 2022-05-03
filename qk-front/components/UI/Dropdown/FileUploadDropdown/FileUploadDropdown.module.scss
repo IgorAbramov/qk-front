@@ -12,12 +12,12 @@
   border: 1px solid $color-primary-light;
   border-radius: 1.2rem;
   display: flex;
+  font-family: $font-primary;
+  font-weight: $font-weight-sm;
   justify-content: space-between;
   outline: none;
   padding: 1rem 1.6rem;
   width: 100%;
-  font-family: $font-primary;
-  font-weight: $font-weight-sm;
 }
 
 .content {
@@ -39,6 +39,7 @@
     cursor: pointer;
     padding: 0.4rem 1rem;
     transition: background-color 0.2s ease-in-out;
+
     &:last-child {
       border-bottom: 1px solid $color-primary-light;
     }
