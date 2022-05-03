@@ -57,10 +57,10 @@
   cursor: pointer;
   display: flex;
   gap: 1rem;
+  justify-content: center;
   padding: 1.2rem 0;
   transition: background-color 0.2s ease-in-out;
   width: 100%;
-  justify-content: center;
 
   svg {
     height: 4rem;
@@ -74,8 +74,9 @@
 }
 
 .sidebarMin {
-  padding-left: 0;
   justify-content: flex-start;
+  padding-left: 0;
+
   span {
     color: $color-secondary;
   }
@@ -88,10 +89,16 @@
 
 .active {
   background-color: $color-highlight-dark;
+
   span {
     color: $color-secondary;
   }
+
   svg {
     stroke: $color-secondary;
   }
+}
+
+.modal {
+  font-size: 2.3rem;
 }

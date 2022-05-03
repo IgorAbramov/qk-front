@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import styles from "./Text.module.scss"
 
-const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar, sidebarMin, active, children, ...otherProps }) => {
+const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar, sidebarMin, active, modal, children, ...otherProps }) => {
    if (link) return (
       <Link href={link}>
          <a className={`${styles.text} ${styles.link}
@@ -15,7 +15,8 @@ const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar
          ${bold ? styles.bold : ""}
          ${sidebar ? styles.sidebar : ""}
          ${sidebarMin ? styles.sidebarMin : ""}
-         ${active ? styles.active : ""}`}>
+         ${active ? styles.active : ""}
+         ${modal ? styles.modal : ""}`}>
             {children}
          </a>
       </Link>
@@ -33,7 +34,8 @@ const Text = ({ blue, grey, small, medium, underline, link, error, bold, sidebar
       ${bold ? styles.bold : ""}
       ${sidebar ? styles.sidebar : ""}
       ${sidebarMin ? styles.sidebarMin : ""}
-      ${active ? styles.active : ""}`}>
+      ${active ? styles.active : ""}
+      ${modal ? styles.modal : ""}`}>
          {children}
       </p>
    )
@@ -53,5 +55,6 @@ Text.propTypes = {
    sidebar: PropTypes.bool,
    sidebarMin: PropTypes.bool,
    active: PropTypes.bool,
+   modal: PropTypes.bool,
    children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired
 }

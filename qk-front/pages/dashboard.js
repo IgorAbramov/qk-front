@@ -1,9 +1,10 @@
 import axios from "axios"
 import getConfig from "next/config"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilValue } from "recoil"
 
 import { uploadModalState } from "../atoms/uploadModalState"
 import Heading from "../components/UI/Heading/Heading"
+import FileUploadModal from "../components/UI/Modal/FileUploadModal/FileUploadModal"
 import InstitutionSidebar from "../components/UI/Sidebar/InstitutionSidebar/InstitutionSidebar"
 import Topbar from "../components/UI/Topbar/Topbar"
 import Error from "./_error"
@@ -19,14 +20,14 @@ export default function Dashboard({ value, serverErrorMessage }) {
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
    return (
-      <>
+      <div className="main__wrapper">
          <InstitutionSidebar/>
          <Topbar/>
          <div className="dashboard">
             <Heading blue h1 xxl>{value}</Heading>
          </div>
-         {openModal && <h1>laksjdflaskj</h1>}
-      </>
+         {openModal && <FileUploadModal/>}
+      </div>
    )
 }
 
