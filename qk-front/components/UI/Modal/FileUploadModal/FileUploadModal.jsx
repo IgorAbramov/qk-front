@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react"
+
 import { useRecoilState } from "recoil"
 
 import { uploadModalState } from "../../../../atoms/uploadModalState"
@@ -9,11 +11,24 @@ import styles from "./FileUploadModal.module.scss"
 
 const FileUploadModal = () => {
 
-   const [, setOpenModal] = useRecoilState(uploadModalState)
+   const [openModal, setOpenModal] = useRecoilState(uploadModalState)
+
+   const outsideClickRef = useRef()
+   useEffect(() => {
+      const checkIfClickedOutside = event => {
+         if (openModal && outsideClickRef.current && !outsideClickRef.current.contains(event.target)) {
+            setOpenModal(false)
+         }
+      }
+      document.addEventListener("click", checkIfClickedOutside)
+      return () => {
+         document.removeEventListener("click", checkIfClickedOutside)
+      }
+   }, [openModal])
 
    return (
       <div className={styles.modal}>
-         <div className={styles.wrapper}>
+         <div ref={outsideClickRef} className={styles.wrapper}>
             <svg className={styles.close} fill="none" height="46"
                  viewBox="0 0 46 46"
                  width="46"

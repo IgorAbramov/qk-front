@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { credentialsFields } from "../../../../utils/credentialsFields"
 import styles from "./FileUploadDropdown.module.scss"
@@ -18,6 +18,19 @@ const FileUploadDropdown = () => {
       setOptionDropdown(e.target.innerText)
    }
 
+   const outsideClickRef = useRef()
+   useEffect(() => {
+      const checkIfClickedOutside = event => {
+         if (showDropdown && outsideClickRef.current && !outsideClickRef.current.contains(event.target)) {
+            setShowDropdown(false)
+         }
+      }
+      document.addEventListener("click", checkIfClickedOutside)
+      return () => {
+         document.removeEventListener("click", checkIfClickedOutside)
+      }
+   }, [showDropdown])
+
    return (
       <div className={styles.dropdown}>
          <button className={styles.button} onClick={handleShowDropdown}>
@@ -30,7 +43,7 @@ const FileUploadDropdown = () => {
                      strokeLinejoin="round" strokeWidth="2"/>
             </svg>
          </button>
-         <div className={styles.content} style={{ display: showDropdown ? "block" : "none" }}>
+         <div ref={outsideClickRef} className={styles.content} style={{ display: showDropdown ? "block" : "none" }}>
             <ul>
                {credentialsFields.map(credential => (
                   <li key={credential.value} value={credential.value}
