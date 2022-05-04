@@ -2,7 +2,7 @@ import axios from "axios"
 import getConfig from "next/config"
 import { useRecoilValue } from "recoil"
 
-import { uploadModalState } from "../atoms/uploadModalState"
+import { uploadModalState } from "../atoms"
 import Heading from "../components/UI/Heading/Heading"
 import FileUploadModal from "../components/UI/Modal/FileUploadModal/FileUploadModal"
 import InstitutionSidebar from "../components/UI/Sidebar/InstitutionSidebar/InstitutionSidebar"

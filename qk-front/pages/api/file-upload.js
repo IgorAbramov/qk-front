@@ -31,7 +31,6 @@ export default async (req, res) => {
                parsedData.push(res)
             })
             .on("end", () => {
-               console.log(parsedData[0])
                res.status(200).json(parsedData[0])
             })
 

@@ -1,21 +1,24 @@
 import { useEffect, useRef, useState } from "react"
 
-import { credentialsFields } from "../../../../utils/credentialsFields"
+import { useRecoilValue } from "recoil"
+
+import { credentialsState } from "../../../../atoms"
 import styles from "./FileUploadDropdown.module.scss"
 
-const FileUploadDropdown = () => {
+const FileUploadDropdown = ({ handleOption, valueIndex }) => {
 
+   const credentialsData = useRecoilValue(credentialsState)
    const [showDropdown, setShowDropdown] = useState(false)
    const [optionDropdown, setOptionDropdown] = useState("")
 
    const handleShowDropdown = () => {
       setShowDropdown(prev => !prev)
    }
-   
+
    const handleChooseOptionDropdown = e => {
       setShowDropdown(false)
-      // setOptionDropdown(e.target.getAttribute("value"))
       setOptionDropdown(e.target.innerText)
+      handleOption(e, valueIndex)
    }
 
    const outsideClickRef = useRef()
@@ -45,9 +48,9 @@ const FileUploadDropdown = () => {
          </button>
          <div ref={outsideClickRef} className={styles.content} style={{ display: showDropdown ? "block" : "none" }}>
             <ul>
-               {credentialsFields.map(credential => (
+               {credentialsData.map((credential, index) => (
                   <li key={credential.value} value={credential.value}
-                      onClick={handleChooseOptionDropdown}>{credential.title}</li>
+                      onClick={(e) => handleChooseOptionDropdown(e, index)}>{credential.title}</li>
                ))}
             </ul>
          </div>

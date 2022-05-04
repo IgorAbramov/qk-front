@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import { useRecoilState } from "recoil"
 
-import { uploadModalState, fileUploadErrorState } from "../../../../atoms"
+import { fileUploadErrorState, uploadModalState, credentialsState } from "../../../../atoms"
 import Button from "../../Button/Button"
 import FileUploadDropdown from "../../Dropdown/FileUploadDropdown/FileUploadDropdown"
 import Heading from "../../Heading/Heading"
@@ -13,12 +13,15 @@ import styles from "./FileUploadModal.module.scss"
 
 const FileUploadModal = () => {
 
+   const [credentialsFields, setCredentialsFields] = useRecoilState(credentialsState)
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
-   const [fileName, setFileName] = useState(null)
    const [fileUploadError, setFileUploadError] = useRecoilState(fileUploadErrorState)
+   const [fileName, setFileName] = useState(null)
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
+   // const [mappingFromFile, setMappingFromFile] = useState({})
+   const [mappingToValues, setMappingToValues] = useState([])
 
-   console.log(parsedValuesFromUpload)
+   // console.log(mappingFromFile)
 
    const uploadFileToClient = async e => {
       if (e.target.files[0]?.type !== "text/csv") {
@@ -35,6 +38,34 @@ const FileUploadModal = () => {
          }
       }
    }
+
+   console.log(credentialsFields)
+
+   const handleOption = (e, index) => {
+      mappingToValues[index] = e.target.getAttribute("value")
+      setMappingToValues(([...mappingToValues]))
+   }
+
+   useEffect(() => {
+      setCredentialsFields(fields => fields.filter(value => !mappingToValues.includes(value.value)))
+   }, [mappingToValues.length])
+
+   // const sendDataToServer = async e => {
+   //    const test = parsedValuesFromUpload.map(value => {
+   //       return { key: value }
+   //    })
+   //    console.log(test)
+   // }
+
+   // useEffect(() => {
+   //    if (parsedValuesFromUpload.length !== 0) {
+   //       const mapping = {}
+   //       for (const key of parsedValuesFromUpload) {
+   //          mapping[key] = ""
+   //       }
+   //       setMappingFromFile(mapping)
+   //    }
+   // }, [parsedValuesFromUpload.length])
 
    const outsideClickRef = useRef()
    useEffect(() => {
@@ -83,12 +114,13 @@ const FileUploadModal = () => {
                   !!parsedValuesFromUpload.length
                   && <>
                      <div className={styles.middle}>
-                        {parsedValuesFromUpload.map(value => (
+                        {parsedValuesFromUpload.map((value, index) => (
                            <div key={value} className={styles.row}>
                               <Input readOnly text inputName={value}
                                      placeholder={value}
                                      value={value}/>
-                              <FileUploadDropdown key={value}/>
+                              <FileUploadDropdown key={value} handleOption={handleOption}
+                                                  valueIndex={index}/>
                            </div>
                         ))}
                      </div>
