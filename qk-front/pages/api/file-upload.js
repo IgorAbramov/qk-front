@@ -1,5 +1,6 @@
-import { promises as fs } from "fs"
+import fs, { promises } from "fs"
 
+import { parse } from "csv-parse"
 import { IncomingForm } from "formidable"
 
 export const config = { api: { bodyParser: false } }
@@ -15,12 +16,24 @@ export default async (req, res) => {
       })
 
       try {
+         const parsedData = []
+
          const file = data.files.uploadedFile
          const temporaryPath = file.filepath
-         const pathToWriteFile = `uploads/${Date.now()}-${file.originalFilename}`
-         const fileWrite = await fs.readFile(temporaryPath)
-         await fs.writeFile(pathToWriteFile, fileWrite)
-         res.status(200).json({ message: "seems ok" })
+         const filePrefix = Date.now()
+         const pathToWriteFile = `uploads/${filePrefix}-${file.originalFilename}`
+         const fileWrite = await promises.readFile(temporaryPath)
+         await promises.writeFile(pathToWriteFile, fileWrite)
+         
+         fs.createReadStream(pathToWriteFile)
+            .pipe(parse({ delimiter: ",", relax_column_count: true }))
+            .on("data", res => {
+               parsedData.push(res)
+            })
+            .on("end", () => {
+               console.log(parsedData[0])
+               res.status(200).json(parsedData[0])
+            })
 
       } catch (error) {
          res.status(500).json({ message: error.message })

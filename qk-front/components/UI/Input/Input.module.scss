@@ -79,12 +79,31 @@
 
   + label {
     align-items: center;
-    border: 1px solid $color-additional;
+    background-color: $color-highlight;
     border-radius: 1.5rem;
     cursor: pointer;
     display: flex;
     gap: 1rem;
     justify-content: center;
     padding: 1rem 0;
+    svg path {
+      stroke: $color-secondary;
+    }
+  }
+
+}
+
+.uploaded {
+  + label {
+    background-color: transparent;
+    border: 1px solid $color-additional;
+    svg {
+      path {
+        stroke: $color-additional;
+      }
+      + p {
+        color: $color-additional;
+      }
+    }
   }
 }

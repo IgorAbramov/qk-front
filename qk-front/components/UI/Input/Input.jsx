@@ -20,6 +20,7 @@ const Input = ({
    hidePassword,
    checkboxText,
    fileName,
+   isFileUploaded,
    ...otherProps
 }) => {
 
@@ -81,7 +82,7 @@ const Input = ({
 
    if (fileUpload) return (
       <>
-         <input {...otherProps} className={styles.fileUpload} id={inputName}
+         <input {...otherProps} className={`${styles.fileUpload} ${isFileUploaded ? styles.uploaded : ""}`} id={inputName}
                 name={inputName}
                 type="file"/>
          <label htmlFor={inputName}>
@@ -96,7 +97,7 @@ const Input = ({
                   stroke="#A3A3A3" strokeLinecap="round"
                   strokeLinejoin="round" strokeWidth="1.5"/>
             </svg>
-            <Text grey>{fileName ? fileName : "Upload file"}</Text>
+            <Text white>{fileName ? fileName : "Click to upload a file"}</Text>
          </label>
       </>
    )
@@ -117,5 +118,6 @@ Input.propTypes = {
    error: PropTypes.bool,
    hidePassword: PropTypes.func,
    checkboxText: PropTypes.string,
-   fileName: PropTypes.bool
+   fileName: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+   isFileUploaded: PropTypes.bool
 }

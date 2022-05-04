@@ -15,7 +15,6 @@
   background-color: $color-secondary;
   border: 2px solid $color-additional-light;
   border-radius: 15px;
-  height: 90%;
   left: 50%;
   position: fixed;
   top: 50%;
@@ -23,7 +22,6 @@
   width: 55%;
 
   &Inner {
-    height: 100%;
     padding: 6rem 5rem 0;
 
     button:last-child {
@@ -59,7 +57,7 @@
   input,
   input + label {
     margin: 0 auto 4rem;
-    width: 30%;
+    width: 40%;
 
     + p {
       left: 50%;
