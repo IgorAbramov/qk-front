@@ -25,6 +25,7 @@
   &Inner {
     height: 100%;
     padding: 6rem 5rem 0;
+
     button:last-child {
       align-items: center;
       display: flex;
@@ -57,8 +58,16 @@
 
   input,
   input + label {
-    margin: 0 auto;
+    margin: 0 auto 4rem;
     width: 30%;
+
+    + p {
+      left: 50%;
+      position: absolute;
+      top: 2rem;
+      transform: translateX(-50%);
+      z-index: 999;
+    }
   }
 }
 
@@ -66,7 +75,6 @@
   border: 1px solid $color-additional-medium;
   border-radius: 1.5rem;
   height: 45%;
-  margin-top: 4rem;
   overflow: hidden;
   overflow-y: scroll;
   padding: 2rem 4rem;

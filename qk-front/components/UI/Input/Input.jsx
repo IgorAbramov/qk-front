@@ -19,6 +19,7 @@ const Input = ({
    error,
    hidePassword,
    checkboxText,
+   fileName,
    ...otherProps
 }) => {
 
@@ -95,7 +96,7 @@ const Input = ({
                   stroke="#A3A3A3" strokeLinecap="round"
                   strokeLinejoin="round" strokeWidth="1.5"/>
             </svg>
-            <Text grey>Upload file</Text>
+            <Text grey>{fileName ? fileName : "Upload file"}</Text>
          </label>
       </>
    )
@@ -115,5 +116,6 @@ Input.propTypes = {
    placeholder: PropTypes.string,
    error: PropTypes.bool,
    hidePassword: PropTypes.func,
-   checkboxText: PropTypes.string
+   checkboxText: PropTypes.string,
+   fileName: PropTypes.bool
 }

@@ -32,7 +32,6 @@ export default function Dashboard({ value, serverErrorMessage }) {
 }
 
 export const getServerSideProps = async ({ req }) => {
-   console.log(req.headers.cookie)
    try {
       const response = await axios.get(`${apiUrl}/credentials`, {
          withCredentials: true,

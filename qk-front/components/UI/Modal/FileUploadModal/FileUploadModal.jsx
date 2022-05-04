@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import { useRecoilState } from "recoil"
 
-import { uploadModalState } from "../../../../atoms/uploadModalState"
+import { uploadModalState, fileUploadErrorState } from "../../../../atoms"
 import Button from "../../Button/Button"
 import FileUploadDropdown from "../../Dropdown/FileUploadDropdown/FileUploadDropdown"
 import Heading from "../../Heading/Heading"
@@ -14,14 +14,22 @@ import styles from "./FileUploadModal.module.scss"
 const FileUploadModal = () => {
 
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
+   const [fileName, setFileName] = useState(null)
+   const [fileUploadError, setFileUploadError] = useRecoilState(fileUploadErrorState)
 
-   const uploadFileToClient = e => {
-      if (e.target.files && e.target.files[0]) {
+   const uploadFileToClient = async e => {
+      if (e.target.files[0].type !== "text/csv") {
+         setFileUploadError("Unsupported file type")
+      } else {
+         setFileName(e.target.files[0].name)
          const formData = new FormData()
-         formData.append("file", e.target.files[0])
-         axios.post("/api/upload", formData,{ headers: { "Content-Type": "mulitpart/form-data" } })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+         formData.append("uploadedFile", e.target.files[0])
+         try {
+            const response = await axios.post("/api/file-upload", formData, { headers: { "Content-type": "multipart/form-data" } })
+            console.log(response)
+         } catch (error) {
+            console.log(error)
+         }
       }
    }
 
@@ -37,6 +45,10 @@ const FileUploadModal = () => {
          document.removeEventListener("click", checkIfClickedOutside)
       }
    }, [openModal])
+
+   useEffect(() => {
+      setFileUploadError("")
+   }, [openModal, fileName])
 
    return (
       <div className={styles.modal}>
@@ -58,7 +70,9 @@ const FileUploadModal = () => {
                   <Heading blue h2 modal>Multi-Upload</Heading>
                   <Text modal>You have confirmed the list of credentials
                      are ready to be authenticated.</Text>
-                  <Input fileUpload inputName="csvUploader" onChange={uploadFileToClient}/>
+                  <Input fileUpload fileName={fileName} inputName="csvUploader"
+                         onChange={uploadFileToClient}/>
+                  {fileUploadError && <Text error>{fileUploadError}</Text>}
                </div>
                {/*TODO: Behaviour before file upload - empty screen.*/}
                <div className={styles.middle}>
