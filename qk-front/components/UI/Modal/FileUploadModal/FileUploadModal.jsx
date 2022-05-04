@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 
 import axios from "axios"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 
-import { fileUploadErrorState, uploadModalState, credentialsState } from "../../../../atoms"
+import { fileUploadErrorState, uploadModalState, credentialsState, dropdownSelectionListenerState } from "../../../../atoms"
 import Button from "../../Button/Button"
 import FileUploadDropdown from "../../Dropdown/FileUploadDropdown/FileUploadDropdown"
 import Heading from "../../Heading/Heading"
@@ -16,6 +16,7 @@ const FileUploadModal = () => {
    const [credentialsFields, setCredentialsFields] = useRecoilState(credentialsState)
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
    const [fileUploadError, setFileUploadError] = useRecoilState(fileUploadErrorState)
+   const dropdownSelectionListener = useRecoilValue(dropdownSelectionListenerState)
    const [fileName, setFileName] = useState(null)
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
    // const [mappingFromFile, setMappingFromFile] = useState({})
@@ -39,16 +40,27 @@ const FileUploadModal = () => {
       }
    }
 
-   console.log(credentialsFields)
+   console.log(mappingToValues, "mappingToValues")
+   // console.log(credentialsFields, "credentialsFields")
+   // console.log(mappingToValues, "mappingToValues")
 
    const handleOption = (e, index) => {
-      mappingToValues[index] = e.target.getAttribute("value")
-      setMappingToValues(([...mappingToValues]))
+      mappingToValues[index] = {
+         title: e.target.innerText,
+         value: e.target.getAttribute("value")
+      }
+      setMappingToValues([...mappingToValues])
    }
 
    useEffect(() => {
-      setCredentialsFields(fields => fields.filter(value => !mappingToValues.includes(value.value)))
-   }, [mappingToValues.length])
+      setCredentialsFields(fields => fields.filter(value => !mappingToValues.find(mappingValue => (value.value === mappingValue.value)))) //TODO: Make proper object filtering!
+   }, [dropdownSelectionListener.length])
+
+   const resetDropdown = index => {
+      //TODO: Add here chosen mappingValues[index] to array of dropdown values and activate dropdown.
+      mappingToValues[index] = undefined
+      setMappingToValues([...mappingToValues])
+   }
 
    // const sendDataToServer = async e => {
    //    const test = parsedValuesFromUpload.map(value => {
@@ -119,8 +131,18 @@ const FileUploadModal = () => {
                               <Input readOnly text inputName={value}
                                      placeholder={value}
                                      value={value}/>
-                              <FileUploadDropdown key={value} handleOption={handleOption}
-                                                  valueIndex={index}/>
+                              <div className={styles.end}>
+                                 <FileUploadDropdown key={value} handleOption={handleOption}
+                                                     valueIndex={index}/>
+                                 <svg fill="none" height="10" viewBox="0 0 9 10"
+                                      width="9"
+                                      xmlns="http://www.w3.org/2000/svg" onClick={() => resetDropdown(index)}>
+                                    <path d="M1.12109 8.53516L8.19216 1.46409" stroke="#737373" strokeLinecap="round"
+                                          strokeLinejoin="round" strokeWidth="1.5"/>
+                                    <path d="M1.12109 1.46484L8.19216 8.53591" stroke="#737373" strokeLinecap="round"
+                                          strokeLinejoin="round" strokeWidth="1.5"/>
+                                 </svg>
+                              </div>
                            </div>
                         ))}
                      </div>

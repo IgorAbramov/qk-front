@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 
-import { credentialsState } from "../../../../atoms"
+import { credentialsState, dropdownSelectionListenerState } from "../../../../atoms"
 import styles from "./FileUploadDropdown.module.scss"
 
 const FileUploadDropdown = ({ handleOption, valueIndex }) => {
@@ -10,6 +10,7 @@ const FileUploadDropdown = ({ handleOption, valueIndex }) => {
    const credentialsData = useRecoilValue(credentialsState)
    const [showDropdown, setShowDropdown] = useState(false)
    const [optionDropdown, setOptionDropdown] = useState("")
+   const [dropdownSelectionListener, setDropdownSelectionListener] = useRecoilState(dropdownSelectionListenerState)
 
    const handleShowDropdown = () => {
       setShowDropdown(prev => !prev)
@@ -18,7 +19,11 @@ const FileUploadDropdown = ({ handleOption, valueIndex }) => {
    const handleChooseOptionDropdown = e => {
       setShowDropdown(false)
       setOptionDropdown(e.target.innerText)
+      setDropdownSelectionListener([
+         ...dropdownSelectionListener, e.target.getAttribute("value")
+      ])
       handleOption(e, valueIndex)
+
    }
 
    const outsideClickRef = useRef()
@@ -36,7 +41,7 @@ const FileUploadDropdown = ({ handleOption, valueIndex }) => {
 
    return (
       <div className={styles.dropdown}>
-         <button className={styles.button} onClick={handleShowDropdown}>
+         <button className={styles.button} disabled={!!optionDropdown} onClick={handleShowDropdown}>
             <span style={{ color: showDropdown ? "#e5e5e5" : "" }}>
                {optionDropdown ? optionDropdown : "Choose"}
             </span>
@@ -48,9 +53,9 @@ const FileUploadDropdown = ({ handleOption, valueIndex }) => {
          </button>
          <div ref={outsideClickRef} className={styles.content} style={{ display: showDropdown ? "block" : "none" }}>
             <ul>
-               {credentialsData.map((credential, index) => (
+               {credentialsData.map(credential => (
                   <li key={credential.value} value={credential.value}
-                      onClick={(e) => handleChooseOptionDropdown(e, index)}>{credential.title}</li>
+                      onClick={handleChooseOptionDropdown}>{credential.title}</li>
                ))}
             </ul>
          </div>
