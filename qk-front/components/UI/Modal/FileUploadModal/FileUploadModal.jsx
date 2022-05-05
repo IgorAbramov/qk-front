@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 
 import axios from "axios"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState, useResetRecoilState } from "recoil"
 
-import { fileUploadErrorState, uploadModalState, credentialsState, dropdownSelectionListenerState } from "../../../../atoms"
+import { credentialsState, dropdownSelectionListenerState, fileUploadErrorState, uploadModalState } from "../../../../atoms"
 import Button from "../../Button/Button"
 import FileUploadDropdown from "../../Dropdown/FileUploadDropdown/FileUploadDropdown"
 import Heading from "../../Heading/Heading"
@@ -13,10 +13,11 @@ import styles from "./FileUploadModal.module.scss"
 
 const FileUploadModal = () => {
 
+   const resetCredentialsFields = useResetRecoilState(credentialsState)
    const [credentialsFields, setCredentialsFields] = useRecoilState(credentialsState)
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
    const [fileUploadError, setFileUploadError] = useRecoilState(fileUploadErrorState)
-   const dropdownSelectionListener = useRecoilValue(dropdownSelectionListenerState)
+   const [dropdownSelectionListener, setDropdownSelectionListener] = useRecoilState(dropdownSelectionListenerState)
    const [fileName, setFileName] = useState(null)
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
    // const [mappingFromFile, setMappingFromFile] = useState({})
@@ -40,9 +41,14 @@ const FileUploadModal = () => {
       }
    }
 
+   const closeModal = () => {
+      setOpenModal(false)
+      resetCredentialsFields()
+      setDropdownSelectionListener([])
+   }
+
    console.log(mappingToValues, "mappingToValues")
-   // console.log(credentialsFields, "credentialsFields")
-   // console.log(mappingToValues, "mappingToValues")
+   console.log(credentialsFields, "credentialsFields")
 
    const handleOption = (e, index) => {
       mappingToValues[index] = {
@@ -52,18 +58,8 @@ const FileUploadModal = () => {
       setMappingToValues([...mappingToValues])
    }
 
-   useEffect(() => {
-      const filteredDropdown = credentialsFields.filter(credentials => {
-         return !mappingToValues.find(mapping => {
-            return mapping?.value !== undefined && credentials.value === mapping.value
-         })
-      })
-      setCredentialsFields(filteredDropdown)
-      console.log(filteredDropdown)
-   }, [dropdownSelectionListener.length])
-
    const resetDropdown = index => {
-      //TODO: Add here chosen mappingValues[index] to array of dropdown values and activate dropdown.
+      setCredentialsFields([...credentialsFields, mappingToValues[index]].sort((a, b) => a.title.localeCompare(b.title)))
       mappingToValues[index] = undefined
       setMappingToValues([...mappingToValues])
    }
@@ -85,6 +81,19 @@ const FileUploadModal = () => {
    //    }
    // }, [parsedValuesFromUpload.length])
 
+   useEffect(() => {
+      const filteredDropdown = credentialsFields.filter(credentials => {
+         return !mappingToValues.find(mapping => {
+            return mapping?.value !== undefined && credentials.value === mapping.value
+         })
+      })
+      setCredentialsFields(filteredDropdown)
+   }, [dropdownSelectionListener.length])
+
+   useEffect(() => {
+      setFileUploadError("")
+   }, [openModal, parsedValuesFromUpload])
+
    const outsideClickRef = useRef()
    useEffect(() => {
       const checkIfClickedOutside = event => {
@@ -98,10 +107,6 @@ const FileUploadModal = () => {
       }
    }, [openModal])
 
-   useEffect(() => {
-      setFileUploadError("")
-   }, [openModal, parsedValuesFromUpload])
-
    return (
       <div className={styles.modal}>
          <div ref={outsideClickRef} className={styles.wrapper}
@@ -109,7 +114,7 @@ const FileUploadModal = () => {
             <svg className={styles.close} fill="none" height="46"
                  viewBox="0 0 46 46"
                  width="46"
-                 xmlns="http://www.w3.org/2000/svg" onClick={() => setOpenModal(false)}>
+                 xmlns="http://www.w3.org/2000/svg" onClick={closeModal}>
                <path d="M31.1424 31.4853C35.8287 26.799 35.8287 19.201 31.1424 14.5147C26.4561 9.82843 18.8581 9.82843 14.1718 14.5147C9.48551 19.201 9.48551 26.799 14.1718 31.4853C18.8581 36.1716 26.4561 36.1716 31.1424 31.4853Z"
                   stroke="#737373" strokeLinecap="round"
                   strokeLinejoin="round" strokeWidth="1.5"/>
@@ -137,18 +142,8 @@ const FileUploadModal = () => {
                               <Input readOnly text inputName={value}
                                      placeholder={value}
                                      value={value}/>
-                              <div className={styles.end}>
-                                 <FileUploadDropdown key={value} handleOption={handleOption}
-                                                     valueIndex={index}/>
-                                 <svg fill="none" height="10" viewBox="0 0 9 10"
-                                      width="9"
-                                      xmlns="http://www.w3.org/2000/svg" onClick={() => resetDropdown(index)}>
-                                    <path d="M1.12109 8.53516L8.19216 1.46409" stroke="#737373" strokeLinecap="round"
-                                          strokeLinejoin="round" strokeWidth="1.5"/>
-                                    <path d="M1.12109 1.46484L8.19216 8.53591" stroke="#737373" strokeLinecap="round"
-                                          strokeLinejoin="round" strokeWidth="1.5"/>
-                                 </svg>
-                              </div>
+                              <FileUploadDropdown key={value} handleOption={handleOption}
+                                                  resetDropdown={resetDropdown} valueIndex={index}/>
                            </div>
                         ))}
                      </div>

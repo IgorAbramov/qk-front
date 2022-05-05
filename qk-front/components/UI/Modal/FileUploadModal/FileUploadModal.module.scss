@@ -84,17 +84,3 @@
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-
-.end {
-  align-items: center;
-  display: flex;
-  gap: 2rem;
-
-  > svg {
-    cursor: pointer;
-
-    path {
-      stroke: $color-primary;
-    }
-  }
-}

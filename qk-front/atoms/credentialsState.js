@@ -67,5 +67,5 @@ export const credentialsState = atom({
          title: "Expires At",
          value: "expiresAt"
       },
-   ]
+   ].sort((a, b) => a.title.localeCompare(b.title))
 })
