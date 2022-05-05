@@ -65,6 +65,9 @@ const FileUploadModal = () => {
    }
 
    const handleSubmitMapping = () => {
+
+      //TODO: Validation to choose minimum for 8 our fields.
+
       const mapping = mappingToValues.map(mapping => {
          return mapping?.value}).join(",")
       const blob = new Blob([mapping], { type: "text/plain" })
