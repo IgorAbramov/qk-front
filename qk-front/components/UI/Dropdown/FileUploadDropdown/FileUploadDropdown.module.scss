@@ -2,13 +2,15 @@
 @import "../../../../assets/styles/helpers/mixins";
 
 .wrapper {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 1rem;
+
   svg {
     cursor: pointer;
+
     path {
-      stroke: $color-primary
+      stroke: $color-primary;
     }
   }
 }

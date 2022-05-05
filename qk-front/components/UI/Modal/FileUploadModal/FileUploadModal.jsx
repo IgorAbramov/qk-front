@@ -18,37 +18,37 @@ const FileUploadModal = () => {
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
    const [fileUploadError, setFileUploadError] = useRecoilState(fileUploadErrorState)
    const [dropdownSelectionListener, setDropdownSelectionListener] = useRecoilState(dropdownSelectionListenerState)
+   const [currentFile, setCurrentFile] = useState(null)
+   const [filePrefix, setFilePrefix] = useState("")
    const [fileName, setFileName] = useState(null)
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
-   // const [mappingFromFile, setMappingFromFile] = useState({})
    const [mappingToValues, setMappingToValues] = useState([])
-
-   // console.log(mappingFromFile)
 
    const uploadFileToClient = async e => {
       if (e.target.files[0]?.type !== "text/csv") {
          setFileUploadError("Unsupported file type")
       } else {
+         setCurrentFile(e.target.files[0])
          setFileName(e.target.files[0].name)
          const formData = new FormData()
          formData.append("uploadedFile", e.target.files[0])
          try {
             const response = await axios.post("/api/file-upload", formData, { headers: { "Content-type": "multipart/form-data" } })
-            setParsedValuesFromUpload(response.data)
+            setParsedValuesFromUpload(response.data.file)
+            setFilePrefix(response.data.prefix)
          } catch (error) {
             setFileUploadError(error?.response?.statusText)
          }
       }
    }
 
+   console.log(filePrefix)
+
    const closeModal = () => {
       setOpenModal(false)
       resetCredentialsFields()
       setDropdownSelectionListener([])
    }
-
-   console.log(mappingToValues, "mappingToValues")
-   console.log(credentialsFields, "credentialsFields")
 
    const handleOption = (e, index) => {
       mappingToValues[index] = {
@@ -64,22 +64,30 @@ const FileUploadModal = () => {
       setMappingToValues([...mappingToValues])
    }
 
-   // const sendDataToServer = async e => {
-   //    const test = parsedValuesFromUpload.map(value => {
-   //       return { key: value }
-   //    })
-   //    console.log(test)
-   // }
+   const handleSubmitMapping = () => {
+      const mapping = mappingToValues.map(mapping => {
+         return mapping?.value}).join(",")
+      const blob = new Blob([mapping], { type: "text/plain" })
+      const formData = new FormData()
+      formData.append("parsedFile", currentFile)
+      formData.append("data", blob)
+      console.log(mapping)
+      console.log([...formData])
 
-   // useEffect(() => {
-   //    if (parsedValuesFromUpload.length !== 0) {
-   //       const mapping = {}
-   //       for (const key of parsedValuesFromUpload) {
-   //          mapping[key] = ""
-   //       }
-   //       setMappingFromFile(mapping)
-   //    }
-   // }, [parsedValuesFromUpload.length])
+      // axios.post(`${processingUrl}/uploads`, formData)
+      //    .then(res => console.log(res))
+      //    .catch(err => console.log(err))
+      
+      const data = JSON.stringify(`${filePrefix}-${fileName}`)
+      
+      axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
+         .then(res => console.log(res))
+         .catch(err => console.log(err))
+   }
+
+   useEffect(() => {
+      setMappingToValues(new Array(parsedValuesFromUpload.length))
+   }, [parsedValuesFromUpload.length])
 
    useEffect(() => {
       const filteredDropdown = credentialsFields.filter(credentials => {
@@ -147,7 +155,7 @@ const FileUploadModal = () => {
                            </div>
                         ))}
                      </div>
-                     <Button blue>
+                     <Button blue onClick={handleSubmitMapping}>
                         <svg fill="none" height="32" viewBox="0 0 32 32"
                              width="32" xmlns="http://www.w3.org/2000/svg">
                            <path d="M12 26H9C7.14348 26 5.36301 25.2625 4.05025 23.9497C2.7375 22.637 2 20.8565 2 19C2 17.1435 2.7375 15.363 4.05025 14.0503C5.36301 12.7375 7.14348 12 9 12C9.58566 11.9998 10.1692 12.0711 10.7375 12.2125"

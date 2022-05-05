@@ -31,7 +31,10 @@ export default async (req, res) => {
                parsedData.push(res)
             })
             .on("end", () => {
-               res.status(200).json(parsedData[0])
+               res.status(200).json({
+                  file: parsedData[0],
+                  prefix: filePrefix
+               })
             })
 
       } catch (error) {
