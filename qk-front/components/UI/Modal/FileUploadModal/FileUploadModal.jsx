@@ -53,7 +53,13 @@ const FileUploadModal = () => {
    }
 
    useEffect(() => {
-      setCredentialsFields(fields => fields.filter(value => !mappingToValues.find(mappingValue => (value.value === mappingValue.value)))) //TODO: Make proper object filtering!
+      const filteredDropdown = credentialsFields.filter(credentials => {
+         return !mappingToValues.find(mapping => {
+            return mapping?.value !== undefined && credentials.value === mapping.value
+         })
+      })
+      setCredentialsFields(filteredDropdown)
+      console.log(filteredDropdown)
    }, [dropdownSelectionListener.length])
 
    const resetDropdown = index => {
