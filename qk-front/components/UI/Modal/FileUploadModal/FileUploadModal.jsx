@@ -42,8 +42,6 @@ const FileUploadModal = () => {
       }
    }
 
-   console.log(filePrefix)
-
    const closeModal = () => {
       setOpenModal(false)
       resetCredentialsFields()
@@ -82,7 +80,6 @@ const FileUploadModal = () => {
       //    .catch(err => console.log(err))
       
       const data = JSON.stringify(`${filePrefix}-${fileName}`)
-      
       axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
          .then(res => console.log(res))
          .catch(err => console.log(err))
