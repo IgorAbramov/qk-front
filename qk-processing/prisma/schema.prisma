@@ -19,15 +19,17 @@ enum Role {
 }
 
 model User {
-    uuid        String @id @default(uuid())
-    email       String @unique
-    password    String
-    role        Role
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    firstName   String?
-    lastName    String?
-    credentials Credential[]
+    uuid            String @id @default(uuid())
+    email           String @unique
+    password        String
+    role            Role
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    firstName       String?
+    lastName        String?
+    credentials     Credential[]
+    institution     Institution? @relation(fields: [institutionUuid], references: [uuid])
+    institutionUuid String?
 
     @@map("users")
 }
@@ -87,6 +89,7 @@ model Institution {
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
     credentials     Credential[]
+    representatives User[]
 
     @@map("institutions")
 }
