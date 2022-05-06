@@ -29,6 +29,8 @@ const FileUploadModal = () => {
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
    const [mappingToValues, setMappingToValues] = useState([])
 
+   console.log(credentialsFields)
+
    const uploadFileToClient = async e => {
       if (e.target.files[0]?.type !== "text/csv") {
          setFileUploadModalError("Unsupported file type")
@@ -68,7 +70,6 @@ const FileUploadModal = () => {
    }
 
    const handleSubmitMapping = () => {
-
       const arrayOfValues = mappingToValues.map(mapping => mapping?.value)
       const validation = validateMappingFields(arrayOfValues)
 
@@ -108,7 +109,7 @@ const FileUploadModal = () => {
    useEffect(() => {
       const filteredDropdown = credentialsFields.filter(credentials => {
          return !mappingToValues.find(mapping => {
-            return mapping?.value !== undefined && credentials.value === mapping.value
+            return mapping?.value !== undefined && credentials.value === mapping.value && credentials.value !== "graduatedName"
          })
       })
       setCredentialsFields(filteredDropdown)

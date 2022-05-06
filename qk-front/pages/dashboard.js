@@ -12,7 +12,6 @@ import Topbar from "../components/UI/Topbar/Topbar"
 import Error from "./_error"
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
-
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
 export default function Dashboard({ value, serverErrorMessage }) {
@@ -22,10 +21,9 @@ export default function Dashboard({ value, serverErrorMessage }) {
    const filePrefix = useRecoilValue(filePrefixState)
    const fileName = useRecoilValue(filenameState)
 
-   console.log(openModal)
-
    useEffect(() => {
       if (currentFile) {
+         console.log("or it is here???")
          const removeUploadedFile = async () => {
             const data = JSON.stringify(`${filePrefix}-${fileName}`)
             await axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
