@@ -38,9 +38,10 @@ const FileUploadModal = () => {
     * @throws Shows error response in UI.
     **/
    const uploadFileToClient = async event => {
-      if (event.target.files[0]?.type !== "text/csv") {
-         setFileUploadModalError("Unsupported file type")
-      } else {
+      const fileType = event.target.files[0]?.type
+      if (fileType === "text/csv"
+         || fileType === "application/vnd.ms-excel"
+         || fileType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
          setCurrentFile(event.target.files[0])
          setFileName(event.target.files[0].name)
          const formData = new FormData()
@@ -52,6 +53,8 @@ const FileUploadModal = () => {
          } catch (error) {
             setFileUploadModalError(error?.response?.statusText)
          }
+      } else {
+         setFileUploadModalError("Unsupported file type")
       }
    }
 
@@ -107,25 +110,24 @@ const FileUploadModal = () => {
          formData.append("file", currentFile)
          formData.append("mapping", mapping)
 
-         resetCurrentFile()
-
          axios.post(`${processingUrl}/upload`, formData, { withCredentials: true })
             .then(res => {
                if (res.status === 201) {
                   setUploadSuccess(true)
+                  resetCurrentFile()
+
+                  const data = JSON.stringify(`${filePrefix}-${fileName}`)
+                  axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
+                     .then(res => {
+                        console.log(res)
+                     })
+                     .catch(err => console.log(err, "ERROR ?"))
                }
             })
             .catch(err => {
                console.log(err)
                setFileUploadModalError(err.response.statusText)
             })
-
-         const data = JSON.stringify(`${filePrefix}-${fileName}`)
-         axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
-            .then(res => {
-               console.log(res)
-            })
-            .catch(err => console.log(err, "ERROR ?"))
       } else {
          setFileUploadModalError("Please, choose all required fields")
       }
