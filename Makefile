@@ -95,6 +95,10 @@ shell-pg:
 migrate:
 	docker exec -t $(processing) sh -c "npx prisma migrate dev"
 
+## Make back-up
+backup:
+	docker exec $(db) pg_dump -U $(dev_db_user) -F t qualkey > qk_db-dev-dump-new.sql
+
 ## Restore admin database
 dump:
 	docker cp db.docker/$(dev_db_dump) $(db):/$(dev_dv_volume)
@@ -111,7 +115,3 @@ test:
 ## Run tests in watch mode
 test-watch:
 	docker exec -it qk_processing sh -c "npm run test:watch"
-
-## Make back-up
-backup:
-	docker exec qualkey_db pg_dump -U qualkey -F t qualkey > qk_db-dev-dump-new.sql

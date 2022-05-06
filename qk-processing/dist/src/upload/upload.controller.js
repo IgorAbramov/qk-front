@@ -25,10 +25,10 @@ let UploadController = class UploadController {
     constructor(uploadService) {
         this.uploadService = uploadService;
     }
-    massUpload(user, file, dto) {
+    async massUpload(user, file, dto) {
         if (user.role !== client_1.Role.INSTITUTION_REPRESENTATIVE)
             throw new common_1.ForbiddenException();
-        this.uploadService.processUpload(file.filename, dto.mapping, user);
+        await this.uploadService.processUpload(file.filename, dto.mapping, user);
     }
 };
 __decorate([
@@ -39,7 +39,7 @@ __decorate([
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, dto_1.UploadDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UploadController.prototype, "massUpload", null);
 UploadController = __decorate([
     (0, common_1.Controller)("upload"),

@@ -13,8 +13,7 @@ exports.UploadService = void 0;
 const common_1 = require("@nestjs/common");
 const event_emitter_1 = require("@nestjs/event-emitter");
 const prisma_service_1 = require("../prisma/prisma.service");
-const upload_failed_event_1 = require("./event/upload-failed.event");
-const upload_succeeded_event_1 = require("./event/upload-succeeded.event");
+const event_1 = require("./event");
 const exception_1 = require("./exception");
 let UploadService = class UploadService {
     constructor(prisma, eventEmitter) {
@@ -27,16 +26,15 @@ let UploadService = class UploadService {
                 where: { uuid: uploadedBy.institutionUuid },
                 include: { representatives: true },
             });
-            this.prisma.upload.create({
+            await this.prisma.upload.create({
                 data: {
                     file_url: filename,
                     mapping: mapping,
                     uploadedBy: uploadedBy.uuid,
                     confirmationsRequestedFrom: institution.representatives.map(r => r.uuid).join(";"),
-                    confirmedBy: "",
                 },
             });
-            const uploadSucceededEvent = new upload_succeeded_event_1.UploadSucceededEvent();
+            const uploadSucceededEvent = new event_1.UploadSucceededEvent();
             uploadSucceededEvent.filename = filename;
             uploadSucceededEvent.uploadedBy = uploadedBy.uuid;
             uploadSucceededEvent.representatives = institution.representatives;
@@ -44,11 +42,11 @@ let UploadService = class UploadService {
         }
         catch (e) {
             console.log(e);
-            const uploadFailedEvent = new upload_failed_event_1.UploadFailedEvent();
+            const uploadFailedEvent = new event_1.UploadFailedEvent();
             uploadFailedEvent.filename = filename;
             uploadFailedEvent.uploadedBy = uploadedBy.uuid;
             this.eventEmitter.emit("upload.failed", uploadFailedEvent);
-            throw new exception_1.UploadFailedException();
+            throw new exception_1.UploadFailedException(filename, e.message);
         }
     }
 };

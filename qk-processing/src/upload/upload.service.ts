@@ -3,8 +3,7 @@ import { EventEmitter2 } from "@nestjs/event-emitter";
 import { User } from "@prisma/client";
 
 import { PrismaService } from "../prisma/prisma.service";
-import { UploadFailedEvent } from "./event/upload-failed.event";
-import { UploadSucceededEvent } from "./event/upload-succeeded.event";
+import { UploadSucceededEvent, UploadFailedEvent } from "./event";
 import { UploadFailedException } from "./exception";
 
 @Injectable()
@@ -21,13 +20,12 @@ export class UploadService {
         include: { representatives: true },
       });
 
-      this.prisma.upload.create({
+      await this.prisma.upload.create({
         data: {
           file_url: filename,
           mapping: mapping,
           uploadedBy: uploadedBy.uuid,
           confirmationsRequestedFrom: institution.representatives.map(r => r.uuid).join(";"),
-          confirmedBy: "",
         },
       });
 
@@ -45,7 +43,7 @@ export class UploadService {
       uploadFailedEvent.uploadedBy = uploadedBy.uuid;
       this.eventEmitter.emit("upload.failed", uploadFailedEvent);
 
-      throw new UploadFailedException();
+      throw new UploadFailedException(filename, e.message);
     }
   }
 }

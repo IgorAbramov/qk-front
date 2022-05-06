@@ -16,9 +16,9 @@ export class UploadController {
 
     @Post()
     @UseInterceptors(FileInterceptor("file", multerOptions))
-  massUpload(@GetUser() user: User, @UploadedFile() file: Express.Multer.File, @Body() dto: UploadDto): void {
+  async massUpload(@GetUser() user: User, @UploadedFile() file: Express.Multer.File, @Body() dto: UploadDto): Promise<void> {
     if (user.role !== Role.INSTITUTION_REPRESENTATIVE) throw new ForbiddenException();
 
-    this.uploadService.processUpload(file.filename, dto.mapping, user);
+    await this.uploadService.processUpload(file.filename, dto.mapping, user);
   }
 }
