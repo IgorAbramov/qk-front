@@ -21,9 +21,14 @@ export default function Dashboard({ value, serverErrorMessage }) {
    const filePrefix = useRecoilValue(filePrefixState)
    const fileName = useRecoilValue(filenameState)
 
+   /**
+    * File deletion processing.
+    * @desc When modal is closed deletes just uploaded file from /uploads folder.
+    * @returns Logs success response.
+    * @throws Logs error response.
+    **/
    useEffect(() => {
       if (currentFile) {
-         console.log("or it is here???")
          const removeUploadedFile = async () => {
             const data = JSON.stringify(`${filePrefix}-${fileName}`)
             await axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
