@@ -22,6 +22,8 @@ export default function Dashboard({ value, serverErrorMessage }) {
    const filePrefix = useRecoilValue(filePrefixState)
    const fileName = useRecoilValue(filenameState)
 
+   console.log(openModal)
+
    useEffect(() => {
       if (currentFile) {
          const removeUploadedFile = async () => {

@@ -79,7 +79,12 @@
 
 .sidebarMin {
   justify-content: flex-start;
-  padding-left: 0;
+  margin-bottom: 2.4rem;
+  padding: 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   span {
     color: $color-secondary;
