@@ -111,22 +111,23 @@ const FileUploadModal = () => {
          formData.append("mapping", mapping)
 
          axios.post(`${processingUrl}/upload`, formData, { withCredentials: true })
-            .then(res => {
-               if (res.status === 201) {
-                  setUploadSuccess(true)
+            .then(response => {
+               if (response.status === 201) {
                   resetCurrentFile()
 
                   const data = JSON.stringify(`${filePrefix}-${fileName}`)
                   axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
-                     .then(res => {
-                        console.log(res)
+                     .then(response => {
+                        if (response.data === "OK") {
+                           setUploadSuccess(true)
+                        }
                      })
-                     .catch(err => console.log(err, "ERROR ?"))
+                     .catch(error => setFileUploadModalError(error.response.statusText))
                }
             })
-            .catch(err => {
-               console.log(err)
-               setFileUploadModalError(err.response.statusText)
+            .catch(error => {
+               console.log(error)
+               setFileUploadModalError(error.response.statusText)
             })
       } else {
          setFileUploadModalError("Please, choose all required fields")
