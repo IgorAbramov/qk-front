@@ -1,8 +1,10 @@
+import { useEffect } from "react"
+
 import axios from "axios"
 import getConfig from "next/config"
 import { useRecoilValue } from "recoil"
 
-import { uploadModalState } from "../atoms"
+import { currentFileState, filenameState, filePrefixState, uploadModalState } from "../atoms"
 import Heading from "../components/UI/Heading/Heading"
 import FileUploadModal from "../components/UI/Modal/FileUploadModal/FileUploadModal"
 import InstitutionSidebar from "../components/UI/Sidebar/InstitutionSidebar/InstitutionSidebar"
@@ -16,6 +18,28 @@ const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 export default function Dashboard({ value, serverErrorMessage }) {
    
    const openModal = useRecoilValue(uploadModalState)
+   const currentFile = useRecoilValue(currentFileState)
+   const filePrefix = useRecoilValue(filePrefixState)
+   const fileName = useRecoilValue(filenameState)
+
+   console.log(openModal)
+   console.log(currentFile)
+
+   useEffect(() => {
+      if (currentFile) {
+         const removeUploadedFile = async () => {
+            const data = JSON.stringify(`${filePrefix}-${fileName}`)
+            await axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
+         }
+         removeUploadedFile()
+            .then(res => {
+               console.log(res)
+            })
+            .catch(err => {
+               console.log(err)
+            })
+      }
+   }, [openModal])
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 

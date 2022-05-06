@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import { useRecoilState, useResetRecoilState } from "recoil"
 
-import { credentialsState, dropdownSelectionListenerState, fileUploadErrorState, uploadModalState } from "../../../../atoms"
+import { credentialsState, currentFileState, dropdownSelectionListenerState, filenameState, filePrefixState, fileUploadErrorState, uploadModalState } from "../../../../atoms"
+import { validateMappingFields } from "../../../../utils"
 import Button from "../../Button/Button"
 import FileUploadDropdown from "../../Dropdown/FileUploadDropdown/FileUploadDropdown"
 import Heading from "../../Heading/Heading"
@@ -14,19 +15,24 @@ import styles from "./FileUploadModal.module.scss"
 const FileUploadModal = () => {
 
    const resetCredentialsFields = useResetRecoilState(credentialsState)
+   const resetCurrentFile = useResetRecoilState(currentFileState)
+   const resetFilePrefix = useResetRecoilState(filePrefixState)
+   const resetFileName = useResetRecoilState(filenameState)
+
+
    const [credentialsFields, setCredentialsFields] = useRecoilState(credentialsState)
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
-   const [fileUploadError, setFileUploadError] = useRecoilState(fileUploadErrorState)
+   const [fileUploadModalError, setFileUploadModalError] = useRecoilState(fileUploadErrorState)
    const [dropdownSelectionListener, setDropdownSelectionListener] = useRecoilState(dropdownSelectionListenerState)
-   const [currentFile, setCurrentFile] = useState(null)
-   const [filePrefix, setFilePrefix] = useState("")
-   const [fileName, setFileName] = useState(null)
+   const [currentFile, setCurrentFile] = useRecoilState(currentFileState)
+   const [filePrefix, setFilePrefix] = useRecoilState(filePrefixState)
+   const [fileName, setFileName] = useRecoilState(filenameState)
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
    const [mappingToValues, setMappingToValues] = useState([])
 
    const uploadFileToClient = async e => {
       if (e.target.files[0]?.type !== "text/csv") {
-         setFileUploadError("Unsupported file type")
+         setFileUploadModalError("Unsupported file type")
       } else {
          setCurrentFile(e.target.files[0])
          setFileName(e.target.files[0].name)
@@ -37,7 +43,7 @@ const FileUploadModal = () => {
             setParsedValuesFromUpload(response.data.file)
             setFilePrefix(response.data.prefix)
          } catch (error) {
-            setFileUploadError(error?.response?.statusText)
+            setFileUploadModalError(error?.response?.statusText)
          }
       }
    }
@@ -64,25 +70,32 @@ const FileUploadModal = () => {
 
    const handleSubmitMapping = () => {
 
-      //TODO: Validation to choose minimum for 8 our fields.
+      const arrayOfValues = mappingToValues.map(mapping => mapping?.value)
+      const validation = validateMappingFields(arrayOfValues)
 
-      const mapping = mappingToValues.map(mapping => {
-         return mapping?.value}).join(",")
-      const blob = new Blob([mapping], { type: "text/plain" })
-      const formData = new FormData()
-      formData.append("parsedFile", currentFile)
-      formData.append("data", blob)
-      console.log(mapping)
-      console.log([...formData])
+      if (!validation) { //TODO: Change to true.
+         setFileUploadModalError("")
+         const mapping = mappingToValues.map(mapping => {
+            return mapping?.value
+         }).join(",")
+         const blob = new Blob([mapping], { type: "text/plain" })
+         const formData = new FormData()
+         formData.append("parsedFile", currentFile)
+         formData.append("data", blob)
+         console.log(mapping)
+         console.log([...formData])
 
-      // axios.post(`${processingUrl}/uploads`, formData)
-      //    .then(res => console.log(res))
-      //    .catch(err => console.log(err))
-      
-      const data = JSON.stringify(`${filePrefix}-${fileName}`)
-      axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
-         .then(res => console.log(res))
-         .catch(err => console.log(err))
+         // axios.post(`${processingUrl}/uploads`, formData)
+         //    .then(res => console.log(res))
+         //    .catch(err => console.log(err))
+
+         const data = JSON.stringify(`${filePrefix}-${fileName}`)
+         axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+      } else {
+         setFileUploadModalError("Please, choose all required fields")
+      }
    }
 
    useEffect(() => {
@@ -99,7 +112,7 @@ const FileUploadModal = () => {
    }, [dropdownSelectionListener.length])
 
    useEffect(() => {
-      setFileUploadError("")
+      setFileUploadModalError("")
    }, [openModal, parsedValuesFromUpload])
 
    const outsideClickRef = useRef()
@@ -112,6 +125,10 @@ const FileUploadModal = () => {
       document.addEventListener("click", checkIfClickedOutside)
       return () => {
          document.removeEventListener("click", checkIfClickedOutside)
+
+         resetCurrentFile()
+         resetFilePrefix()
+         resetFileName()
       }
    }, [openModal])
 
@@ -139,7 +156,7 @@ const FileUploadModal = () => {
                   <Input fileUpload fileName={fileName} inputName="csvUploader"
                          isFileUploaded={!!parsedValuesFromUpload.length}
                          onChange={uploadFileToClient}/>
-                  {fileUploadError && <Text error>{fileUploadError}</Text>}
+                  {fileUploadModalError && <Text error>{fileUploadModalError}</Text>}
                </div>
                {
                   !!parsedValuesFromUpload.length
