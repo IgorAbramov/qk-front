@@ -33,7 +33,7 @@ export default function Dashboard({ value, serverErrorMessage }) {
 
 export const getServerSideProps = async ({ req }) => {
    try {
-      const response = await axios.get(`${apiUrl}/credentials`, {
+      const response = await axios.get(`${apiUrl}/credential`, {
          withCredentials: true,
          headers: { Cookie: req.headers.cookie || "" }
       })
