@@ -19,7 +19,6 @@ const FileUploadModal = () => {
    const resetFilePrefix = useResetRecoilState(filePrefixState)
    const resetFileName = useResetRecoilState(filenameState)
 
-
    const [credentialsFields, setCredentialsFields] = useRecoilState(credentialsState)
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
    const [fileUploadModalError, setFileUploadModalError] = useRecoilState(fileUploadErrorState)
@@ -73,7 +72,7 @@ const FileUploadModal = () => {
       const arrayOfValues = mappingToValues.map(mapping => mapping?.value)
       const validation = validateMappingFields(arrayOfValues)
 
-      if (!validation) { //TODO: Change to true.
+      if (validation) {
          setFileUploadModalError("")
          const mapping = mappingToValues.map(mapping => {
             return mapping?.value
@@ -85,13 +84,17 @@ const FileUploadModal = () => {
          console.log(mapping)
          console.log([...formData])
 
+         resetCurrentFile()
+
          // axios.post(`${processingUrl}/uploads`, formData)
          //    .then(res => console.log(res))
          //    .catch(err => console.log(err))
 
          const data = JSON.stringify(`${filePrefix}-${fileName}`)
          axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
-            .then(res => console.log(res))
+            .then(res => {
+               console.log(res)
+            })
             .catch(err => console.log(err))
       } else {
          setFileUploadModalError("Please, choose all required fields")
