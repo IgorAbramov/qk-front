@@ -12,7 +12,6 @@ export const multerConfig = { dest: process.env.UPLOAD_LOCATION };
  */
 export const multerOptions = {
   fileFilter: (req: any, file: any, cb: any):void => {
-    console.log(file);
     if (file.mimetype.match(/(text\/csv|application\/vnd.ms-excel|application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet)/g)) {
       // Allow storage of file
       cb(null, true);
