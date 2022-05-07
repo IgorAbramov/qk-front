@@ -6,7 +6,10 @@ import { diskStorage } from "multer";
 import { v4 as uuid } from "uuid";
 
 export const multerConfig = { dest: process.env.UPLOAD_LOCATION };
-
+/**
+ * This is a config for saving the mass-upload file to storage
+ * TODO: Save to S3
+ */
 export const multerOptions = {
   fileFilter: (req: any, file: any, cb: any):void => {
     console.log(file);
