@@ -45,12 +45,12 @@
 
 .top {
   h2 {
-    margin-bottom: 1.6rem;
+    margin-bottom: 2.5rem;
     text-align: center;
 
     + p {
       margin-bottom: 2.5rem;
-      text-align: center;
+      text-align: center !important;
     }
   }
 
@@ -75,7 +75,7 @@
 .middle {
   border: 1px solid $color-additional-medium;
   border-radius: 1.5rem;
-  height: 45%;
+  height: 55%;
   overflow: hidden;
   overflow-y: scroll;
   padding: 2rem 4rem;
