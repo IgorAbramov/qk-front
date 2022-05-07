@@ -56,6 +56,9 @@
 
   input,
   input + label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     margin: 0 auto 4rem;
     width: 40%;
 
