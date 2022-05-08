@@ -14,7 +14,7 @@ type CreateUser = {
     createdAt: Date
 }
 
-describe("AuthService Unit Test", () => {
+describe("AuthService Unit", () => {
   let service: AuthService;
 
   const mockCreateUser: CreateUser = {
