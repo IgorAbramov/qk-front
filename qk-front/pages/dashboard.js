@@ -9,12 +9,14 @@ import Heading from "../components/UI/Heading/Heading"
 import FileUploadModal from "../components/UI/Modal/FileUploadModal/FileUploadModal"
 import InstitutionSidebar from "../components/UI/Sidebar/InstitutionSidebar/InstitutionSidebar"
 import Topbar from "../components/UI/Topbar/Topbar"
+import { userRoles } from "../utils"
 import Error from "./_error"
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
-export default function Dashboard({ value, serverErrorMessage }) {
+export default function Dashboard({ data, serverErrorMessage }) {
+   const { role, value } = data
    
    const openModal = useRecoilValue(uploadModalState)
    const currentFile = useRecoilValue(currentFileState)
@@ -44,8 +46,8 @@ export default function Dashboard({ value, serverErrorMessage }) {
    }, [openModal])
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
-
-   return (
+   
+   if (role === userRoles.institution) return (
       <div className="main__wrapper">
          <InstitutionSidebar/>
          <Topbar/>
@@ -55,6 +57,10 @@ export default function Dashboard({ value, serverErrorMessage }) {
          {openModal && <FileUploadModal/>}
       </div>
    )
+
+   if (role === userRoles.student) return (
+      <Heading blue h1>{value}</Heading>
+   )
 }
 
 export const getServerSideProps = async ({ req }) => {
@@ -63,8 +69,8 @@ export const getServerSideProps = async ({ req }) => {
          withCredentials: true,
          headers: { Cookie: req.headers.cookie || "" }
       })
-      const { data: value } = response
-      return { props: { value } }
+      const { data } = response
+      return { props: { data } }
    } catch (error) {
       return { props: { serverErrorMessage: error.response.statusText } }
    }
