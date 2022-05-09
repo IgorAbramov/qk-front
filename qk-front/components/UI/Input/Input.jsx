@@ -21,6 +21,7 @@ const Input = ({
    checkboxText,
    fileName,
    isFileUploaded,
+   search,
    ...otherProps
 }) => {
 
@@ -82,7 +83,8 @@ const Input = ({
 
    if (fileUpload) return (
       <>
-         <input {...otherProps} className={`${styles.fileUpload} ${isFileUploaded ? styles.uploaded : ""}`} id={inputName}
+         <input {...otherProps} className={`${styles.fileUpload} ${isFileUploaded ? styles.uploaded : ""}`}
+                id={inputName}
                 name={inputName}
                 type="file"/>
          <label htmlFor={inputName}>
@@ -100,6 +102,13 @@ const Input = ({
             <Text white>{fileName ? fileName : "Click to upload a file"}</Text>
          </label>
       </>
+   )
+
+   if (search) return (
+      <input {...otherProps} className={`${styles.input} ${styles.search}`}
+             name={inputName}
+             placeholder="Search"
+             type="text"/>
    )
 }
 
@@ -119,5 +128,6 @@ Input.propTypes = {
    hidePassword: PropTypes.func,
    checkboxText: PropTypes.string,
    fileName: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-   isFileUploaded: PropTypes.bool
+   isFileUploaded: PropTypes.bool,
+   search: PropTypes.bool
 }

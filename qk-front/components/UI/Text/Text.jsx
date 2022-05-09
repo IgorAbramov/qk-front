@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import styles from "./Text.module.scss"
 
-const Text = ({ blue, grey, white, small, medium, underline, link, error, success, bold, sidebar, sidebarMin, active, modal, children, ...otherProps }) => {
+const Text = ({ blue, grey, white, small, medium, large, underline, link, error, success, bold, sidebar, sidebarMin, active, search, children, ...otherProps }) => {
    if (link) return (
       <Link href={link}>
          <a className={`${styles.text} ${styles.link}
@@ -12,12 +12,13 @@ const Text = ({ blue, grey, white, small, medium, underline, link, error, succes
          ${white ? styles.white : ""}
          ${small ? styles.small : ""}
          ${medium ? styles.medium : ""}
+         ${large ? styles.large : ""}
          ${underline ? styles.underline : ""}
          ${bold ? styles.bold : ""}
          ${sidebar ? styles.sidebar : ""}
          ${sidebarMin ? styles.sidebarMin : ""}
          ${active ? styles.active : ""}
-         ${modal ? styles.modal : ""}`}>
+         ${search ? styles.search : ""}`}>
             {children}
          </a>
       </Link>
@@ -31,6 +32,7 @@ const Text = ({ blue, grey, white, small, medium, underline, link, error, succes
       ${white ? styles.white : ""}
       ${small ? styles.small : ""}
       ${medium ? styles.medium : ""}
+      ${large ? styles.large : ""}
       ${underline ? styles.underline : ""}
       ${error ? styles.error + " form-error" : ""}
       ${success ? styles.success + " form-error" : ""}
@@ -38,7 +40,7 @@ const Text = ({ blue, grey, white, small, medium, underline, link, error, succes
       ${sidebar ? styles.sidebar : ""}
       ${sidebarMin ? styles.sidebarMin : ""}
       ${active ? styles.active : ""}
-      ${modal ? styles.modal : ""}`}>
+      ${search ? styles.search : ""}`}>
          {children}
       </p>
    )
@@ -52,6 +54,7 @@ Text.propTypes = {
    white: PropTypes.bool,
    small: PropTypes.bool,
    medium: PropTypes.bool,
+   large: PropTypes.bool,
    underline: PropTypes.bool,
    link: PropTypes.string,
    error: PropTypes.bool,
@@ -60,6 +63,6 @@ Text.propTypes = {
    sidebar: PropTypes.bool,
    sidebarMin: PropTypes.bool,
    active: PropTypes.bool,
-   modal: PropTypes.bool,
+   search: PropTypes.bool,
    children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired
 }

@@ -238,7 +238,7 @@ const FileUploadModal = () => {
                <div className={styles.wrapperInner} style={{ height: parsedValuesFromUpload.length ? "100%" : "" }}>
                   <div className={styles.top}>
                      <Heading blue h2 modal>Multi-Upload</Heading>
-                     {fileUploadModalError && <Text error modal>{fileUploadModalError}</Text>}
+                     {fileUploadModalError && <Text error large>{fileUploadModalError}</Text>}
                      <Input fileUpload fileName={fileName} inputName="csvUploader"
                             isFileUploaded={!!parsedValuesFromUpload.length}
                             onChange={uploadFileToClient}/>

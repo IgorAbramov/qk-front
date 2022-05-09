@@ -109,3 +109,13 @@
     }
   }
 }
+
+.search {
+  background: url("../../../assets/images/search.svg") no-repeat 10px 13px;
+  border-color: $color-additional;
+  padding-left: 4rem;
+
+  &::placeholder {
+    color: $color-additional;
+  }
+}

@@ -78,8 +78,8 @@
 
   span {
     color: $color-additional-medium;
-    width: 50%;
     text-align: center;
+    width: 50%;
   }
 }
 
@@ -94,8 +94,8 @@
 
   span {
     color: $color-additional-light;
-    width: initial;
     text-align: left;
+    width: initial;
   }
 
   svg {
@@ -116,6 +116,15 @@
   }
 }
 
-.modal {
+.large {
   font-size: 2.3rem;
+}
+
+.search {
+  color: $color-primary-light;
+  font-weight: $font-weight-md;
+
+  span {
+    color: $color-primary;
+  }
 }

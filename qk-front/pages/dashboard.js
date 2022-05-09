@@ -5,9 +5,11 @@ import getConfig from "next/config"
 import { useRecoilValue } from "recoil"
 
 import { currentFileState, filenameState, filePrefixState, uploadModalState } from "../atoms"
+import InstitutionDashboard from "../components/Institution/InstitutionDashboard/InstitutionDashboard"
 import Heading from "../components/UI/Heading/Heading"
 import FileUploadModal from "../components/UI/Modal/FileUploadModal/FileUploadModal"
 import InstitutionSidebar from "../components/UI/Sidebar/InstitutionSidebar/InstitutionSidebar"
+import Text from "../components/UI/Text/Text"
 import Topbar from "../components/UI/Topbar/Topbar"
 import { userRoles } from "../utils"
 import Error from "./_error"
@@ -52,7 +54,9 @@ export default function Dashboard({ data, serverErrorMessage }) {
          <InstitutionSidebar/>
          <Topbar/>
          <div className="dashboard">
-            <Heading blue h1 xxl>{value}</Heading>
+            <Heading blue h1 xxl>University Dashboard</Heading>
+            <Text large>browse all credential records</Text>
+            <InstitutionDashboard/>
          </div>
          {openModal && <FileUploadModal/>}
       </div>
@@ -61,6 +65,8 @@ export default function Dashboard({ data, serverErrorMessage }) {
    if (role === userRoles.student) return (
       <Heading blue h1>{value}</Heading>
    )
+
+   else return null //TODO: Probably redirect user to /
 }
 
 export const getServerSideProps = async ({ req }) => {
