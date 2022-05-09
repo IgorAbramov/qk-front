@@ -30,7 +30,8 @@ export class UploadService {
 
       const upload = await this.prisma.upload.create({
         data: {
-          file_url: filename,
+          uuid: filename.split('.')[0],
+          filename: filename,
           mapping: mapping,
           uploadedBy: uploadedBy.uuid,
           confirmationsRequestedFrom: institution.representatives.map(r => r.uuid).join(";"),
