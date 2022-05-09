@@ -33,7 +33,7 @@ const InstitutionSidebar = () => {
                            stroke="white" strokeLinecap="round"
                            strokeLinejoin="round" strokeWidth="1.5"/>
                      </svg>
-                     <span>Overview</span>
+                     <span>University Dashboard</span>
                   </Text>
                   <Text bold sidebar active={openModal}
                         onClick={() => setOpenModal(true)}>
