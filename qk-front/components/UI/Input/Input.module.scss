@@ -112,7 +112,8 @@
 
 .search {
   background: url("../../../assets/images/search.svg") no-repeat 10px 13px;
-  border-color: $color-additional;
+  border: 1px solid $color-additional;
+  border-radius: 15px;
   padding-left: 4rem;
 
   &::placeholder {

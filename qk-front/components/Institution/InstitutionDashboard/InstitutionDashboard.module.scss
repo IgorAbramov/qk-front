@@ -1,6 +1,14 @@
+@import "assets/styles/helpers/variables";
+@import "assets/styles/helpers/mixins";
+
 .searchWrapper {
   align-items: center;
-  display: flex;
   justify-content: space-between;
+  display: flex;
   margin-bottom: 4rem;
+}
+
+.headerWrapper {
+  padding: 0 2.5rem;
+  width: calc(100% - 2.5rem - 2.5rem);
 }
