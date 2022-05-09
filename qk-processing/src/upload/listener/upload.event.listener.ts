@@ -35,7 +35,17 @@ export class UploadEventListener {
     Logger.debug(`upload SUCCEEDED ${event.upload.uuid}`);
 
     // send notifications to institution representatives
-    // skip this part and change status right away
+
+    // skip this part and approve right away
+    const uploadApprovedEvent = new UploadApprovedEvent();
+    uploadApprovedEvent.upload = event.upload;
+    this.eventEmitter.emit("upload.approved", uploadApprovedEvent);
+  }
+
+  @OnEvent("upload.approved")
+  async handleUploadApprovedEvent(event: UploadApprovedEvent): Promise<void> {
+    Logger.debug(`upload APPROVED ${event.upload.uuid}`);
+
     await this.prisma.upload.update({
       data: {
         status: UploadStatus.APPROVED,
@@ -45,15 +55,6 @@ export class UploadEventListener {
       },
     });
     Logger.debug(`upload status changed to APPROVED ${event.upload.uuid}`);
-
-    const uploadApprovedEvent = new UploadApprovedEvent();
-    uploadApprovedEvent.upload = event.upload;
-    this.eventEmitter.emit("upload.approved", uploadApprovedEvent);
-  }
-
-  @OnEvent("upload.approved")
-  async handleUploadApprovedEvent(event: UploadApprovedEvent): Promise<void> {
-    Logger.debug(`upload APPROVED ${event.upload.uuid}`);
 
     // load file
 
