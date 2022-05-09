@@ -26,17 +26,18 @@
 }
 
 .imageWrapper {
-  height: 104px;
+  height: 113px;
   margin-bottom: 4rem;
   position: relative;
-  width: 150px;
+  width: 165px;
 }
 
 .hr {
-  background-color: $color-additional-medium;
+  background-color: $color-additional-light;
   border: none;
   height: 1px;
   mix-blend-mode: soft-light;
+  opacity: .4;
   width: calc(#{$sidebar-width-xxl - 4rem});
 }
 
