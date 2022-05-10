@@ -119,4 +119,8 @@
   &::placeholder {
     color: $color-additional;
   }
+
+  &:focus {
+    border: 1px solid $color-highlight;
+  }
 }

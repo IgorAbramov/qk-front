@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import logo from "../../assets/images/qk-logo-xl.png"
+import logo from "../../assets/images/qk-logo-text.svg"
 import AuthForms from "../../components/AuthForms/AuthForms"
 import Heading from "../../components/UI/Heading/Heading"
 

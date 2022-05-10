@@ -2,10 +2,11 @@
 @import "assets/styles/helpers/mixins";
 
 .detailsItem {
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   z-index: 999;
+
   > p {
     margin-bottom: 2.5rem;
   }
