@@ -38,7 +38,7 @@ const InstitutionDashboardItem = ({ data }) => {
             </svg>
             <div className={styles.item}>
                <Text bold>{student}</Text>
-               <Text>{`${diploma.slice(0, 25).trim()}...`}</Text>
+               <Text>{`${diploma.slice(0, 27).trim()}...`}</Text>
             </div>
          </div>
          <div className={`${styles.status} ${validateStatus()}`}>
