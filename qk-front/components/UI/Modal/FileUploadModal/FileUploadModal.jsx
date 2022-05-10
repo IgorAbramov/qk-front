@@ -130,7 +130,7 @@ const FileUploadModal = () => {
             })
             .catch(error => {
                console.log(error)
-               setFileUploadModalError(error.response.statusText)
+               setFileUploadModalErrorButton(error.response.statusText)
             })
       } else {
          setFileUploadModalErrorButton("You must match the required fields first!")
