@@ -105,7 +105,7 @@ const FileUploadModal = () => {
       const arrayOfValues = mappingToValues.map(mapping => mapping?.value)
       const validation = validateMappingFields(arrayOfValues)
 
-      if (validation) {
+      if (!validation) {
          setFileUploadModalError("")
          setFileUploadModalErrorButton("")
          const mapping = mappingToValues.map(mapping => mapping?.value).join(",")
@@ -130,7 +130,7 @@ const FileUploadModal = () => {
             })
             .catch(error => {
                console.log(error)
-               setFileUploadModalErrorButton(error.response.statusText)
+               setFileUploadModalErrorButton(error.response.statusText || error.message)
             })
       } else {
          setFileUploadModalErrorButton("You must match the required fields first!")
