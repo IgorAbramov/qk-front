@@ -1,21 +1,69 @@
 @import "assets/styles/helpers/variables";
 @import "assets/styles/helpers/mixins";
 
+.activated {
+  p {
+    color: $color-success;
+  }
+
+  path {
+    stroke: $color-success;
+  }
+}
+
+.uploaded {
+  p {
+    color: $color-pending;
+  }
+
+  path {
+    stroke: $color-pending;
+  }
+}
+
+.withdrawn {
+  p {
+    color: $color-error;
+  }
+
+  path {
+    stroke: $color-error;
+  }
+}
+
+.expired {
+  p {
+    color: $color-additional-medium-dark;
+  }
+
+  path {
+    stroke: $color-additional-medium-dark;
+  }
+}
+
 .wrapper {
-  display: grid;
-  grid-template-columns: 1.1fr 1.5fr .7fr .7fr .5fr;
+  background-color: $color-secondary;
+  margin-bottom: 1.6rem;
+}
+
+.left,
+.right {
+  > p {
+    margin: 2rem 0 2.5rem;
+  }
+}
+
+.credentialWrapper {
   align-items: center;
-  justify-items: stretch;
-  //display: flex;
-  //align-items: center;
-  //justify-content: space-between;
   background-color: $color-secondary;
   border: 1px solid $color-additional-medium;
-  border-radius: 15px;
-  margin-bottom: 1.6rem;
+  display: grid;
+  grid-template-columns: 1.1fr 1.5fr 0.7fr 0.85fr 0.5fr;
+  height: 9rem;
+  justify-items: stretch;
   padding: 0 2.5rem;
   width: calc(100% - 2.5rem - 2.5rem);
-  height: 9rem;
+
   > p:nth-child(4) {
     justify-self: center;
   }
@@ -34,55 +82,49 @@
 }
 
 .status {
-  display: flex;
   align-items: center;
-  gap: .8rem;
-}
-
-.activated {
-  p {
-    color: $color-success;
-  }
-  path {
-    stroke: $color-success;
-  }
-}
-
-.uploaded {
-  p {
-    color: $color-pending;
-  }
-  path {
-    stroke: $color-pending;
-  }
-}
-
-.withdrawn {
-  p {
-    color: $color-error;
-  }
-  path {
-    stroke: $color-error;
-  }
-}
-
-.expired {
-  p {
-    color: $color-additional-medium-dark;
-  }
-  path {
-    stroke: $color-additional-medium-dark;
-  }
+  display: flex;
+  gap: 0.8rem;
 }
 
 .actions {
-  display: flex;
   align-items: center;
-  gap: 3.2rem;
-  padding-left: 2.5rem;
   border-left: 1px solid $color-additional-medium;
+  display: flex;
+  gap: 3.2rem;
   height: 100%;
+  padding-left: 2.5rem;
+
   svg {
     cursor: pointer;
   }
+}
+
+.history {
+  border: 1px solid $color-additional-medium;
+  border-top: none;
+  display: grid;
+  grid-template-columns: 1fr 0.7fr;
+  height: 30rem;
+  padding: 0 3rem;
+  width: calc(100% - 3rem - 3rem);
+}
+
+.left {
+  padding-right: 3rem;
+}
+
+.historyItemWrapper {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 20rem;
+}
+
+.right {
+  border-left: 1px solid $color-additional-medium;
+  padding-left: 3rem;
+}
+
+.rightWrapper {
+  position: relative;
 }

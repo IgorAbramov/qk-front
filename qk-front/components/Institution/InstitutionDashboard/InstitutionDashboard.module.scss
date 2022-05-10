@@ -3,12 +3,18 @@
 
 .searchWrapper {
   align-items: center;
-  justify-content: space-between;
   display: flex;
+  justify-content: space-between;
   margin-bottom: 4rem;
 }
 
 .headerWrapper {
   padding: 0 2.5rem;
   width: calc(100% - 2.5rem - 2.5rem);
+}
+
+.contentWrapper {
+  height: 54rem; // Height of 5 elements including border, height, an margin bottom.
+  overflow: hidden;
+  overflow-y: scroll;
 }

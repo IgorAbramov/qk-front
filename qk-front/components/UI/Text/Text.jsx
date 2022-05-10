@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import styles from "./Text.module.scss"
 
-const Text = ({ blue, grey, white, small, medium, large, underline, link, error, success, bold, sidebar, sidebarMin, active, search, children, ...otherProps }) => {
+const Text = ({ blue, grey, white, small, medium, large, underline, link, error, success, bold, semiBold, sidebar, sidebarMin, active, blackSpan, children, ...otherProps }) => {
    if (link) return (
       <Link href={link}>
          <a className={`${styles.text} ${styles.link}
@@ -15,10 +15,11 @@ const Text = ({ blue, grey, white, small, medium, large, underline, link, error,
          ${large ? styles.large : ""}
          ${underline ? styles.underline : ""}
          ${bold ? styles.bold : ""}
+         ${semiBold ? styles.semiBold : ""}
          ${sidebar ? styles.sidebar : ""}
          ${sidebarMin ? styles.sidebarMin : ""}
          ${active ? styles.active : ""}
-         ${search ? styles.search : ""}`}>
+         ${blackSpan ? styles.blackSpan : ""}`}>
             {children}
          </a>
       </Link>
@@ -37,10 +38,11 @@ const Text = ({ blue, grey, white, small, medium, large, underline, link, error,
       ${error ? styles.error + " form-error" : ""}
       ${success ? styles.success + " form-error" : ""}
       ${bold ? styles.bold : ""}
+      ${semiBold ? styles.semiBold : ""}
       ${sidebar ? styles.sidebar : ""}
       ${sidebarMin ? styles.sidebarMin : ""}
       ${active ? styles.active : ""}
-      ${search ? styles.search : ""}`}>
+      ${blackSpan ? styles.blackSpan : ""}`}>
          {children}
       </p>
    )
@@ -60,9 +62,10 @@ Text.propTypes = {
    error: PropTypes.bool,
    success: PropTypes.bool,
    bold: PropTypes.bool,
+   semiBold: PropTypes.bool,
    sidebar: PropTypes.bool,
    sidebarMin: PropTypes.bool,
    active: PropTypes.bool,
-   search: PropTypes.bool,
+   blackSpan: PropTypes.bool,
    children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired
 }

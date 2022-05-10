@@ -10,7 +10,7 @@ const mockData = [
       student: "Andrew Feinstein",
       diploma: "BA Computer Science and Engineering",
       status: "Uploaded",
-      lastModified: 1652112363,
+      lastModified: 1652112363
    },
    {
       auditName: "L. Wade",
@@ -18,7 +18,7 @@ const mockData = [
       student: "Brian Herrera",
       diploma: "MA International Relations",
       status: "Activated",
-      lastModified: 1652112363,
+      lastModified: 1652112363
    },
    {
       auditName: "L. Wade",
@@ -26,7 +26,7 @@ const mockData = [
       student: "Isabelle Portre",
       diploma: "BA Computer Science and Engineering",
       status: "Withdrawn",
-      lastModified: 1652112363,
+      lastModified: 1652112363
    },
    {
       auditName: "L. Wade",
@@ -34,15 +34,47 @@ const mockData = [
       student: "Adrian Portre",
       diploma: "MSc Data Science in Business",
       status: "Expired",
-      lastModified: 1652112363,
+      lastModified: 1652112363
    },
+   {
+      auditName: "L. Wade",
+      auditFrom: "University Registrar",
+      student: "Adrian Gibbs",
+      diploma: "MSc Data Science in Business",
+      status: "Expired",
+      lastModified: 1652112363
+   },
+   {
+      auditName: "L. Wade",
+      auditFrom: "University Registrar",
+      student: "John Black",
+      diploma: "MSc Data Science in Business",
+      status: "Expired",
+      lastModified: 1652112363
+   },
+   {
+      auditName: "L. Wade",
+      auditFrom: "University Registrar",
+      student: "Joseph White",
+      diploma: "MSc Data Science in Business",
+      status: "Expired",
+      lastModified: 1652112363
+   },
+   {
+      auditName: "L. Wade",
+      auditFrom: "University Registrar",
+      student: "Sergio Aguero",
+      diploma: "MSc Data Science in Business",
+      status: "Expired",
+      lastModified: 1652112363
+   }
 ]
 
 const InstitutionDashboard = () => {
    return (
       <>
          <div className={styles.searchWrapper}>
-            <Text search>Showing <span>5</span> from <span>5</span> results</Text>
+            <Text blackSpan semiBold>Showing <span>5</span> from <span>5</span> results</Text>
             <Input search/>
          </div>
          {/*<div className={styles.headerWrapper}>*/}
@@ -52,9 +84,11 @@ const InstitutionDashboard = () => {
          {/*   <Text grey>Last Modified</Text>*/}
          {/*   <Text grey>Actions</Text>*/}
          {/*/!*</div>*!/ TODO: How to correctly display them CSS?*/}
-         {mockData.map(data => (
-            <InstitutionDashboardItem key={data.student} data={data}/>
-         ))}
+         <div className={styles.contentWrapper}>
+            {mockData.map(data => (
+               <InstitutionDashboardItem key={data.student} data={data}/>
+            ))}
+         </div>
       </>
    )
 }
