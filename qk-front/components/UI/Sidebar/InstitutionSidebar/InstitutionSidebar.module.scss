@@ -10,8 +10,13 @@
   padding: 4rem 0 8rem;
   position: fixed;
   width: $sidebar-width-initial;
+
   @include breakpoint-max($bp-screen-xxl) {
     width: $sidebar-width-xxl;
+  }
+
+  @include breakpoint-max($bp-screen-lg) {
+    display: none;
   }
 }
 

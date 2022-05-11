@@ -17,6 +17,7 @@
   height: 62%;
   overflow: hidden;
   overflow-y: scroll;
+
   p {
     @include breakpoint-max($bp-screen-xl) {
       font-size: 1.45rem;

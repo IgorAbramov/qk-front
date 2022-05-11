@@ -31,42 +31,44 @@ const Topbar = () => {
 
    return (
       <div className={styles.topbar}>
-         <div className={styles.imageWrapperNotification}>
-            <Image alt="bell" layout="fill"
-                   src={bell}/>
-            <span className={styles.notification}>3</span>
-         </div>
-         <div className={styles.imageWrapperLogo}>
-            <Image alt="uni" className={styles.logo} layout="fill"
-                   objectFit={"contain"}
-                   src={uniLogo}/>
-         </div>
-         <div className={styles.userWrapper} onClick={handleShowMenu}>
-            <div className={styles.imageWrapperUser}>
-               <Image alt="user" className={styles.user} layout="fill"
-                      src={avatar}/>
+         <div className={styles.right}>
+            <div className={styles.imageWrapperNotification}>
+               <Image alt="bell" layout="fill" quality={100}
+                      src={bell}/>
+               <span className={styles.notification}>3</span>
             </div>
-            <Text semiBold>John Reed</Text>
-            <IconHideDropdownBig/>
-            <div ref={outsideClickRef} className={styles.menu} style={{ display: showMenu ? "block" : "none" }}>
-               <ul>
-                  <li>
-                     <IconAcademicCap/>
-                     <Text>Dashboard</Text>
-                  </li>
-                  <li>
-                     <IconSettings/>
-                     <Text>Settings</Text>
-                  </li>
-                  <li>
-                     <IconMessage/>
-                     <Text>Give feedback</Text>
-                  </li>
-                  <li>
-                     <IconLogout/>
-                     <Text>Log out</Text>
-                  </li>
-               </ul>
+            <div className={styles.imageWrapperLogo}>
+               <Image alt="uni" className={styles.logo} layout="fill"
+                      objectFit={"contain"}
+                      quality={100} src={uniLogo}/>
+            </div>
+            <div className={styles.userWrapper} onClick={handleShowMenu}>
+               <div className={styles.imageWrapperUser}>
+                  <Image alt="user" className={styles.user} layout="fill"
+                         quality={100} src={avatar}/>
+               </div>
+               <Text semiBold>John Reed</Text>
+               <IconHideDropdownBig/>
+               <div ref={outsideClickRef} className={styles.menu} style={{ display: showMenu ? "block" : "none" }}>
+                  <ul>
+                     <li>
+                        <IconAcademicCap/>
+                        <Text>Dashboard</Text>
+                     </li>
+                     <li>
+                        <IconSettings/>
+                        <Text>Settings</Text>
+                     </li>
+                     <li>
+                        <IconMessage/>
+                        <Text>Give feedback</Text>
+                     </li>
+                     <li>
+                        <IconLogout/>
+                        <Text>Log out</Text>
+                     </li>
+                  </ul>
+               </div>
             </div>
          </div>
       </div>

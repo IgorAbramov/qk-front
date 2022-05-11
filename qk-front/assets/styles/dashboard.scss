@@ -5,11 +5,17 @@
   background-color: $color-additional-medium;
   height: calc(100vh - #{$topbar-height-initial} - 7rem);
   padding: 7rem 11rem 0 calc(11rem + #{$sidebar-width-initial});
+
   @include breakpoint-max($bp-screen-xxl) {
     padding: 7rem 7rem 0 calc(7rem + #{$sidebar-width-xxl});
   }
+
   @include breakpoint-max($bp-screen-xl) {
     padding: 7rem 3rem 0 calc(3rem + #{$sidebar-width-xxl});
+  }
+
+  @include breakpoint-max($bp-screen-lg) {
+    padding: 7rem 5rem 0;
   }
 
   > p {

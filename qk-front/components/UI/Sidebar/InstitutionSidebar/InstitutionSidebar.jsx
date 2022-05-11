@@ -16,7 +16,8 @@ const InstitutionSidebar = () => {
          <div className={styles.wrapper}>
             <div className={styles.top}>
                <div className={styles.imageWrapper}>
-                  <Image alt="Qualkey" layout="fill" src={logo}/>
+                  <Image alt="Qualkey" layout="fill" quality={100}
+                         src={logo}/>
                </div>
                <hr className={styles.hr}/>
                <div className={styles.menu}>

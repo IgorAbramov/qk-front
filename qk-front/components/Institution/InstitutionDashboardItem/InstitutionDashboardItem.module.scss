@@ -65,7 +65,7 @@
   width: calc(100% - 2rem - 2rem);
 
   > *:not(:last-child) {
-    padding: 0 .6rem;
+    padding: 0 0.6rem;
   }
 
   > p:nth-child(4) {
@@ -93,11 +93,11 @@
 
 .actions {
   align-items: center;
-  justify-content: center;
   border-left: 1px solid $color-additional-medium;
   display: flex;
   gap: 2rem;
   height: 100%;
+  justify-content: center;
   padding-left: 1.5rem;
 
   svg {

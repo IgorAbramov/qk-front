@@ -5,17 +5,21 @@
   align-items: center;
   background-color: $color-secondary;
   display: flex;
-  height: calc(#{$topbar-height-initial - 1.2rem - 1.2rem});
+  height: $topbar-height-initial;
   justify-content: flex-end;
-  padding: 1.2rem 0;
-  gap: 3rem;
+}
+
+.right {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
 }
 
 .imageWrapperNotification {
+  cursor: pointer;
   height: 3.2rem;
   position: relative;
   width: 3.2rem;
-  cursor: pointer;
 }
 
 .notification {
@@ -29,14 +33,18 @@
   height: 1.8rem;
   justify-content: center;
   position: absolute;
-  right: -.5rem;
+  right: -0.5rem;
   width: 1.8rem;
 }
 
 .imageWrapperLogo {
+  height: 50px;
   position: relative;
   width: 150px;
-  height: 50px;
+
+  @include breakpoint-max($bp-screen-lg) {
+    display: none;
+  }
 }
 
 .logo {
@@ -45,22 +53,35 @@
 }
 
 .imageWrapperUser {
+  height: 4.5rem;
   position: relative;
   width: 4.5rem;
-  height: 4.5rem;
 }
 
 .userWrapper {
-  position: relative;
-  display: flex;
   align-items: center;
-  gap: 1.5rem;
   cursor: pointer;
-  padding-right: 6rem;
+  display: flex;
+  gap: 1.5rem;
   padding-left: 1.5rem;
+  padding-right: 11rem;
+  position: relative;
+
+  @include breakpoint-max($bp-screen-xxl) {
+    padding-right: 7rem;
+  }
+
+  @include breakpoint-max($bp-screen-xl) {
+    padding-right: 3rem;
+  }
+
+  @include breakpoint-max($bp-screen-lg) {
+    padding-right: 5rem;
+  }
+
   svg {
-    width: 1.68rem;
     height: 0.8rem;
+    width: 1.68rem;
   }
 }
 
@@ -70,22 +91,34 @@
 }
 
 .menu {
-  border-radius: 0 0 15px 15px;
-  width: 100%;
-  position: absolute;
-  top: 5.7rem;
-  right: 0;
   background-color: $color-secondary;
+  border-radius: 0 0 15px 15px;
   border-top: 1px solid $color-additional-medium;
+  position: absolute;
+  right: 0;
+  top: 5.7rem;
+  width: 100%;
+
   li {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 1rem;
     padding: 1rem 0 1rem 2rem;
-    transition: background-color .2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+
     &:hover {
       background-color: $color-additional-light;
     }
+
+    svg {
+      height: 2.4rem;
+      width: 2.4rem;
+
+      path {
+        stroke: $color-primary;
+      }
+    }
+
     &:first-child {
       svg {
         path {
@@ -93,16 +126,9 @@
         }
       }
     }
+
     &:last-child {
       border-radius: 0 0 15px 15px;
     }
-    svg {
-      width: 2.4rem;
-      height: 2.4rem;
-      path {
-        stroke: $color-primary
-      }
-    }
   }
 }
-
