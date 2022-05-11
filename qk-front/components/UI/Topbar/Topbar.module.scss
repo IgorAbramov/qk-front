@@ -7,9 +7,10 @@
   display: flex;
   height: $topbar-height-initial;
   justify-content: flex-end;
+
   @include breakpoint-max($bp-screen-lg) {
-    justify-content: space-between;
     height: $topbar-height-lg;
+    justify-content: space-between;
   }
 }
 
@@ -80,7 +81,11 @@
   }
 
   @include breakpoint-max($bp-screen-lg) {
-    padding-right: 5rem;
+    padding-right: 3.5rem;
+  }
+
+  @include breakpoint-max($bp-screen-md) {
+    padding-right: 2.5rem;
   }
 
   svg {
@@ -102,6 +107,7 @@
   right: 0;
   top: 5.7rem;
   width: 100%;
+
   @include breakpoint-max($bp-screen-lg) {
     top: 6rem;
   }
@@ -138,4 +144,8 @@
       border-radius: 0 0 15px 15px;
     }
   }
+}
+
+.burger {
+  margin-left: 3.5rem;
 }

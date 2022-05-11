@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
 
 import Image from "next/image"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useMediaQuery } from "react-responsive"
+import { useRecoilState } from "recoil"
 
 import logo from "../../../../assets/images/qk-logo-text.svg"
 import { burgerMenuActiveState, uploadModalState } from "../../../../atoms"
@@ -11,6 +12,9 @@ import Text from "../../Text/Text"
 import styles from "./InstitutionSidebar.module.scss"
 
 const InstitutionSidebar = () => {
+
+   const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
+   const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
 
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
    const [burgerMenuActive, setBurgerMenuActive] = useRecoilState(burgerMenuActiveState)
@@ -37,7 +41,8 @@ const InstitutionSidebar = () => {
                      <Image alt="Qualkey" layout="fill" quality={100}
                             src={logo}/>
                   </div>
-                  <BurgerButton style={{ marginLeft: "-8.2rem", marginBottom: "1.7rem" }}/>
+                  <BurgerButton style={
+                     { marginLeft: isScreenMd ? "-13rem" : isScreenLg ? "-11rem" : "", marginBottom: "1.7rem" }}/>
                   <hr className={styles.hr}/>
                   <div className={styles.menu}>
                      <Text bold sidebar active={!openModal}>

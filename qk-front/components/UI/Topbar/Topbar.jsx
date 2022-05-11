@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import Image from "next/image"
+import { useMediaQuery } from "react-responsive"
 
 import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
@@ -11,6 +12,10 @@ import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
 const Topbar = () => {
+   
+   const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
+   const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
+
    const [showMenu, setShowMenu] = useState(false)
 
    const handleShowMenu = () => {
@@ -32,7 +37,7 @@ const Topbar = () => {
 
    return (
       <div className={styles.topbar}>
-         <BurgerButton style={{ marginLeft: "5rem" }}/>
+         <BurgerButton style={{ marginLeft: isScreenMd ? "2.5rem" : isScreenLg ? "3.5rem" : "" }}/>
          <div className={styles.right}>
             <div className={styles.imageWrapperNotification}>
                <Image alt="bell" layout="fill" quality={100}

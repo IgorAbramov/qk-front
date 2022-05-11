@@ -15,7 +15,7 @@ import styles from "./InstitutionDashboardItem.module.scss"
 const mockDataHistory = [
    {
       date: 1652174960,
-      action: "Credentials Uploadedkjhkljh",
+      action: "Credentials Uplo",
       details: {
          action: "Credentials Uploaded or maybe not",
          status: "Success",
