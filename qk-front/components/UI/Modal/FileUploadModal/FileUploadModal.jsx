@@ -105,7 +105,7 @@ const FileUploadModal = () => {
       const arrayOfValues = mappingToValues.map(mapping => mapping?.value)
       const validation = validateMappingFields(arrayOfValues)
 
-      if (!validation) {
+      if (validation) {
          setFileUploadModalError("")
          setFileUploadModalErrorButton("")
          const mapping = mappingToValues.map(mapping => mapping?.value).join(",")
@@ -174,6 +174,7 @@ const FileUploadModal = () => {
     **/
    useEffect(() => {
       setFileUploadModalError("")
+      setFileUploadModalErrorButton("")
    }, [openModal, parsedValuesFromUpload])
 
    /**
