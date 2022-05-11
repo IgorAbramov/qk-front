@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil"
 
 import logo from "../../../../assets/images/qk-logo-text.svg"
 import { uploadModalState } from "../../../../atoms"
-import { IconAcademicCapPerson, IconGoBack, IconKey, IconPolicy, IconMessage, IconPlus, IconQuestion } from "../../_Icon"
+import { IconAcademicCapPerson, IconKey, IconLogout, IconMessage, IconPlus, IconPolicy, IconQuestion } from "../../_Icon"
 import Text from "../../Text/Text"
 import styles from "./InstitutionSidebar.module.scss"
 
@@ -51,7 +51,7 @@ const InstitutionSidebar = () => {
                      <span>Privacy Policy</span>
                   </Text>
                   <Text sidebar sidebarMin>
-                     <IconGoBack/>
+                     <IconLogout/>
                      <span>Log Out</span>
                   </Text>
                </div>

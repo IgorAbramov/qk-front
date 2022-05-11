@@ -32,6 +32,10 @@ const FileUploadModal = () => {
    const [mappingToValues, setMappingToValues] = useState([])
    const [uploadSuccess, setUploadSuccess] = useState(false)
 
+   //TODO: Make active field in dropdown according to figma ui — BLUE?
+
+   //TODO: Fix bug with adding * to value if it was cleared in dropdown.
+
    /**
     * File upload processing.
     * @desc Validates file type and sends to api/ endpoint request to parse file.
