@@ -102,6 +102,9 @@
   right: 0;
   top: 5.7rem;
   width: 100%;
+  @include breakpoint-max($bp-screen-lg) {
+    top: 6rem;
+  }
 
   li {
     align-items: center;

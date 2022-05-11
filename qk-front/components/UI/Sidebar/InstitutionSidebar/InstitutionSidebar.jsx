@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react"
+
 import Image from "next/image"
 import { useRecoilState, useRecoilValue } from "recoil"
 
@@ -11,11 +13,24 @@ import styles from "./InstitutionSidebar.module.scss"
 const InstitutionSidebar = () => {
 
    const [openModal, setOpenModal] = useRecoilState(uploadModalState)
-   const burgerMenuActive = useRecoilValue(burgerMenuActiveState)
+   const [burgerMenuActive, setBurgerMenuActive] = useRecoilState(burgerMenuActiveState)
+
+   const outsideClickRef = useRef()
+   useEffect(() => {
+      const checkIfClickedOutside = event => {
+         if (burgerMenuActive && outsideClickRef.current && !outsideClickRef.current.contains(event.target)) {
+            setBurgerMenuActive(false)
+         }
+      }
+      document.addEventListener("click", checkIfClickedOutside)
+      return () => {
+         document.removeEventListener("click", checkIfClickedOutside)
+      }
+   }, [burgerMenuActive])
 
    return (
       <div className={burgerMenuActive ? styles.darken : ""}>
-         <div className={`${styles.sidebar} ${burgerMenuActive ? styles.active : ""}`}>
+         <div ref={outsideClickRef} className={`${styles.sidebar} ${burgerMenuActive ? styles.active : ""}`}>
             <div className={styles.wrapper}>
                <div className={styles.top}>
                   <div className={styles.imageWrapper}>
