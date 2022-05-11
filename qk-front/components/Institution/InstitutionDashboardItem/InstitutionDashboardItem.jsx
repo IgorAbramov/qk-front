@@ -4,7 +4,7 @@ import moment from "moment"
 import Image from "next/image"
 import { useRecoilValue } from "recoil"
 
-import portrait from "../../../assets/images/mockPortrait.webp"
+import avatar from "../../../assets/images/avatarMock.webp"
 import { credentialsDetailsState, credentialsShowDetailsState } from "../../../atoms"
 import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShowDropdownBig } from "../../UI/_Icon"
 import Text from "../../UI/Text/Text"
@@ -108,8 +108,8 @@ const InstitutionDashboardItem = ({ data }) => {
          }}>
             <div className={styles.itemWrapper}>
                <Image alt="portrait" className={styles.photo} height={50}
-                      quality={100} src={portrait} width={50}/>
-               <div className={styles.item}>
+                      quality={100} src={avatar} width={50}/>
+               <div>
                   <Text bold>{auditName}</Text>
                   <Text grey>{auditFrom}</Text>
                </div>

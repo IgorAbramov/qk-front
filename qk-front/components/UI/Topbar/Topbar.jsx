@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react"
 
 import Image from "next/image"
 
+import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
-import user from "../../../assets/images/mockPortrait.webp"
 import uniLogo from "../../../assets/images/mockUniLogo.webp"
 import { IconAcademicCap, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
 import Text from "../Text/Text"
@@ -44,7 +44,7 @@ const Topbar = () => {
          <div className={styles.userWrapper} onClick={handleShowMenu}>
             <div className={styles.imageWrapperUser}>
                <Image alt="user" className={styles.user} layout="fill"
-                      src={user}/>
+                      src={avatar}/>
             </div>
             <Text semiBold>John Reed</Text>
             <IconHideDropdownBig/>
