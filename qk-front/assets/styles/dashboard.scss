@@ -15,6 +15,7 @@
   }
 
   @include breakpoint-max($bp-screen-lg) {
+    height: calc(100vh - #{$topbar-height-lg} - 7rem);;
     padding: 7rem 5rem 0;
   }
 

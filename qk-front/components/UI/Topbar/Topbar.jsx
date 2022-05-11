@@ -6,6 +6,7 @@ import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
 import uniLogo from "../../../assets/images/mockUniLogo.webp"
 import { IconAcademicCap, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
+import BurgerButton from "../BurgerButton/BurgerButton"
 import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
@@ -31,6 +32,7 @@ const Topbar = () => {
 
    return (
       <div className={styles.topbar}>
+         <BurgerButton style={{ marginLeft: "5rem" }}/>
          <div className={styles.right}>
             <div className={styles.imageWrapperNotification}>
                <Image alt="bell" layout="fill" quality={100}

@@ -7,6 +7,10 @@
   display: flex;
   height: $topbar-height-initial;
   justify-content: flex-end;
+  @include breakpoint-max($bp-screen-lg) {
+    justify-content: space-between;
+    height: $topbar-height-lg;
+  }
 }
 
 .right {
