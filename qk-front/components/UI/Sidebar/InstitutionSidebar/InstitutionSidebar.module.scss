@@ -9,7 +9,10 @@
   height: 100vh;
   padding: 4rem 0 8rem;
   position: fixed;
-  width: $sidebar-width-xxl;
+  width: $sidebar-width-initial;
+  @include breakpoint-max($bp-screen-xxl) {
+    width: $sidebar-width-xxl;
+  }
 }
 
 .wrapper {
@@ -38,7 +41,7 @@
   height: 1px;
   mix-blend-mode: soft-light;
   opacity: 0.4;
-  width: calc(#{$sidebar-width-xxl - 4rem});
+  width: calc(#{$sidebar-width-initial - 4rem});
 }
 
 .menu {

@@ -41,6 +41,9 @@
 .xxl {
   font-family: $font-primary;
   font-size: 6.4rem;
+  @include breakpoint-max($bp-screen-xl) {
+    font-size: 6rem;
+  }
 }
 
 .modal {

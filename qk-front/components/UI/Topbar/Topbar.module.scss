@@ -5,7 +5,7 @@
   align-items: center;
   background-color: $color-secondary;
   display: flex;
-  height: calc(#{$topbar-height-xxl - 1.2rem - 1.2rem});
+  height: calc(#{$topbar-height-initial - 1.2rem - 1.2rem});
   justify-content: flex-end;
   padding: 1.2rem 0;
   gap: 3rem;

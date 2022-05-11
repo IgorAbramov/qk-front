@@ -5,7 +5,7 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .headerWrapper {
@@ -14,7 +14,12 @@
 }
 
 .contentWrapper {
-  height: 54rem; // Height of 5 elements including border, height, an margin bottom.
+  height: 62%;
   overflow: hidden;
   overflow-y: scroll;
+  p {
+    @include breakpoint-max($bp-screen-xl) {
+      font-size: 1.45rem;
+    }
+  }
 }
