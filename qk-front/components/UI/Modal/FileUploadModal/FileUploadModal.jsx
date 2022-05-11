@@ -36,6 +36,8 @@ const FileUploadModal = () => {
 
    //TODO: Fix bug with adding * to value if it was cleared in dropdown.
 
+   //TODO: Make scroll to chosen option dropdown row so it is more user friendly.
+
    /**
     * File upload processing.
     * @desc Validates file type and sends to api/ endpoint request to parse file.
