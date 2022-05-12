@@ -18,7 +18,6 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
 export default function Dashboard({ data, serverErrorMessage }) {
-   const { role, value } = data
    
    const openModal = useRecoilValue(uploadModalState)
    const currentFile = useRecoilValue(currentFileState)
@@ -48,6 +47,8 @@ export default function Dashboard({ data, serverErrorMessage }) {
    }, [openModal])
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
+
+   const { role, value } = data
    
    if (role === userRoles.institution) return (
       <div className="main__wrapper">
