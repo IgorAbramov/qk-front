@@ -21,16 +21,19 @@
 }
 
 .routes {
-  padding: 0 4rem;
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 1.5rem;
+  padding: 0 4rem;
+
   @include breakpoint-max($bp-screen-xl) {
     padding: 0 2rem;
   }
+
   @include breakpoint-max($bp-screen-lg) {
     display: none;
   }
+
   p {
     @include breakpoint-max($bp-screen-xl) {
       font-size: 1.45rem;
@@ -101,8 +104,8 @@
   }
 
   @include breakpoint-max($bp-screen-xl) {
-    padding-right: 3rem;
     padding-left: 1rem;
+    padding-right: 3rem;
   }
 
   @include breakpoint-max($bp-screen-lg) {

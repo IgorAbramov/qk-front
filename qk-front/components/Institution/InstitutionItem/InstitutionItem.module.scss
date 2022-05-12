@@ -69,6 +69,16 @@
   }
 }
 
+.viewWrapper {
+  margin-bottom: 2.5rem;
+
+  p {
+    @include breakpoint-max($bp-screen-xl) {
+      font-size: 1.45rem;
+    }
+  }
+}
+
 .credentialWrapper {
   align-items: center;
   background-color: $color-secondary;
@@ -165,6 +175,7 @@
     padding: 0 2rem;
     width: calc(100% - 2rem - 2rem);
   }
+
   @include breakpoint-max($bp-screen-md) {
     padding: 0 1rem;
     width: calc(100% - 1rem - 1rem);
@@ -173,6 +184,7 @@
 
 .left {
   padding-right: 3rem;
+
   @include breakpoint-max($bp-screen-md) {
     padding-right: 1.5rem;
   }
@@ -187,6 +199,7 @@
 .right {
   border-left: 1px solid $color-additional-medium;
   padding-left: 3rem;
+
   @include breakpoint-max($bp-screen-md) {
     padding-left: 1.5rem;
   }
@@ -194,4 +207,23 @@
 
 .rightWrapper {
   position: relative;
+}
+
+.viewName {
+  svg {
+    height: 4.8rem;
+    width: 4.8rem;
+
+    path {
+      stroke: $color-primary;
+    }
+  }
+}
+
+.viewActions {
+  border-left: none;
+}
+
+.viewCredentialWrapper {
+  grid-template-columns: 1.1fr 1.5fr 0.7fr 1.05fr 0.3fr;
 }

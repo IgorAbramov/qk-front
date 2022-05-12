@@ -12,7 +12,7 @@ import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconS
 import Text from "../../UI/Text/Text"
 import InstitutionDetailsItem from "../InstitutionDetailsItem/InstitutionDetailsItem"
 import InstitutionHistoryItem from "../InstitutionHistoryItem/InstitutionHistoryItem"
-import styles from "./InstitutionDashboardItem.module.scss"
+import styles from "./InstitutionItem.module.scss"
 
 const mockDataHistory = [
    {
@@ -41,7 +41,6 @@ const mockDataHistory = [
       details: {
          action: "Credentials Uploaded",
          status: "Success",
-         registrar: "Mr. Michael Caine",
          date: 1652174960
       }
    },
@@ -78,7 +77,7 @@ const mockDataHistory = [
 ]
 
 const InstitutionDashboardItem = ({ data }) => {
-   const { auditFrom, auditName, diploma, lastModified, status, student } = data
+   const { diploma, lastModified, status, student } = data
 
    const { pathname } = useRouter()
 
@@ -114,14 +113,12 @@ const InstitutionDashboardItem = ({ data }) => {
                <Image alt="portrait" className={styles.photo} height={50}
                       quality={100} src={avatar} width={50}/>
                <div>
-                  <Text bold>{auditName}</Text>
-                  <Text grey>{auditFrom}</Text>
+                  <Text bold>{student}</Text>
                </div>
             </div>
             <div className={styles.itemWrapper}>
                <IconAcademicCap/>
                <div className={styles}>
-                  <Text bold>{student}</Text>
                   <Text>{`${diploma.slice(0, 27).trim()}...`}</Text>
                </div>
             </div>

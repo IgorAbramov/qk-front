@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
 
-import { IconGoBack } from "../UI/_Icon"
+import { IconBack } from "../UI/_Icon"
 import Button from "../UI/Button/Button"
 import Heading from "../UI/Heading/Heading"
 import Input from "../UI/Input/Input"
@@ -25,7 +25,7 @@ const AuthForms = ({ login, forgot, twoFactor, newPassword, changeFormHandler, s
                <Button blue bold thin>Send 4-digit code</Button>
                <Button semiBold thin white>
                   <div className={styles.buttonRow}>
-                     <IconGoBack/>
+                     <IconBack/>
                      {/*TODO: PreventDefault!*/}
                      <p>Back</p>
                   </div>
@@ -74,7 +74,7 @@ const AuthForms = ({ login, forgot, twoFactor, newPassword, changeFormHandler, s
                <Button semiBold thin white
                        onClick={() => router.back()}>
                   <div className={styles.buttonRow}>
-                     <IconGoBack/>
+                     <IconBack/>
                      {/*TODO: PreventDefault!*/}
                      <p>Back to Login</p>
                   </div>
