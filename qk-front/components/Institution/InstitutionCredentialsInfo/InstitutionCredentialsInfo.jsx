@@ -105,9 +105,6 @@ const InstitutionCredentialsInfo = ({ data }) => {
                </Button>
             </div>
          </div>
-         <div className={styles.withdraw}>
-            <Text grey>- Withdraw Credentials -</Text>
-         </div>
       </>
    )
 }

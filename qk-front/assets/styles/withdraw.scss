@@ -1,0 +1,9 @@
+.withdraw__button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  > p {
+    cursor: pointer;
+  }
+}

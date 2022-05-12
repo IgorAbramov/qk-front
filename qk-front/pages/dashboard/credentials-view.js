@@ -55,6 +55,9 @@ export default function CredentialsView({ data, serverErrorMessage }) {
             <Text large>browse all credential records</Text>
             <InstitutionViewCredentialsItem data={mockDataView}/>
             <InstitutionCredentialsInfo data={mockDataView.information}/>
+            <div className="withdraw__button">
+               <Text grey>- Withdraw Credentials -</Text>
+            </div>
          </InstitutionView>
       </>
    )
