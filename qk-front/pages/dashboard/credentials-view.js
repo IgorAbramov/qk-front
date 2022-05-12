@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 import axios from "axios"
 import getConfig from "next/config"
 import Head from "next/head"
@@ -24,7 +26,7 @@ export default function CredentialsView({ data, serverErrorMessage }) {
    if (role === userRoles.institution) return (
       <>
          <Head>
-            <title>Credentials View | QualKey</title>
+            <title>View Credentials | QualKey</title>
          </Head>
          <InstitutionView>
             <Heading blue h1 xxl>View Credentials</Heading>

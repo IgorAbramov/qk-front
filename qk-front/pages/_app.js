@@ -15,8 +15,9 @@ function MyApp({ Component, pageProps }) {
 
          <RecoilRoot>
             <NextNProgress color="#0880ce" height={2} options={{
+               showSpinner: false,
                easing: "ease",
-               speed: 500
+               speed: 500,
             }}/>
             <Component {...pageProps} />
          </RecoilRoot>
