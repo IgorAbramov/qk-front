@@ -13,6 +13,8 @@ import styles from "./InstitutionSidebar.module.scss"
 
 const InstitutionSidebar = () => {
 
+   //TODO: Fix error with prop 'style' server and client difference.
+
    const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
    const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
 
@@ -31,6 +33,9 @@ const InstitutionSidebar = () => {
          document.removeEventListener("click", checkIfClickedOutside)
       }
    }, [burgerMenuActive])
+
+   console.log(isScreenLg)
+   console.log(isScreenMd)
 
    return (
       <div className={burgerMenuActive ? styles.darken : ""}>

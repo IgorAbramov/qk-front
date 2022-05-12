@@ -2,6 +2,8 @@ import { useState } from "react"
 
 import moment from "moment"
 import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/router"
 import { useRecoilValue } from "recoil"
 
 import avatar from "../../../assets/images/avatarMock.webp"
@@ -78,6 +80,8 @@ const mockDataHistory = [
 const InstitutionDashboardItem = ({ data }) => {
    const { auditFrom, auditName, diploma, lastModified, status, student } = data
 
+   const { pathname } = useRouter()
+
    const validateStatus = () => {
       if (status === "Activated") return styles.activated
       if (status === "Uploaded") return styles.uploaded
@@ -127,7 +131,11 @@ const InstitutionDashboardItem = ({ data }) => {
             </div>
             <Text bold>{moment(lastModified * 1000).format("hh:mm DD/MM/YYYY")}</Text>
             <div className={styles.actions}>
-               <IconOpenViewPage/>
+               <Link passHref href={`${pathname}/credentials-view`}>
+                  <a>
+                     <IconOpenViewPage/>
+                  </a>
+               </Link>
                {
                   showCredentialsHistory
                      ? <IconShowDropdownBig onClick={handleShowDropdown}/>
