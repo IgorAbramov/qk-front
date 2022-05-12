@@ -3,6 +3,7 @@ import getConfig from "next/config"
 import Head from "next/head"
 
 import InstitutionCredentialsInfo from "../../components/Institution/InstitutionCredentialsInfo/InstitutionCredentialsInfo"
+import InstitutionEditCredentials from "../../components/Institution/InstitutionEditCredentials/InstitutionEditCredentials"
 import InstitutionViewCredentialsItem from "../../components/Institution/InstitutionItem/InstitutionViewCredentialsItem"
 import InstitutionView from "../../components/Institution/InstitutionView/InstitutionView"
 import Heading from "../../components/UI/Heading/Heading"
@@ -54,7 +55,8 @@ export default function CredentialsView({ data, serverErrorMessage }) {
             <Heading blue h1>View Credentials</Heading>
             <Text large>browse all credential records</Text>
             <InstitutionViewCredentialsItem data={mockDataView}/>
-            <InstitutionCredentialsInfo data={mockDataView.information}/>
+            {/*<InstitutionCredentialsInfo data={mockDataView.information}/>*/}
+            <InstitutionEditCredentials data={mockDataView.information}/>
             <div className="withdraw__button">
                <Text grey>- Withdraw Credentials -</Text>
             </div>
