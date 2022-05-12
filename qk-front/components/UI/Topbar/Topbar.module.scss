@@ -7,17 +7,41 @@
   display: flex;
   height: $topbar-height-initial;
   justify-content: flex-end;
+  padding-left: $sidebar-width-initial;
+
+  @include breakpoint-max($bp-screen-xxl) {
+    padding-left: $sidebar-width-xxl;
+  }
 
   @include breakpoint-max($bp-screen-lg) {
     height: $topbar-height-lg;
     justify-content: space-between;
+    padding-left: 0;
+  }
+}
+
+.routes {
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  @include breakpoint-max($bp-screen-xl) {
+    padding: 0 2rem;
+  }
+  @include breakpoint-max($bp-screen-lg) {
+    display: none;
+  }
+  p {
+    @include breakpoint-max($bp-screen-xl) {
+      font-size: 1.45rem;
+    }
   }
 }
 
 .right {
   align-items: center;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .imageWrapperNotification {
@@ -78,6 +102,7 @@
 
   @include breakpoint-max($bp-screen-xl) {
     padding-right: 3rem;
+    padding-left: 1rem;
   }
 
   @include breakpoint-max($bp-screen-lg) {

@@ -34,9 +34,6 @@ const InstitutionSidebar = () => {
       }
    }, [burgerMenuActive])
 
-   console.log(isScreenLg)
-   console.log(isScreenMd)
-
    return (
       <div className={burgerMenuActive ? styles.darken : ""}>
          <div ref={outsideClickRef} className={`${styles.sidebar} ${burgerMenuActive ? styles.active : ""}`}>

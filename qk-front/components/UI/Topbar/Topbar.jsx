@@ -1,17 +1,25 @@
 import { useEffect, useRef, useState } from "react"
 
 import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/router"
 import { useMediaQuery } from "react-responsive"
 
 import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
 import uniLogo from "../../../assets/images/mockUniLogo.webp"
-import { IconAcademicCap, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
+import { IconAcademicCap, IconArrowLeft, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
 import BurgerButton from "../BurgerButton/BurgerButton"
 import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
 const Topbar = () => {
+   
+   const { pathname } = useRouter()
+
+   const checkIfPathIncludesView = () => {
+      if (pathname.includes("/credentials-view")) return true
+   }
    
    const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
    const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
@@ -36,7 +44,16 @@ const Topbar = () => {
    }, [showMenu])
 
    return (
-      <div className={styles.topbar}>
+      <div className={styles.topbar} style={{ justifyContent: checkIfPathIncludesView() ? "space-between" : "" }}>
+         {checkIfPathIncludesView() && <div className={styles.routes}>
+            <Link href="/dashboard">
+               <a>
+                  <Text grey>University Dashboard</Text>
+               </a>
+            </Link>
+            <IconArrowLeft/>
+            <Text>View Credentials</Text>
+         </div>}
          <BurgerButton style={{ marginLeft: isScreenMd ? "2.5rem" : isScreenLg ? "3.5rem" : "" }}/>
          <div className={styles.right}>
             <div className={styles.imageWrapperNotification}>
