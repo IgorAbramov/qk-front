@@ -55,6 +55,42 @@
   }
 }
 
+.confirm {
+  width: fit-content !important;
+  padding: .5rem 1rem;
+  font-size: 1.45rem;
+  background-color: transparent;
+  border: 1px solid $color-success;
+  color: $color-success;
+  position: absolute;
+  top: -1rem;
+  right: -9.5rem;
+  transition: background-color .2s ease-in-out, color .2s ease-in-out;
+  &:hover,
+  &:focus {
+    background-color: $color-success;
+    color: $color-secondary;
+  }
+}
+
+.undo {
+  width: fit-content !important;
+  padding: .5rem 1rem;
+  font-size: 1.45rem;
+  background-color: transparent;
+  border: 1px solid $color-highlight;
+  color: $color-highlight;
+  position: absolute;
+  top: -1rem;
+  right: -8.6rem;
+  transition: background-color .2s ease-in-out, color .2s ease-in-out;
+  &:hover,
+  &:focus {
+    background-color: $color-highlight;
+    color: $color-secondary;
+  }
+}
+
 .white {
   background-color: $color-secondary;
   border: 1px solid $color-highlight;

@@ -14,6 +14,8 @@ import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
 const Topbar = () => {
+
+   //TODO: Remove padding from right! + bp!
    
    const { pathname } = useRouter()
 
