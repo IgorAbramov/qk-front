@@ -1,6 +1,7 @@
-export const IconEdit = () => {
+export const IconEdit = ({ ...otherProps }) => {
    return (
       <svg fill="none" height="40" viewBox="0 0 40 40"
+           {...otherProps}
            width="40" xmlns="http://www.w3.org/2000/svg">
          <path d="M20 25H15V20L30 5L35 10L20 25Z" stroke="#262626" strokeLinecap="round"
                strokeLinejoin="round" strokeWidth="1.5"/>

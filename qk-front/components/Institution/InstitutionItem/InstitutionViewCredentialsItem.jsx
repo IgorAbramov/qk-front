@@ -1,11 +1,15 @@
 import moment from "moment"
+import { useRecoilState, useRecoilValue } from "recoil"
 
+import { showEditCredentialsState } from "../../../atoms"
 import { IconAcademicCap, IconAcademicCapPerson, IconEdit, IconInfo } from "../../UI/_Icon"
 import Text from "../../UI/Text/Text"
 import styles from "./InstitutionItem.module.scss"
 
 const InstitutionViewCredentialsItem = ({ data }) => {
    const { diploma, lastModified, status, student } = data
+
+   const [, setShowEditCredentials] = useRecoilState(showEditCredentialsState)
 
    const validateStatus = () => {
       if (status === "Activated") return styles.activated
@@ -35,7 +39,7 @@ const InstitutionViewCredentialsItem = ({ data }) => {
             </div>
             <Text bold>{moment(lastModified * 1000).format("hh:mm DD/MM/YYYY")}</Text>
             <div className={`${styles.actions} ${styles.viewActions}`}>
-               <IconEdit/>
+               <IconEdit onClick={() => setShowEditCredentials(true)}/>
             </div>
          </div>
       </div>
