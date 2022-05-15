@@ -1,7 +1,9 @@
 import axios from "axios"
 import getConfig from "next/config"
 import Head from "next/head"
+import { useRecoilValue } from "recoil"
 
+import { showEditCredentialsState } from "../../atoms"
 import InstitutionCredentialsInfo from "../../components/Institution/InstitutionCredentialsInfo/InstitutionCredentialsInfo"
 import InstitutionEditCredentials from "../../components/Institution/InstitutionEditCredentials/InstitutionEditCredentials"
 import InstitutionViewCredentialsItem from "../../components/Institution/InstitutionItem/InstitutionViewCredentialsItem"
@@ -42,6 +44,8 @@ export default function CredentialsView({ data, serverErrorMessage }) {
    //TODO: Should be dynamic route!
    //TODO: Change request address according to logic and make it return role.
 
+   const showEditCredentials = useRecoilValue(showEditCredentialsState)
+
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
    const { role, value } = data
@@ -55,8 +59,9 @@ export default function CredentialsView({ data, serverErrorMessage }) {
             <Heading blue h1>View Credentials</Heading>
             <Text large>browse all credential records</Text>
             <InstitutionViewCredentialsItem data={mockDataView}/>
-            {/*<InstitutionCredentialsInfo data={mockDataView.information}/>*/}
-            <InstitutionEditCredentials data={mockDataView.information}/>
+            {!showEditCredentials
+               ? <InstitutionCredentialsInfo data={mockDataView.information}/>
+               : <InstitutionEditCredentials data={mockDataView.information}/>}
             <div className="withdraw__button">
                <Text grey>- Withdraw Credentials -</Text>
             </div>
@@ -67,6 +72,8 @@ export default function CredentialsView({ data, serverErrorMessage }) {
    if (role === userRoles.student) return (
       <Heading blue h1>{value}</Heading>
    )
+
+   else return null //TODO: Probably redirect user to /
 
 }
 
