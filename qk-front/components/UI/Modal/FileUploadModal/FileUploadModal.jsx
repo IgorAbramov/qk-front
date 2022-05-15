@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRecoilState, useResetRecoilState } from "recoil"
 
 import { credentialsState, currentFileState, dropdownSelectionListenerState, filenameState, filePrefixState, fileUploadErrorState, uploadModalState } from "../../../../atoms"
-import { processingUrl, validateMappingFields } from "../../../../utils"
+import { frontUrl, processingUrl, validateMappingFields } from "../../../../utils"
 import { IconClose, IconLoading, IconUpload } from "../../_Icon"
 import Button from "../../Button/Button"
 import FileUploadDropdown from "../../Dropdown/FileUploadDropdown/FileUploadDropdown"
@@ -54,7 +54,7 @@ const FileUploadModal = () => {
          const formData = new FormData()
          formData.append("uploadedFile", event.target.files[0])
          try {
-            const response = await axios.post("/api/file-upload", formData, { headers: { "Content-type": "multipart/form-data" } })
+            const response = await axios.post(`${frontUrl}/api/file-upload`, formData, { headers: { "Content-type": "multipart/form-data" } })
             setParsedValuesFromUpload(response.data.file)
             setFilePrefix(response.data.prefix)
          } catch (error) {
@@ -129,7 +129,7 @@ const FileUploadModal = () => {
                   resetCurrentFile()
 
                   const data = JSON.stringify(`${filePrefix}-${fileName}`)
-                  axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
+                  axios.post(`${frontUrl}/api/file-delete`, data, { headers: { "Content-type": "application/json" } })
                      .then(response => {
                         if (response.data === "OK") {
                            setLoading(false)
