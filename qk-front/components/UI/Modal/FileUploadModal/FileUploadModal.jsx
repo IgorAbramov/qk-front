@@ -234,8 +234,8 @@ const FileUploadModal = () => {
                   <div className={styles.top}>
                      <Heading blue h2 modal>Multi-Upload</Heading>
                      {fileUploadModalError && <Text error large>{fileUploadModalError}</Text>}
-                     <Input fileUpload fileName={fileName} inputName="csvUploader"
-                            isFileUploaded={!!parsedValuesFromUpload.length}
+                     <Input fileName={fileName} inputName="csvUploader" isFileUploaded={!!parsedValuesFromUpload.length}
+                            type={"fileUpload"}
                             onChange={uploadFileToClient}/>
                   </div>
                   {
@@ -244,7 +244,7 @@ const FileUploadModal = () => {
                         <div className={styles.middle}>
                            {parsedValuesFromUpload.map((value, index) => (
                               <div key={value} className={styles.row}>
-                                 <Input readOnly text inputName={value}
+                                 <Input readOnly inputName={value} type={"text"}
                                         value={value}/>
                                  <FileUploadDropdown key={value} handleOption={handleOption}
                                                      resetDropdown={resetDropdown} valueIndex={index}/>

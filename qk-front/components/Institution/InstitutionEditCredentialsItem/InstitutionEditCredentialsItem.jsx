@@ -22,11 +22,11 @@ const InstitutionEditCredentialsItem = ({
       <div className={styles.wrapper}>
          <div className={styles.infoItem}>
             <Text grey>{mapping.get(mappingKey)}:</Text>
-            <Input text inputName={mappingKey} placeholder={data[mappingKey].toString()}
-                   style={{
-                      borderBottom: isInputValid.includes(mappingKey) ? "1px solid #ef4444" : "",
-                      color: isInputValid.includes(mappingKey) ? "#ef4444" : ""
-                   }}
+            <Input inputName={mappingKey} placeholder={data[mappingKey].toString()} style={{
+               borderBottom: isInputValid.includes(mappingKey) ? "1px solid #ef4444" : "",
+               color: isInputValid.includes(mappingKey) ? "#ef4444" : ""
+            }}
+                   type={"text"}
                    value={!!savedData[mappingKey] && savedData[mappingKey] !== undefined ? savedData[mappingKey] : formData[mappingKey] ? formData[mappingKey] : ""}
                    onChange={(event) => handleFormChange(event, index)}/>
          </div>

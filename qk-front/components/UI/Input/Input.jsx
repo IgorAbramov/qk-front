@@ -8,12 +8,7 @@ import Text from "../Text/Text"
 import styles from "./Input.module.scss"
 
 const Input = ({
-   email,
-   password,
-   checkbox,
-   text,
-   fileUpload,
-   pinCode,
+   type,
    inputName,
    passwordRepeat,
    placeholder,
@@ -22,13 +17,12 @@ const Input = ({
    checkboxText,
    fileName,
    isFileUploaded,
-   search,
    ...otherProps
 }) => {
 
    const [pinValues, setPinValues] = useState(["", "", "", ""]) //TODO: Move it to parent component :)
 
-   if (email) return (
+   if (type === "email") return (
       <input {...otherProps} className={`${styles.input}
       ${error ? styles.error : ""}`}
              name="email"
@@ -36,7 +30,7 @@ const Input = ({
              type="email"/>
    )
 
-   if (password) return (
+   if (type === "password") return (
       <div className={styles.container}>
          <input {...otherProps} className={`${styles.input}
       ${error ? styles.error : ""}`}
@@ -47,7 +41,7 @@ const Input = ({
       </div>
    )
 
-   if (checkbox) return (
+   if (type === "checkbox") return (
       <div className={styles.checkboxContainer}>
          <input {...otherProps} className={`${styles.checkbox}`}
                 name={inputName}
@@ -56,15 +50,24 @@ const Input = ({
       </div>
    )
 
-   if (text) return (
-      <input {...otherProps} className={`${styles.input}
+   if (type === "text") return (
+      inputName !== "password"
+         ?       <input {...otherProps} className={`${styles.input}
       ${error ? styles.error : ""}`}
-             name={inputName}
-             placeholder={placeholder}
-             type="text"/>
+                     name={inputName}
+                     placeholder={placeholder}
+                     type="text"/>
+         : <div className={styles.container}>
+            <input {...otherProps} className={`${styles.input}
+      ${error ? styles.error : ""}`}
+                   name={inputName}
+                   placeholder={placeholder}
+                   type="text"/>
+            <IconHideInput onClick={hidePassword}/>
+         </div>
    )
 
-   if (pinCode) return (
+   if (type === "pinCode") return (
       <PinInput autoFocus={true}
                 containerClassName="pinCode" //TODO: Add .error for error scenario.
                 disabled={false} //TODO: Use this while server request.
@@ -76,7 +79,7 @@ const Input = ({
       />
    )
 
-   if (fileUpload) return (
+   if (type === "fileUpload") return (
       <>
          <input {...otherProps} className={`${styles.fileUpload} ${isFileUploaded ? styles.uploaded : ""}`}
                 id={inputName}
@@ -89,7 +92,7 @@ const Input = ({
       </>
    )
 
-   if (search) return (
+   if (type === "search") return (
       <input {...otherProps} className={`${styles.input} ${styles.search}`}
              name={inputName}
              placeholder="Search"
@@ -100,12 +103,7 @@ const Input = ({
 export default Input
 
 Input.propTypes = {
-   email: PropTypes.bool,
-   password: PropTypes.bool,
-   checkbox: PropTypes.bool,
-   text: PropTypes.bool,
-   fileUpload: PropTypes.bool,
-   pinCode: PropTypes.bool,
+   type: PropTypes.string.isRequired,
    inputName: PropTypes.string,
    passwordRepeat: PropTypes.bool,
    placeholder: PropTypes.string,
@@ -114,5 +112,4 @@ Input.propTypes = {
    checkboxText: PropTypes.string,
    fileName: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
    isFileUploaded: PropTypes.bool,
-   search: PropTypes.bool
 }

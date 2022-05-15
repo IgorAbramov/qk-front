@@ -16,9 +16,9 @@ const NewPasswordForm = () => {
          <div className={styles.wrapper}>
             <Heading blue h1>Set new password</Heading>
             <form>
-               <Input password placeholder="New Password"/>
+               <Input placeholder="New Password" type={"password"}/>
                {/*<Text error small>Wrong email</Text>*/}
-               <Input password placeholder="Confirm New Password"/>
+               <Input placeholder="Confirm New Password" type={"password"}/>
                {/*<Text error small>Wrong email</Text>*/}
                <Button blue bold thin>Set New Password</Button>
                <Button semiBold thin white

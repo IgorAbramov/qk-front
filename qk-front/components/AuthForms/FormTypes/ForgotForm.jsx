@@ -11,7 +11,7 @@ const ForgotForm = () => {
          <div className={styles.wrapper}>
             <Heading blue h1>Forgot password</Heading>
             <form>
-               <Input email placeholder="Email"/>
+               <Input placeholder="Email" type={"email"}/>
                {/*<Text error small>Wrong email</Text>*/}
                <Button blue bold thin>Send 4-digit code</Button>
                <Button semiBold thin white>

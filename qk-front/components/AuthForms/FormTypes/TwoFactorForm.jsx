@@ -12,7 +12,7 @@ const TwoFactorForm = () => {
             <Text grey>Enter the 4-digit code we’ve sent to your
                email</Text>
             <form>
-               <Input pinCode/>
+               <Input type={"pinCode"}/>
                {/*<Text error small>Please enter all 4 digits</Text>*/}
                <Button blue bold thin>Next</Button>
                <Text grey>Resend code</Text>
