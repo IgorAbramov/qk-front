@@ -13,7 +13,7 @@ const InstitutionCredentialsInfo = ({ data }) => {
          </div>
          <div className={styles.wrapper}>
             <div className={styles.info}>
-               <div className={styles.infoWrapper}>
+               <div>
                   <div className={styles.infoBlock}>
                      <div className={styles.infoItem}>
                         <Text grey>Authenticated by:</Text>
@@ -89,15 +89,13 @@ const InstitutionCredentialsInfo = ({ data }) => {
                </div>
             </div>
             <div className={styles.bottom}>
-               <div className={styles.bottomItemLeft}>
-                  <div className={styles.bottomItem}>
-                     <Text lightBlue semiBold>Certificate ID:</Text>
-                     <Text>some-sort-of-id-here-i-gues-7890</Text>
-                  </div>
-                  <div className={styles.bottomItem}>
-                     <Text lightBlue semiBold>Hedera Blockchain ID:</Text>
-                     <Text>78jcHvxX3nM8NHYRXxhDGJ99HBDRphNdnM7oXCLiXWWu</Text>
-                  </div>
+               <div className={styles.bottomItem}>
+                  <Text lightBlue semiBold>Certificate ID:</Text>
+                  <Text>some-sort-of-id-here-i-gues-7890</Text>
+               </div>
+               <div className={styles.bottomItem}>
+                  <Text lightBlue semiBold>Hedera Blockchain ID:</Text>
+                  <Text>78jcHvxX3nM8NHYRXxhDGJ99HBDRphNdnM7oXCLiXWWu</Text>
                </div>
                <Button blue thin>
                   <div className={styles.buttonRow}>
