@@ -5,7 +5,6 @@ import { Role } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Response } from "express";
 
-import { UserNotFoundException } from "../common/exception";
 import { PrismaService } from "../prisma/prisma.service";
 import { AuthCheckCredentialsRequestDto, AuthRequestDto } from "./dto";
 import { RouteProvider } from "./provider";
@@ -86,6 +85,12 @@ export class AuthService {
 
     const pwMatches = await bcrypt.compareSync(dto.password, user.password);
     if (!pwMatches) throw new UnprocessableEntityException("Invalid credentials");
+  }
+  
+  async logout(response: Response): Promise<string> {
+    const frontendDomain = this.config.get<string>("FRONTEND_DOMAIN");
+    response.cookie("jwt", "", { httpOnly: true, domain: frontendDomain });
+    return "/";
   }
 
   /**

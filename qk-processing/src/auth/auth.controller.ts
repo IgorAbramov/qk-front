@@ -53,4 +53,10 @@ export class AuthController {
   async checkCredentials(@Body() dto: AuthCheckCredentialsRequestDto): Promise<void> {
     await this.authService.checkCredentials(dto);
   }
+  
+  @HttpCode(HttpStatus.OK)
+  @Post("logout")
+  async logout(@Res({ passthrough: true }) response: Response): Promise<string> {
+    return this.authService.logout(response);
+  }
 }
