@@ -4,16 +4,16 @@ import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
 import styles from "../AuthForm.module.scss"
 
-const TwoFactorForm = ({ submitFormHandler }) => {
+const TwoFactorForm = () => {
    return (
       <div className={`${styles.loginPage}`}>
          <div className={styles.wrapper}>
             <Heading blue h1>Check your email</Heading>
             <Text grey>Enter the 4-digit code we’ve sent to your
-               email and then choose your new password</Text>
-            <form onSubmit={submitFormHandler}>
+               email</Text>
+            <form>
                <Input pinCode/>
-               <Text error small>Please enter all 4 digits</Text>
+               {/*<Text error small>Please enter all 4 digits</Text>*/}
                <Button blue bold thin>Next</Button>
                <Text grey>Resend code</Text>
             </form>

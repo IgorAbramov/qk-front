@@ -7,7 +7,7 @@ import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
 import styles from "../AuthForm.module.scss"
 
-const NewPasswordForm = ({ submitFormHandler }) => {
+const NewPasswordForm = () => {
    
    const { back } = useRouter()
    
@@ -15,7 +15,7 @@ const NewPasswordForm = ({ submitFormHandler }) => {
       <div className={`${styles.loginPage} ${styles.forgot} ${styles.newPassword}`}>
          <div className={styles.wrapper}>
             <Heading blue h1>Set new password</Heading>
-            <form onSubmit={submitFormHandler}>
+            <form>
                <Input password placeholder="New Password"/>
                {/*<Text error small>Wrong email</Text>*/}
                <Input password placeholder="Confirm New Password"/>

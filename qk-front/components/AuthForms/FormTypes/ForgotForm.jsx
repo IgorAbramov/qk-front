@@ -5,12 +5,12 @@ import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
 import styles from "../AuthForm.module.scss"
 
-const ForgotForm = ({ submitFormHandler }) => {
+const ForgotForm = () => {
    return (
       <div className={`${styles.loginPage} ${styles.forgot}`}>
          <div className={styles.wrapper}>
             <Heading blue h1>Forgot password</Heading>
-            <form onSubmit={submitFormHandler}>
+            <form>
                <Input email placeholder="Email"/>
                {/*<Text error small>Wrong email</Text>*/}
                <Button blue bold thin>Send 4-digit code</Button>

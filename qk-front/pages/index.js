@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil"
 
 import logo from "../assets/images/qk-logo-text.svg"
 import { formValidationErrorsState, initialLoginFormState, loadingState, loginFormState } from "../atoms"
-import AuthForms from "../components/AuthForms/AuthForms"
+import LoginForm from "../components/AuthForms/FormTypes/LoginForm"
 import Heading from "../components/UI/Heading/Heading"
 import { processingUrl, validateLoginForm } from "../utils"
 
@@ -19,7 +19,7 @@ export default function Home() {
    const [, setFormError] = useRecoilState(formValidationErrorsState)
    const [, setLoading] = useRecoilState(loadingState)
 
-   const handleFormChange = ({ target }) => {
+   const handleLoginFormChange = ({ target }) => {
       const { name, value, type, checked } = target
       if (type !== "checkbox") {
          setFormData({
@@ -41,7 +41,7 @@ export default function Home() {
     * @returns Redirect to dashboard page.
     * @throws Shows error in UI.
     **/
-   const handleFormSubmit = async event => {
+   const handleLoginFormSubmit = async event => {
       event.preventDefault()
       setFormError({})
 
@@ -51,8 +51,9 @@ export default function Home() {
       } else {
          setLoading(true)
          await axios.post(`${processingUrl}/auth/login`, formData, { withCredentials: true })
+            //TODO: Change request url.
             .then(response => {
-               router.push(response.data)
+               router.push(response.data) //TODO: Add here state to show 2FA Form.
             })
             .catch(error => {
                setLoading(false)
@@ -77,7 +78,8 @@ export default function Home() {
       <div className="auth">
          <div className="container authenticate">
             <div className="auth__wrapper">
-               <AuthForms login changeFormHandler={handleFormChange} submitFormHandler={handleFormSubmit}/>
+               <LoginForm changeFormHandler={handleLoginFormChange} submitFormHandler={handleLoginFormSubmit}/>
+               {/*<TwoFactorForm/>*/}
                <div className="logo">
                   <div className="logo__image-wrapper">
                      <Image priority alt="Qualkey" layout="fill"
