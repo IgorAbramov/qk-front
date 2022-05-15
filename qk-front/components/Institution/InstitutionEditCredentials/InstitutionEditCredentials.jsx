@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-import { IconShare } from "../../UI/_Icon"
+import { useRecoilState } from "recoil"
+
+import { showEditCredentialsState } from "../../../atoms"
+import { IconBackLeft, IconShare } from "../../UI/_Icon"
 import Button from "../../UI/Button/Button"
 import Text from "../../UI/Text/Text"
 import InstitutionEditCredentialsItem from "../InstitutionEditCredentialsItem/InstitutionEditCredentialsItem"
@@ -28,9 +31,8 @@ const InstitutionEditCredentials = ({ data }) => {
    const [savedData, setSavedData] = useState({})
    const [formData, setFormData] = useState({})
    const [, setActiveIndex] = useState(null)
-
-   console.log(savedData, "savedData :))")
-   console.log(formData, "formData")
+   const [isInputValid, setIsInputValid] = useState([])
+   const [, setShowEditCredentials] = useRecoilState(showEditCredentialsState)
 
    const handleFormChange = ({ target }, index) => {
       setActiveIndex(index)
@@ -39,6 +41,11 @@ const InstitutionEditCredentials = ({ data }) => {
          ...formData,
          [name]: value
       })
+      if (value === "") {
+         const formDataCopy = { ...formData }
+         delete formDataCopy[name]
+         setFormData(formDataCopy)
+      }
    }
 
    const saveValue = inputName => {
@@ -46,22 +53,52 @@ const InstitutionEditCredentials = ({ data }) => {
          ...savedData,
          [inputName]: formData[inputName]
       })
+      const formDataCopy = { ...formData }
+      delete formDataCopy[inputName]
+      setFormData(formDataCopy)
    }
 
    const resetValue = inputName => {
-      setSavedData({
-         ...savedData,
-         [inputName]: undefined
+      const savedDataCopy = { ...savedData }
+      delete savedDataCopy[inputName]
+      setSavedData(savedDataCopy)
+      const updatedValidationArray = isInputValid.filter(value => value === [inputName])
+      setIsInputValid(updatedValidationArray)
+      const formDataCopy = { ...formData }
+      delete formDataCopy[inputName]
+      setFormData(formDataCopy)
+   }
+
+   const handleFormSubmit = () => {
+      const notValidFieldsLength = validateInputs()
+      if (notValidFieldsLength === 0) {
+         console.log(JSON.stringify(savedData))
+         //TODO: Axios post request.
+         //TODO: setSuccess and setLoading to handle button correctly.
+         //TODO: Go back button imitation and reset all state to default value!
+      } else {
+         console.log("WTF, please!")
+      }
+   }
+
+   const validateInputs = () => {
+      const notValidatedFields = []
+      Object.keys(formData).forEach(key => {
+         notValidatedFields.push(key)
       })
-      setFormData({
-         ...formData,
-         [inputName]: ""
-      })
+      setIsInputValid([...notValidatedFields])
+      return [...notValidatedFields].length
    }
 
    return (
       <div className={styles.edit}>
-         <Text large semiBold>Edit Credentials</Text>
+         <div className={styles.topWrapper}>
+            <Text large semiBold>Edit Credentials</Text>
+            <div className={styles.back} onClick={() => setShowEditCredentials(false)}>
+               <IconBackLeft/>
+               <Text semiBold>Back</Text>
+            </div>
+         </div>
          <div className={styles.wrapper}>
             {
                Object.keys(data).map((key, index) => {
@@ -71,6 +108,7 @@ const InstitutionEditCredentials = ({ data }) => {
                                                             formData={formData}
                                                             handleFormChange={handleFormChange}
                                                             index={index}
+                                                            isInputValid={isInputValid}
                                                             mapping={mockDataMapping}
                                                             mappingKey={key}
                                                             resetValue={resetValue}
@@ -80,7 +118,8 @@ const InstitutionEditCredentials = ({ data }) => {
                })
             }
          </div>
-         <Button blue thin>
+         <Button blue thin disabled={!Object.keys(savedData).length}
+                 onClick={handleFormSubmit}>
             <div className={styles.buttonRow}>
                <IconShare/>
                <Text semiBold>Confirm Changes</Text>

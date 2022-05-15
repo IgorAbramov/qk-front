@@ -55,17 +55,19 @@
   }
 }
 
-.confirm {
-  width: fit-content !important;
-  padding: .5rem 1rem;
-  font-size: 1.45rem;
+.confirmEdit {
   background-color: transparent;
   border: 1px solid $color-success;
   color: $color-success;
+  font-size: 1.45rem;
+  padding: 0.5rem 1rem;
   position: absolute;
-  top: -1rem;
   right: -9.5rem;
-  transition: background-color .2s ease-in-out, color .2s ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  width: fit-content !important;
+
   &:hover,
   &:focus {
     background-color: $color-success;
@@ -73,17 +75,19 @@
   }
 }
 
-.undo {
-  width: fit-content !important;
-  padding: .5rem 1rem;
-  font-size: 1.45rem;
+.undoEdit {
   background-color: transparent;
   border: 1px solid $color-highlight;
   color: $color-highlight;
+  font-size: 1.45rem;
+  padding: 0.5rem 1rem;
   position: absolute;
-  top: -1rem;
   right: -8.6rem;
-  transition: background-color .2s ease-in-out, color .2s ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  width: fit-content !important;
+
   &:hover,
   &:focus {
     background-color: $color-highlight;
