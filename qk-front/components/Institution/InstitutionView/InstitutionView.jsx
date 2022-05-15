@@ -4,6 +4,7 @@ import axios from "axios"
 import { useRecoilValue } from "recoil"
 
 import { currentFileState, filenameState, filePrefixState, uploadModalState } from "../../../atoms"
+import { frontUrl } from "../../../utils"
 import FileUploadModal from "../../UI/Modal/FileUploadModal/FileUploadModal"
 import InstitutionSidebar from "../../UI/Sidebar/InstitutionSidebar/InstitutionSidebar"
 import Topbar from "../../UI/Topbar/Topbar"
@@ -25,7 +26,7 @@ const InstitutionView = ({ children }) => {
       if (currentFile) {
          const removeUploadedFile = async () => {
             const data = JSON.stringify(`${filePrefix}-${fileName}`)
-            await axios.post("api/file-delete", data, { headers: { "Content-type": "application/json" } })
+            await axios.post(`${frontUrl}/api/file-delete`, data, { headers: { "Content-type": "application/json" } })
          }
          removeUploadedFile()
             .then(res => {
@@ -36,7 +37,7 @@ const InstitutionView = ({ children }) => {
             })
       }
    }, [openModal])
-   
+
    return (
       <div className="main__wrapper">
          <InstitutionSidebar/>

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 import Button from "../../UI/Button/Button"
 import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
@@ -36,3 +38,16 @@ const InstitutionEditCredentialsItem = ({
 }
 
 export default InstitutionEditCredentialsItem
+
+InstitutionEditCredentialsItem.propTypes = {
+   mapping: PropTypes.object.isRequired,
+   mappingKey: PropTypes.string.isRequired,
+   data: PropTypes.object.isRequired,
+   formData: PropTypes.object.isRequired,
+   handleFormChange: PropTypes.func.isRequired,
+   index: PropTypes.number.isRequired,
+   saveValue: PropTypes.func.isRequired,
+   savedData: PropTypes.object.isRequired,
+   resetValue: PropTypes.func.isRequired,
+   isInputValid: PropTypes.array.isRequired
+}
