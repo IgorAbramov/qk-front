@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 import PropTypes from "prop-types"
 import { PinInput } from "react-input-pin-code"
 
@@ -17,11 +15,13 @@ const Input = ({
    checkboxText,
    fileName,
    isFileUploaded,
+   pinValues,
+   setPinValues,
+   pinError,
+   loading,
    ...otherProps
 }) => {
-
-   const [pinValues, setPinValues] = useState(["", "", "", ""]) //TODO: Move it to parent component :)
-
+   
    if (type === "email") return (
       <input {...otherProps} className={`${styles.input}
       ${error ? styles.error : ""}`}
@@ -69,7 +69,7 @@ const Input = ({
 
    if (type === "pinCode") return (
       <PinInput autoFocus={true}
-                containerClassName="pinCode" //TODO: Add .error for error scenario.
+                containerClassName={`pinCode${pinError ? " error" : ""}${loading ? " loading" : ""}`}
                 disabled={false} //TODO: Use this while server request.
                 name="pinCode"
                 placeholder=""
@@ -112,4 +112,8 @@ Input.propTypes = {
    checkboxText: PropTypes.string,
    fileName: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
    isFileUploaded: PropTypes.bool,
+   pinValues: PropTypes.array,
+   setPinValues: PropTypes.func,
+   pinError: PropTypes.bool,
+   loading: PropTypes.bool
 }

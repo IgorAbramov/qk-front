@@ -29,11 +29,11 @@ const InstitutionView = ({ children }) => {
             await axios.post(`${frontUrl}/api/file-delete`, data, { headers: { "Content-type": "application/json" } })
          }
          removeUploadedFile()
-            .then(res => {
-               console.log(res)
+            .then(response => {
+               console.log(response)
             })
-            .catch(err => {
-               console.log(err)
+            .catch(error => {
+               console.log(error)
             })
       }
    }, [openModal])
