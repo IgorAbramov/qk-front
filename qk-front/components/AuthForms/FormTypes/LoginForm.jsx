@@ -53,9 +53,9 @@ const LoginForm = ({ submitFormHandler, changeFormHandler }) => {
    )
 }
 
+export default LoginForm
+
 LoginForm.propTypes = {
    submitFormHandler: PropTypes.func.isRequired,
    changeFormHandler: PropTypes.func.isRequired
 }
-
-export default LoginForm
