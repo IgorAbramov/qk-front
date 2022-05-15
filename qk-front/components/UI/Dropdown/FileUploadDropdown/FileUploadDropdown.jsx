@@ -49,8 +49,6 @@ const FileUploadDropdown = ({ handleOption, valueIndex, resetDropdown }) => {
       }
    }, [showDropdown])
 
-   console.log(credentialsData)
-
    return (
       <div className={styles.wrapper}>
          <div className={styles.dropdown}>
