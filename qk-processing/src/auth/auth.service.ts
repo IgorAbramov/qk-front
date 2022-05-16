@@ -6,7 +6,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Response, Request } from "express";
 
 import { PrismaService } from "../prisma/prisma.service";
-import { AuthCheckCredentialsRequestDto, AuthRequestDto } from "./dto";
+import { AuthCheckCredentialsRequestDto, AuthRequestDto, ResetPasswordRequestDto } from "./dto";
 import { RouteProvider } from "./provider";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -19,17 +19,18 @@ export class AuthService {
         private jwt: JwtService,
         private config: ConfigService,
         private routeProvider: RouteProvider,
-  ) {}
+  ) {
+  }
 
   /**
-   * User registration.
-   * @desc Registers user or throws error if email already exists.
-   * @param dto {AuthRequestDto} Validates data in request.
-   * @returns New user.
-   * @throws If email already exists.
-   */
-  async register(dto: AuthRequestDto): Promise<{ uuid: string, email: string, createdAt: Date }> {
-    const hash = this.hashData(dto.password);
+     * User registration.
+     * @desc Registers user or throws error if email already exists.
+     * @param dto {AuthRequestDto} Validates data in request.
+     * @returns New user.
+     * @throws If email already exists.
+     */
+  public async register(dto: AuthRequestDto): Promise<{ uuid: string, email: string, createdAt: Date }> {
+    const hash = AuthService.hashData(dto.password);
 
     try {
       return await this.prisma.user.create({
@@ -55,14 +56,14 @@ export class AuthService {
   }
 
   /**
-   * User login.
-   * @desc Log in user and set jwt in cookies or throws error if credentials does not match.
-   * @param dto {AuthRequestDto} Validates data in request.
-   * @param response {Response} Server response interface.
-   * @returns Sets jwt in httpOnly cookie.
-   * @throws If user does not exist or credentials are incorrect.
-   */
-  async login(dto: AuthRequestDto, response: Response): Promise<string> {
+     * User login.
+     * @desc Log in user and set jwt in cookies or throws error if credentials does not match.
+     * @param dto {AuthRequestDto} Validates data in request.
+     * @param response {Response} Server response interface.
+     * @returns Sets jwt in httpOnly cookie.
+     * @throws If user does not exist or credentials are incorrect.
+     */
+  public async login(dto: AuthRequestDto, response: Response): Promise<string> {
     const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (!user) throw new UnprocessableEntityException("Invalid credentials");
 
@@ -73,13 +74,15 @@ export class AuthService {
     const jwtToken = await this.signToken(user.uuid, user.email, user.role, dto.rememberMe);
     response.cookie("jwt", jwtToken, { httpOnly: true, domain: frontendDomain });
 
+    await this.prisma.user.update({ data: { lastLoginAt: new Date() }, where: { email: user.email } });
+
     return this.routeProvider.onLogin(user);
   }
 
   /**
-   * Check user credentials
-   */
-  async checkCredentials(dto: AuthCheckCredentialsRequestDto): Promise<void> {
+     * Check user credentials
+     */
+  public async checkCredentials(dto: AuthCheckCredentialsRequestDto): Promise<void> {
     const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (!user) throw new UnprocessableEntityException("Invalid credentials");
 
@@ -88,8 +91,8 @@ export class AuthService {
   }
 
   /**
-   * Logout user
-   */
+     * Logout user
+     */
   async logout(response: Response): Promise<string> {
     const frontendDomain = this.config.get<string>("FRONTEND_DOMAIN");
     response.cookie("jwt", "", { httpOnly: true, domain: frontendDomain });
@@ -97,8 +100,8 @@ export class AuthService {
   }
 
   /**
-   * Check if user got valid JWT
-   */
+     * Check if user got valid JWT
+     */
   async checkJwt(request: Request): Promise<string> {
     const secret = this.config.get<string>("JWT_SECRET");
     try {
@@ -110,15 +113,31 @@ export class AuthService {
   }
 
   /**
-   * Signs jwt token.
-   * @desc Signs new jwt token with data.
-   * @param userId {string}
-   * @param email {string}
-   * @param role {Role}
-   * @param rememberMe {boolean}
-   * @returns Jwt token with particular expiration date.
-   */
-  async signToken(userId: string, email: string, role: Role, rememberMe: boolean): Promise<string> {
+     * Reset user password
+     */
+  public async resetPassword(dto: ResetPasswordRequestDto, email: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({ where: { email: email } });
+    // check if old password match
+    const pwMatches = await bcrypt.compareSync(dto.oldPassword, user.password);
+    if (!pwMatches) throw new UnprocessableEntityException("Wrong password");
+
+    // encrypt password and save
+    await this.prisma.user.update({
+      data: { password: await bcrypt.hashSync(dto.newPassword, bcrypt.genSaltSync(10)) },
+      where: { email: user.email },
+    });
+  }
+
+  /**
+     * Signs jwt token.
+     * @desc Signs new jwt token with data.
+     * @param userId {string}
+     * @param email {string}
+     * @param role {Role}
+     * @param rememberMe {boolean}
+     * @returns Jwt token with particular expiration date.
+     */
+  private async signToken(userId: string, email: string, role: Role, rememberMe: boolean): Promise<string> {
     const payload = {
       sub: userId,
       email,
@@ -135,8 +154,7 @@ export class AuthService {
     });
   }
 
-  hashData(data: string):string {
-    const salt = bcrypt.genSaltSync(10);
-    return bcrypt.hashSync(data, salt);
+  private static hashData(data: string): string {
+    return bcrypt.hashSync(data, bcrypt.genSaltSync(10));
   }
 }

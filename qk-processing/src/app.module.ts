@@ -2,16 +2,17 @@ import { AdminModule, AdminModuleOptions } from "@adminjs/nestjs";
 import { Database, Resource } from "@adminjs/prisma";
 import { RedisModule } from "@liaoliaots/nestjs-redis";
 import { BullModule } from "@nestjs/bull";
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { Role } from "@prisma/client";
 import { DMMFClass } from "@prisma/client/runtime";
-import AdminJS, { CurrentAdmin } from "adminjs";
+import AdminJS, { buildFeature, CurrentAdmin } from "adminjs";
 
 import { AuthModule } from "./auth/auth.module";
 import { AwsModule } from "./aws/aws.module";
+import { AwsSesService } from "./aws/aws.ses.service";
 import { CredentialsModule } from "./credentials/credentials.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { PrismaService } from "./prisma/prisma.service";
@@ -32,9 +33,9 @@ AdminJS.registerAdapter({ Database, Resource });
     PrismaModule,
     CredentialsModule,
     AdminModule.createAdminAsync({
-      imports: [PrismaModule],
-      inject: [PrismaService],
-      useFactory: async (prisma: PrismaService): Promise<AdminModuleOptions> => {
+      imports: [PrismaModule, AwsModule],
+      inject: [PrismaService, AwsSesService],
+      useFactory: async (prisma: PrismaService, ses: AwsSesService): Promise<AdminModuleOptions> => {
         const dmmf = ((prisma as any)._dmmf as DMMFClass);
         return {
           adminJsOptions: {
@@ -42,7 +43,75 @@ AdminJS.registerAdapter({ Database, Resource });
             resources: [
               {
                 resource: { model: dmmf.modelMap.User, client: prisma },
-                options: {},
+                options: {
+                  editProperties: ["email", "role", "firstName", "lastName", "institution"],
+                  actions: {
+                    new: {
+                      isAccessible: ({ currentAdmin }): boolean => {
+                        return currentAdmin && ( currentAdmin.role === Role.SUPER_ADMIN );
+                      }, 
+                    },
+                    edit: {
+                      isAccessible: ({ currentAdmin }): boolean => {
+                        return currentAdmin && ( currentAdmin.role === Role.SUPER_ADMIN );
+                      }, 
+                    },
+                    delete: {
+                      isAccessible: ({ currentAdmin }): boolean => {
+                        return currentAdmin && ( currentAdmin.role === Role.SUPER_ADMIN );
+                      }, 
+                    },
+                  },
+                },
+                features: [
+                  buildFeature({
+                    actions: {
+                      new: {
+                        after: async (response) => {
+                          // get first 8 chars of the generated password
+                          const len = response.record.params.password.length;
+                          const password = response.record.params.password.substring(len - 8, len);
+                          Logger.warn(password);
+                          // encrypt password and save
+                          await prisma.user.update({
+                            data: { password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)) },
+                            where: { email: response.record.params.email },
+                          });
+                          // send notification email
+                          await ses.sendWelcomeUserEmail(
+                            response.record.params.email,
+                            response.record.params.firstName,
+                            password,
+                          );
+
+                          return response;
+                        },
+                      },
+                    },
+                  }),
+                ],
+              },
+              {
+                resource: { model: dmmf.modelMap.Institution, client: prisma },
+                options: {
+                  actions: {
+                    new: {
+                      isAccessible: ({ currentAdmin }): boolean => {
+                        return currentAdmin && ( currentAdmin.role === Role.SUPER_ADMIN );
+                      }, 
+                    },
+                    edit: {
+                      isAccessible: ({ currentAdmin }): boolean => {
+                        return currentAdmin && ( currentAdmin.role === Role.SUPER_ADMIN );
+                      }, 
+                    },
+                    delete: {
+                      isAccessible: ({ currentAdmin }): boolean => {
+                        return currentAdmin && ( currentAdmin.role === Role.SUPER_ADMIN );
+                      }, 
+                    },
+                  },
+                },
               },
             ],
           },
@@ -50,15 +119,15 @@ AdminJS.registerAdapter({ Database, Resource });
             authenticate: async (email: string, password: string): Promise<CurrentAdmin> => {
               if (email !== "" && password !== "") {
                 const user = await prisma.user.findUnique({ where: { email: email } });
-                if (user && user.role === Role.SUPER_ADMIN) {
+                if (user && (user.role === Role.SUPER_ADMIN || user.role === Role.ADMIN)) {
                   if (bcrypt.compareSync(
                     password,
-                    user?.password,
+                    user.password,
                     (err, res) => {
-                      console.log(err, res);
+                      Logger.error(err, res);
                     },
                   )) {
-                    return Promise.resolve<CurrentAdmin>({ email: email });
+                    return Promise.resolve<CurrentAdmin>({ email: email, role: user.role });
                   }
                 }
               }
