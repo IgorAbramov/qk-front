@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { Role } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { Response } from "express";
+import { Response, Request } from "express";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { AuthCheckCredentialsRequestDto, AuthRequestDto } from "./dto";
@@ -86,11 +86,27 @@ export class AuthService {
     const pwMatches = await bcrypt.compareSync(dto.password, user.password);
     if (!pwMatches) throw new UnprocessableEntityException("Invalid credentials");
   }
-  
+
+  /**
+   * Logout user
+   */
   async logout(response: Response): Promise<string> {
     const frontendDomain = this.config.get<string>("FRONTEND_DOMAIN");
     response.cookie("jwt", "", { httpOnly: true, domain: frontendDomain });
     return "/";
+  }
+
+  /**
+   * Check if user got valid JWT
+   */
+  async checkJwt(request: Request): Promise<string> {
+    const secret = this.config.get<string>("JWT_SECRET");
+    try {
+      const isJwtValid = await this.jwt.verify(request.cookies.jwt, { secret });
+      if (isJwtValid) return JSON.stringify({ redirectTo: "/dashboard" });
+    } catch (error) {
+      return JSON.stringify({ redirectTo: "" });
+    }
   }
 
   /**
