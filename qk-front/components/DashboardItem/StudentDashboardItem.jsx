@@ -3,8 +3,12 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useRecoilValue } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
+import { credentialsDetailsState, credentialsShowDetailsState } from "../../atoms"
+import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
+import StudentHistoryItem from "../HistoryItem/StudentHistoryItem"
 import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShare, IconShowDropdownBig, IconWarning } from "../UI/_Icon"
 import Input from "../UI/Input/Input"
 import Text from "../UI/Text/Text"
@@ -57,6 +61,8 @@ const StudentDashboardItem = ({ data }) => {
       if (status === "Activate Credentials") return `${styles.activateCredentials} ${styles.student}`
    }
 
+   const showDetails = useRecoilValue(credentialsShowDetailsState)
+   const details = useRecoilValue(credentialsDetailsState)
    const [showCredentialsHistory, setShowCredentialsHistory] = useState(false)
 
    const handleShowDropdown = () => {
@@ -107,24 +113,24 @@ const StudentDashboardItem = ({ data }) => {
                }
             </div>
          </div>
-         {/*<div style={{ display: showCredentialsHistory ? "block" : "none", borderRadius: "0 0 15px 15px" }}>*/}
-         {/*   <div className={styles.history}>*/}
-         {/*      <div className={styles.left}>*/}
-         {/*         <Text bold large>Credentials History</Text>*/}
-         {/*         <div className={styles.historyItemWrapper}>*/}
-         {/*            {mockDataHistory.map((data, index) => (*/}
-         {/*               <InstitutionHistoryItem key={index} data={data}/>*/}
-         {/*            ))}*/}
-         {/*         </div>*/}
-         {/*      </div>*/}
-         {/*      <div className={styles.right}>*/}
-         {/*         <Text bold large>Details</Text>*/}
-         {/*         <div className={styles.rightWrapper}>*/}
-         {/*            {showDetails && <InstitutionDetailsItem data={details}/>}*/}
-         {/*         </div>*/}
-         {/*      </div>*/}
-         {/*   </div>*/}
-         {/*</div>*/}
+         <div style={{ display: showCredentialsHistory ? "block" : "none", borderRadius: "0 0 15px 15px" }}>
+            <div className={styles.history}>
+               <div className={styles.left}>
+                  <Text bold large>Credentials History</Text>
+                  <div className={styles.historyItemWrapper}>
+                     {mockDataHistory.map((data, index) => (
+                        <StudentHistoryItem key={index} data={data}/>
+                     ))}
+                  </div>
+               </div>
+               <div className={styles.right}>
+                  <Text bold large>Details</Text>
+                  <div className={styles.rightWrapper}>
+                     {showDetails && <StudentDetailsItem data={details}/>}
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    )
 }
