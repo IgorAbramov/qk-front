@@ -2,9 +2,9 @@ import moment from "moment"
 import PropTypes from "prop-types"
 import { useRecoilState } from "recoil"
 
-import { credentialsDetailsState, credentialsShowDetailsState } from "../../../atoms"
-import Text from "../../UI/Text/Text"
-import styles from "./InstitutionHistoryItem.module.scss"
+import { credentialsDetailsState, credentialsShowDetailsState } from "../../atoms"
+import Text from "../UI/Text/Text"
+import styles from "./HistoryItem.module.scss"
 
 const InstitutionHistoryItem = ({ data }) => {
    const { date, action, details } = data
