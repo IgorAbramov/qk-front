@@ -35,16 +35,20 @@
       > svg {
         &:first-child {
           pointer-events: none;
+
           path {
             stroke: $color-additional-medium;
           }
         }
       }
+
       > a {
         pointer-events: none;
+
         svg {
           path {
             stroke: $color-additional-medium;
+
             &:nth-child(3),
             &:nth-child(4) {
               fill: $color-additional-medium;
@@ -70,6 +74,7 @@
       > svg {
         &:first-child {
           pointer-events: none;
+
           path {
             stroke: $color-additional-medium;
           }
@@ -81,6 +86,7 @@
 
 .activateCredentials {
   cursor: pointer;
+
   p {
     color: $color-pending;
   }
@@ -183,8 +189,8 @@
   &.student {
     grid-template-columns: 0.2fr 0.6fr 1.3fr 0.8fr 0.7fr;
 
-    @include breakpoint-max($bp-screen-xl) {
-      grid-template-columns: 0.2fr 0.6fr 1.3fr 0.8fr 0.9fr !important;
+    @include breakpoint-max($bp-screen-md) {
+      grid-template-columns: 0.2fr 0.6fr 1.3fr 0.3fr 0.7fr;
     }
 
     > *:not(:last-child) {
@@ -273,6 +279,11 @@
       }
     }
   }
+
+  > button {
+    width: fit-content;
+    padding: 1rem 2rem;
+  }
 }
 
 .history {
@@ -339,9 +350,34 @@
 
 .viewCredentialWrapper {
   grid-template-columns: 1.1fr 1.5fr 0.7fr 1.05fr 0.3fr;
+
+  &.student {
+    grid-template-columns: 0.6fr 1.3fr 0.8fr 0.5fr;
+
+    @include breakpoint-max($bp-screen-xl) {
+      grid-template-columns: 0.6fr 1.3fr 0.8fr 1.1fr;
+    }
+
+    @include breakpoint-max($bp-screen-md) {
+      grid-template-columns: 0.6fr 1.3fr 0.3fr 1.3fr;
+    }
+
+    > div:nth-child(3) {
+      justify-self: center;
+      @include breakpoint-max($bp-screen-xxl) {
+        justify-self: self-start;
+      }
+    }
+  }
 }
 
 .studentSchoolLogo {
   border: 1px solid $color-additional-light !important;
   border-radius: 15px;
+}
+
+.buttonRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
