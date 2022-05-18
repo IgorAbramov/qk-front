@@ -32,22 +32,25 @@
 
   &.student {
     + div {
-      svg {
-        pointer-events: none;
-
-        path {
-          stroke: $color-additional-medium;
-        }
-
-        &:last-child {
+      > svg {
+        &:first-child {
+          pointer-events: none;
           path {
-            fill: $color-additional-medium;
+            stroke: $color-additional-medium;
           }
         }
       }
-
-      a {
-        display: none;
+      > a {
+        pointer-events: none;
+        svg {
+          path {
+            stroke: $color-additional-medium;
+            &:nth-child(3),
+            &:nth-child(4) {
+              fill: $color-additional-medium;
+            }
+          }
+        }
       }
     }
   }
@@ -64,28 +67,20 @@
 
   &.student {
     + div {
-      svg {
-        pointer-events: none;
-
-        path {
-          stroke: $color-additional-medium;
-        }
-
-        &:last-child {
+      > svg {
+        &:first-child {
+          pointer-events: none;
           path {
-            fill: $color-additional-medium;
+            stroke: $color-additional-medium;
           }
         }
-      }
-
-      a {
-        display: none;
       }
     }
   }
 }
 
 .activateCredentials {
+  cursor: pointer;
   p {
     color: $color-pending;
   }
