@@ -36,10 +36,10 @@ const ForgotForm = ({ changeFormHandler, submitFormHandler, buttonError }) => {
                        onClick={() => push("/")}>
                   <div className={styles.buttonRow}>
                      <IconBack/>
-                     {/*TODO: PreventDefault!*/}
                      <p>Back</p>
                   </div>
                </Button>
+               {/*TODO: REMOVE FROM HERE!*/}
             </form>
          </div>
          <div className={styles.copyright}>

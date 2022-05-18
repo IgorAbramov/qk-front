@@ -43,14 +43,18 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
          return !pinValues.includes("")
       }
       if (validation()) {
-         if (!forgotPassword) {
-            setButtonError("")
-            setPinError(false)
-            setLoading(true)
-            axios.post(`${processingUrl}/auth/login`, { ...formData, otp: pinValues.join("") }, { withCredentials: true })
+         setButtonError("")
+         setPinError(false)
+         setLoading(true)
+         if (forgotPassword) {
+            axios.post(`${processingUrl}/auth/login-otp`, {
+               ...forgotFormData,
+               otp: pinValues.join("")
+            }, { withCredentials: true })
                .then(response => {
-                  push(response.data) //TODO: Remove login endpoint logic as JWT is set from /otp!!!
-                  resetFormData()
+                  if (response.status === 200) {
+                     push("forgot/new-password")
+                  }
                })
                .catch(error => {
                   setLoading(false)
@@ -61,7 +65,19 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
                   }
                })
          } else {
-            console.log("hey")
+            axios.post(`${processingUrl}/auth/login`, { ...formData, otp: pinValues.join("") }, { withCredentials: true })
+               .then(response => {
+                  push(response.data)
+                  resetFormData()
+               })
+               .catch(error => {
+                  setLoading(false)
+                  if (error.response.statusText === "Unprocessable Entity") {
+                     setButtonError("Incorrect code")
+                  } else {
+                     setButtonError(error.response.statusText)
+                  }
+               })
          }
       } else {
          setButtonError("Please, fill all numbers")
@@ -80,6 +96,7 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
       setHideResendButton(true)
       return () => {
          setLoading(false)
+
       }
    }, [])
 
