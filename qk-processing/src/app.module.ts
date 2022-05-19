@@ -14,11 +14,11 @@ import { AuthModule } from "./auth/auth.module";
 import { AwsModule } from "./aws/aws.module";
 import { AwsSesService } from "./aws/aws.ses.service";
 import { CredentialsModule } from "./credentials/credentials.module";
+import { HederaModule } from "./hedera/hedera.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { PrismaService } from "./prisma/prisma.service";
 import { UploadModule } from "./upload/upload.module";
 import { UserModule } from "./user/user.module";
-import { HederaModule } from './hedera/hedera.module';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require("bcryptjs");
