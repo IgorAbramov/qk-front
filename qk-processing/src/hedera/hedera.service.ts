@@ -21,11 +21,11 @@ export class HederaService {
     console.log("return credentials");
   }
 
-  setCredentials(): void {
-    console.log("set credentials");
+  async setCredentials(): Promise<string> {
+    return this.getSmartContract();
   }
 
-  async createSmartContract(): Promise<string> {
+  async getSmartContract(): Promise<string> {
     const smartContract = await this.prismaService.smartContract.findFirst({ where: { status: SmartContractStatus.ACTIVE } });
     if (!smartContract) {
       Logger.debug("Creating new smart contract...");
@@ -49,7 +49,7 @@ export class HederaService {
       Logger.debug(`New smart contract created ${newSmartContract.id}`);
       return newSmartContract.id;
     } else {
-      Logger.debug(`Smart contract in use ${smartContract.id}`);
+      Logger.debug(`Smart contract already in use ${smartContract.id}`);
       return smartContract.id;
     }
   }

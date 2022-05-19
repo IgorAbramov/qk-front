@@ -12,6 +12,6 @@ export class HederaController {
   @HttpCode(HttpStatus.OK)
   @Get("test")
   test(): Promise<string> {
-    return this.hederaService.createSmartContract();
+    return this.hederaService.setCredentials();
   }
 }
