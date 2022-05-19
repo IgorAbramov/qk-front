@@ -52,7 +52,7 @@ export class CredentialsService {
       const did = await this.hederaService.generateDid();
       const newCredential = await this.credentialsFactory.createCredentials(newUser, did, mockDataCredentials);
       const fieldsToEncrypt = await this.credentialsRepository.getCredentialsEncryptedFields(newCredential.uuid);
-      await this.hederaService.setCredentials(fieldsToEncrypt);
+      await this.hederaService.saveCredentialsToSmartContract(fieldsToEncrypt);
 
     } else {
       user.credentials.map(c => {
@@ -70,7 +70,7 @@ export class CredentialsService {
       const did = await this.hederaService.generateDid();
       const newCredential = await this.credentialsFactory.createCredentials(user, did, mockDataCredentials);
       const fieldsToEncrypt = await this.credentialsRepository.getCredentialsEncryptedFields(newCredential.uuid);
-      await this.hederaService.setCredentials(fieldsToEncrypt);
+      await this.hederaService.saveCredentialsToSmartContract(fieldsToEncrypt);
     }
   }
 }

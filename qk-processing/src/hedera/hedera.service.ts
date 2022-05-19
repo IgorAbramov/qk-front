@@ -2,7 +2,7 @@ import { HcsIdentityNetworkBuilder } from "@hashgraph/did-sdk-js";
 import { Client, ContractCreateTransaction, FileCreateTransaction, PublicKey } from "@hashgraph/sdk";
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { SmartContractStatus, Credential } from "@prisma/client";
+import { SmartContractStatus } from "@prisma/client";
 
 import { LogicException } from "../common/exception";
 import { FieldsEncryptType } from "../credentials/type/fields.encrypt.type";
@@ -22,7 +22,7 @@ export class HederaService {
     console.log("return credentials");
   }
 
-  async setCredentials(credentials: FieldsEncryptType): Promise<void> {
+  async saveCredentialsToSmartContract(credentials: FieldsEncryptType): Promise<void> {
     console.log(Object.values(credentials).join().replace(/\s/g, ""));
     const smartContract = await this.getSmartContract();
     console.log(smartContract);
