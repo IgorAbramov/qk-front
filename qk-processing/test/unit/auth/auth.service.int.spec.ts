@@ -13,6 +13,8 @@ describe("AuthService Int", () => {
     email: "email@email.com",
     password: "password",
     rememberMe: false,
+    otp: "",
+    otpUuid: "",
   };
   
   beforeAll(async () => {
@@ -20,7 +22,7 @@ describe("AuthService Int", () => {
 
     prisma = moduleRef.get<PrismaService>(PrismaService);
     authService = moduleRef.get<AuthService>(AuthService);
-    await prisma.cleanDatabase();
+    // await prisma.cleanDatabase();
   });
 
   describe("Register User", () => {
