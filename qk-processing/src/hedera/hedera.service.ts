@@ -4,6 +4,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { RuntimeException } from "@nestjs/core/errors/exceptions/runtime.exception";
 
+import { LogicException } from "../common/exception";
 import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
@@ -33,6 +34,7 @@ export class HederaService {
     
     while (true) {
       try {
+
         const identityNetwork = await new HcsIdentityNetworkBuilder()
           .setNetwork("testnet")
           .setPublicKey(PublicKey.fromString(publicKey))
@@ -44,7 +46,7 @@ export class HederaService {
         
       } catch (err) {
         Logger.error(err, err.stack);
-        if (err.name === "TypeError") throw new RuntimeException();
+        if (err.name === "TypeError") throw new LogicException("Something went wrong");
       }
     }
   }
