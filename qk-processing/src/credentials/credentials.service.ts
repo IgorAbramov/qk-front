@@ -3,14 +3,16 @@ import { CredentialStatus, Role, User } from "@prisma/client";
 
 import { HederaService } from "../hedera/hedera.service";
 import { PrismaService } from "../prisma/prisma.service";
+import { CredentialsFactory } from "./credentials.factory";
 import { CredentialsRepository } from "./credentials.repository";
 
 const mockDataCredentials = {
   email: "a@k.lv",
   institutionUuid: "89f43c8f-1434-4caf-92bd-990b3f112da1",
   authenticatedBy: "4728859d-622b-4ec0-8f60-75caa0d17c13",
-  qualificationLevel: "Doctors",
+  qualificationLevel: "Bachelors",
   qualificationName: "Bachelor of Web3 Development",
+  graduatedName: "Andrew Kramer",
 };
 
 /**
@@ -20,6 +22,7 @@ const mockDataCredentials = {
 export class CredentialsService {
   constructor(
         private credentialsRepository: CredentialsRepository,
+        private credentialsFactory: CredentialsFactory,
         private prismaService: PrismaService,
         private hederaService: HederaService) {
   }
@@ -47,71 +50,25 @@ export class CredentialsService {
       });
 
       const did = await this.hederaService.generateDid();
+      const newCredential = await this.credentialsFactory.createCredentials(newUser, did, mockDataCredentials);
+      // await this.hederaService.setCredentials(newCredential);
 
-      const newCredential = await this.prismaService.credential.create({
-        data: {
-          did,
-          status: CredentialStatus.NEW,
-          studentUuid: newUser.uuid,
-          institutionUuid: mockDataCredentials.institutionUuid,
-          certificateId: "certificated-id",
-          graduatedName: "Andrew Kramer",
-          authenticatedBy: mockDataCredentials.authenticatedBy,
-          qualificationName: mockDataCredentials.qualificationName,
-          majors: "",
-          minors: "",
-          authenticatedTitle: "",
-          awardingInstitution: "Riga School of Engineering",
-          qualificationLevel: mockDataCredentials.qualificationLevel,
-          awardLevel: "Honors",
-          studyLanguage: "Spanish",
-          info: "",
-          gpaFinalGrade: "9.1",
-          studyStartedAt: new Date(1117372840),
-          studyEndedAt: new Date(1117372840),
-          graduatedAt: new Date(1117372840),
-        },
-      });
-      console.log(newCredential, "NEW CREDENTIALS!");
     } else {
       user.credentials.map(c => {
         if (
           c.institutionUuid === mockDataCredentials.institutionUuid &&
-            c.qualificationLevel === mockDataCredentials.qualificationLevel &&
-            c.qualificationName === mockDataCredentials.qualificationName
+                    c.qualificationLevel === mockDataCredentials.qualificationLevel &&
+                    c.qualificationName === mockDataCredentials.qualificationName &&
+                    c.graduatedName === mockDataCredentials.graduatedName
         ) {
           Logger.error(`Adding the same credentials for user ${user.email}`);
           throw new ForbiddenException(`Adding the same credentials for user ${user.email}`);
         }
       });
-      const did = await this.hederaService.generateDid();
-      
-      const newCredential = await this.prismaService.credential.create({
-        data: {
-          did,
-          status: CredentialStatus.NEW,
-          studentUuid: user.uuid,
-          institutionUuid: mockDataCredentials.institutionUuid,
-          certificateId: "certificated-id",
-          graduatedName: "Andrew Kramer",
-          authenticatedBy: mockDataCredentials.authenticatedBy,
-          qualificationName: mockDataCredentials.qualificationName,
-          majors: "",
-          minors: "",
-          authenticatedTitle: "",
-          awardingInstitution: "Riga School of Engineering",
-          qualificationLevel: mockDataCredentials.qualificationLevel,
-          awardLevel: "Honors",
-          studyLanguage: "Spanish",
-          info: "",
-          gpaFinalGrade: "9.1",
-          studyStartedAt: new Date(1117372840),
-          studyEndedAt: new Date(1117372840),
-          graduatedAt: new Date(1117372840),
-        },
-      });
 
-      console.log(newCredential, "UPDATE CURRENT USER TO NEW CREDS!");
+      const did = await this.hederaService.generateDid();
+      const newCredential = await this.credentialsFactory.createCredentials(user, did, mockDataCredentials);
+      // await this.hederaService.setCredentials(newCredential);
     }
   }
 }
