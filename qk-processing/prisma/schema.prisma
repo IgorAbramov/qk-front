@@ -207,8 +207,14 @@ model OneTimePassword {
     @@map("oneTimePasswords")
 }
 
+enum SmartContractStatus {
+    ACTIVE
+    STORAGE_EXCEEDED
+}
+
 model SmartContract {
     id              String @unique
+    status          SmartContractStatus @default(ACTIVE)
     deployedAt      DateTime @default(now())
     transactions    Transaction[]
 
