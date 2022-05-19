@@ -18,6 +18,7 @@ import { PrismaModule } from "./prisma/prisma.module";
 import { PrismaService } from "./prisma/prisma.service";
 import { UploadModule } from "./upload/upload.module";
 import { UserModule } from "./user/user.module";
+import { HederaModule } from './hedera/hedera.module';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require("bcryptjs");
@@ -162,6 +163,7 @@ AdminJS.registerAdapter({ Database, Resource });
     }),
     UploadModule,
     AwsModule,
+    HederaModule,
   ],
 })
 export class AppModule {
