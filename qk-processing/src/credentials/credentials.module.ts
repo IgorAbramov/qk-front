@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { HederaService } from "../hedera/hedera.service";
+import { HederaModule } from "../hedera/hedera.module";
 import { CredentialsCreateConsumer } from "./consumer/credentials-create.consumer";
 import { CredentialsController } from "./credentials.controller";
 import { CredentialsFactory } from "./credentials.factory";
@@ -9,6 +9,7 @@ import { CredentialsService } from "./credentials.service";
 import { CredentialsCreateHandler } from "./handler/credentials-create.handler";
 
 @Module({
+  imports: [HederaModule],
   controllers: [CredentialsController],
   providers: [
     CredentialsService,
@@ -16,7 +17,6 @@ import { CredentialsCreateHandler } from "./handler/credentials-create.handler";
     CredentialsCreateHandler,
     CredentialsFactory,
     CredentialsCreateConsumer,
-    HederaService,
   ],
 })
 export class CredentialsModule {}
