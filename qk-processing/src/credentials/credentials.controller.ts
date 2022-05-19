@@ -21,9 +21,4 @@ export class CredentialsController {
   getCredentials(@GetUser() user: User):string {
     return this.credentialsService.getCredentials(user);
   }
-  @HttpCode(HttpStatus.OK)
-  @Get("test")
-    test(): Promise<void> {
-      return this.credentialsService.mapCredentials();
-    }
 }

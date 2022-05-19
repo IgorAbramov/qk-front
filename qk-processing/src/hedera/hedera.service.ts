@@ -5,7 +5,6 @@ import { ConfigService } from "@nestjs/config";
 import { SmartContractStatus } from "@prisma/client";
 
 import { LogicException } from "../common/exception";
-import { FieldsEncryptType } from "../credentials/type/fields.encrypt.type";
 import { PrismaService } from "../prisma/prisma.service";
 import * as contract from "./contract/Qualkey.json";
 
@@ -18,21 +17,19 @@ export class HederaService {
   ) {
   }
 
-  getCredentials(): void {
+  getCredentialsFromSmartContact(): void {
     console.log("return credentials");
   }
 
-  async saveCredentialsToSmartContract(credentials: FieldsEncryptType): Promise<void> {
-    console.log(Object.values(credentials).join().replace(/\s/g, ""));
-    const smartContract = await this.getSmartContract();
-    console.log(smartContract);
+  saveCredentialsToSmartContract(): void {
+    console.log("save credentials");
   }
 
-  public async getSmartContract(): Promise<string> {
+  public async getSmartContractId(): Promise<string> {
     const smartContract = await this.prismaService.smartContract.findFirst({ where: { status: SmartContractStatus.ACTIVE } });
     if (!smartContract) {
       Logger.debug("Creating new smart contract...");
-      const client = await this.createClient();
+      const client = await this.createHederaClient();
 
       const bytecode = contract.data.bytecode.object;
       const fileCreateTx = new FileCreateTransaction()
@@ -58,7 +55,7 @@ export class HederaService {
   }
 
   public async generateDid(): Promise<string> {
-    const client = await this.createClient();
+    const client = await this.createHederaClient();
 
     const publicKey = this.config.get<string>("HEDERA_PUBLIC_KEY");
 
@@ -81,7 +78,7 @@ export class HederaService {
     }
   }
 
-  private async createClient(): Promise<Client> {
+  private async createHederaClient(): Promise<Client> {
     const accountId = this.config.get<string>("HEDERA_ACCOUNT_ID");
     const privateKey = this.config.get<string>("HEDERA_PRIVATE_KEY");
 
