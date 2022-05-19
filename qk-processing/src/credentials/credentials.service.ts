@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, Logger } from "@nestjs/common";
-import { Role, User } from "@prisma/client";
+import { CredentialStatus, Role, User } from "@prisma/client";
 
 import { HederaService } from "../hedera/hedera.service";
 import { PrismaService } from "../prisma/prisma.service";
@@ -51,7 +51,7 @@ export class CredentialsService {
       const newCredential = await this.prismaService.credential.create({
         data: {
           did,
-          status: "NEW",
+          status: CredentialStatus.NEW,
           studentUuid: newUser.uuid,
           institutionUuid: mockDataCredentials.institutionUuid,
           certificateId: "certificated-id",
@@ -89,7 +89,7 @@ export class CredentialsService {
       const newCredential = await this.prismaService.credential.create({
         data: {
           did,
-          status: "NEW",
+          status: CredentialStatus.NEW,
           studentUuid: user.uuid,
           institutionUuid: mockDataCredentials.institutionUuid,
           certificateId: "certificated-id",
@@ -112,7 +112,6 @@ export class CredentialsService {
       });
 
       console.log(newCredential, "UPDATE CURRENT USER TO NEW CREDS!");
-      console.log(user, "UPDATED USER!");
     }
   }
 }
