@@ -1,19 +1,20 @@
 import { HcsIdentityNetworkBuilder } from "@hashgraph/did-sdk-js";
 import { Client, ContractCreateTransaction, FileCreateTransaction, PublicKey } from "@hashgraph/sdk";
-import { ForbiddenException, Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { SmartContractStatus } from "@prisma/client";
+import { SmartContractStatus, Credential } from "@prisma/client";
 
 import { LogicException } from "../common/exception";
+import { FieldsEncryptType } from "../credentials/type/fields.encrypt.type";
 import { PrismaService } from "../prisma/prisma.service";
 import * as contract from "./contract/Qualkey.json";
 
 @Injectable()
 export class HederaService {
   constructor(
-        private configService: ConfigService,
-        private prismaService: PrismaService,
-        private config: ConfigService,
+        private readonly configService: ConfigService,
+        private readonly prismaService: PrismaService,
+        private readonly config: ConfigService,
   ) {
   }
 
@@ -21,11 +22,13 @@ export class HederaService {
     console.log("return credentials");
   }
 
-  async setCredentials(): Promise<string> {
-    return this.getSmartContract();
+  async setCredentials(credentials: FieldsEncryptType): Promise<void> {
+    console.log(Object.values(credentials).join().replace(/\s/g, ""));
+    const smartContract = await this.getSmartContract();
+    console.log(smartContract);
   }
 
-  async getSmartContract(): Promise<string> {
+  public async getSmartContract(): Promise<string> {
     const smartContract = await this.prismaService.smartContract.findFirst({ where: { status: SmartContractStatus.ACTIVE } });
     if (!smartContract) {
       Logger.debug("Creating new smart contract...");
@@ -54,9 +57,9 @@ export class HederaService {
     }
   }
 
-  async generateDid(): Promise<string> {
+  public async generateDid(): Promise<string> {
     const client = await this.createClient();
-      
+
     const publicKey = this.config.get<string>("HEDERA_PUBLIC_KEY");
 
     while (true) {
@@ -78,7 +81,7 @@ export class HederaService {
     }
   }
 
-  async createClient(): Promise<Client> {
+  private async createClient(): Promise<Client> {
     const accountId = this.config.get<string>("HEDERA_ACCOUNT_ID");
     const privateKey = this.config.get<string>("HEDERA_PRIVATE_KEY");
 

@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, Logger } from "@nestjs/common";
-import { CredentialStatus, Role, User } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 
 import { HederaService } from "../hedera/hedera.service";
 import { PrismaService } from "../prisma/prisma.service";
@@ -21,10 +21,10 @@ const mockDataCredentials = {
 @Injectable()
 export class CredentialsService {
   constructor(
-        private credentialsRepository: CredentialsRepository,
-        private credentialsFactory: CredentialsFactory,
-        private prismaService: PrismaService,
-        private hederaService: HederaService) {
+        private readonly credentialsRepository: CredentialsRepository,
+        private readonly credentialsFactory: CredentialsFactory,
+        private readonly prismaService: PrismaService,
+        private readonly hederaService: HederaService) {
   }
 
   getCredentials(user: User): string {
@@ -51,7 +51,8 @@ export class CredentialsService {
 
       const did = await this.hederaService.generateDid();
       const newCredential = await this.credentialsFactory.createCredentials(newUser, did, mockDataCredentials);
-      // await this.hederaService.setCredentials(newCredential);
+      const fieldsToEncrypt = await this.credentialsRepository.getCredentialsEncryptedFields(newCredential.uuid);
+      await this.hederaService.setCredentials(fieldsToEncrypt);
 
     } else {
       user.credentials.map(c => {
@@ -68,7 +69,8 @@ export class CredentialsService {
 
       const did = await this.hederaService.generateDid();
       const newCredential = await this.credentialsFactory.createCredentials(user, did, mockDataCredentials);
-      // await this.hederaService.setCredentials(newCredential);
+      const fieldsToEncrypt = await this.credentialsRepository.getCredentialsEncryptedFields(newCredential.uuid);
+      await this.hederaService.setCredentials(fieldsToEncrypt);
     }
   }
 }
