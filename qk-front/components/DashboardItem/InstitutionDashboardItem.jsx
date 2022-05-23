@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil"
 
 import avatar from "../../assets/images/avatarMock.webp"
 import { credentialsDetailsState, credentialsShowDetailsState } from "../../atoms"
+import { validateStatus, validateStatusStyles } from "../../utils"
 import InstitutionDetailsItem from "../DetailsItem/InstitutionDetailsItem"
 import InstitutionHistoryItem from "../HistoryItem/InstitutionHistoryItem"
 import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShowDropdownBig } from "../UI/_Icon"
@@ -81,20 +82,6 @@ const InstitutionDashboardItem = ({ data }) => {
 
    const { pathname } = useRouter()
 
-   const validateStatusStyles = () => {
-      if (data.status === "ACTIVATED") return styles.activated
-      if (data.status === "UPLOADED_TO_BLOCKCHAIN") return styles.uploaded
-      if (data.status === "WITHDRAWN") return styles.withdrawn
-      // if (data.status === "Expired") return styles.expired
-   }
-
-   const validateStatus = () => {
-      if (data.status === "ACTIVATED") return "Activated"
-      if (data.status === "UPLOADED_TO_BLOCKCHAIN") return "Uploaded"
-      if (data.status === "WITHDRAWN") return "Withdrawn"
-      // if (data.status === "Expired") return "Expired"
-   }
-
    const showDetails = useRecoilValue(credentialsShowDetailsState)
    const details = useRecoilValue(credentialsDetailsState)
    const [showCredentialsHistory, setShowCredentialsHistory] = useState(false)
@@ -125,9 +112,9 @@ const InstitutionDashboardItem = ({ data }) => {
                <IconAcademicCap/>
                <Text>{`${data.qualificationName.slice(0, 27).trim()}...`}</Text>
             </div>
-            <div className={`${styles.status} ${validateStatusStyles()}`}>
+            <div className={`${styles.status} ${validateStatusStyles(data.status)}`}>
                <IconInfo/>
-               <Text bold>{validateStatus()}</Text>
+               <Text bold>{validateStatus(data.status)}</Text>
             </div>
             <Text bold>{moment.utc(data.updatedAt).format("HH:mm DD/MM/YYYY")}</Text>
             <div className={styles.actions}>
