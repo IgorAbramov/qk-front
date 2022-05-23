@@ -1,5 +1,5 @@
 import { Controller, ForbiddenException, Get, HttpCode, HttpStatus, Query, UseGuards } from "@nestjs/common";
-import { Credential, Role, User } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 
 import { GetUser } from "../auth/decorator";
 import { JwtGuard } from "../auth/guard";

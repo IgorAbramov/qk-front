@@ -49,7 +49,6 @@ export default function Dashboard({ data, serverErrorMessage }) {
 
 export const getServerSideProps = async (ctx) => {
    const { req, query } = ctx
-   console.log(query.filter)
    let response
 
    if (query.filter) {
