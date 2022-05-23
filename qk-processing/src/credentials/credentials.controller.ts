@@ -28,7 +28,7 @@ export class CredentialsController {
       @GetUser() user: User,
       @Query("uuid") uuid: string,
       @Query("filter") filter: string,
-  ): Promise<Credential[]> {
+  ): Promise<any> {
     if (uuid && uuid !== "") {
       return [await this.credentialsRepository.getByUuid(uuid, user)];
     }

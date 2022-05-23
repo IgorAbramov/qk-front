@@ -78,15 +78,14 @@ const mockDataHistory = [
 ]
 
 const InstitutionDashboardItem = ({ data }) => {
-   const { diploma, lastModified, status, student } = data
 
    const { pathname } = useRouter()
 
    const validateStatus = () => {
-      if (status === "Activated") return styles.activated
-      if (status === "Uploaded") return styles.uploaded
-      if (status === "Withdrawn") return styles.withdrawn
-      if (status === "Expired") return styles.expired
+      if (data.status === "ACTIVATED") return styles.activated
+      if (data.status === "UPLOADED_TO_BLOCKCHAIN") return styles.uploaded
+      if (data.status === "WITHDRAWN") return styles.withdrawn
+      // if (data.status === "Expired") return styles.expired
    }
 
    const showDetails = useRecoilValue(credentialsShowDetailsState)
@@ -113,19 +112,19 @@ const InstitutionDashboardItem = ({ data }) => {
             <div className={styles.itemWrapper}>
                <Image alt="portrait" className={styles.photo} height={50}
                       quality={100} src={avatar} width={50}/>
-               <Text bold>{student}</Text>
+               <Text bold>{data.graduatedName}</Text>
             </div>
             <div className={styles.itemWrapper}>
                <IconAcademicCap/>
-               <Text>{`${diploma.slice(0, 27).trim()}...`}</Text>
+               <Text>{`${data.qualificationName.slice(0, 27).trim()}...`}</Text>
             </div>
             <div className={`${styles.status} ${validateStatus()}`}>
                <IconInfo/>
-               <Text bold>{status}</Text>
+               <Text bold>{data.status}</Text>
             </div>
-            <Text bold>{moment(lastModified * 1000).format("hh:mm DD/MM/YYYY")}</Text>
+            <Text bold>{moment.utc(data.updatedAt).format("HH:mm DD/MM/YYYY")}</Text>
             <div className={styles.actions}>
-               <Link passHref href={`${pathname}/credentials-view`}>
+               <Link passHref href={`${pathname}/${data.uuid}`}>
                   <a>
                      <IconOpenViewPage/>
                   </a>

@@ -14,7 +14,7 @@ export class CredentialsRepository {
   ) {
   }
 
-  public async getByUuid(uuid: string, user: User): Promise<Credential> {
+  public async getByUuid(uuid: string, user: User): Promise<{ data: Credential, role: Role }> {
     const credentials = await this.prismaService.credential.findUnique({ where:{ uuid:uuid } });
     assert(null !== credentials, "credentials should not be null");
 
@@ -26,12 +26,15 @@ export class CredentialsRepository {
       throw new ForbiddenException();
     }
 
-    return credentials;
+    return {
+      data: credentials,
+      role: user.role,
+    };
   }
 
-  public async getAllForStudent(user: User, filter?: string): Promise<Credential[]> {
+  public async getAllForStudent(user: User, filter?: string): Promise<string> {
     if (filter && filter !== "") {
-      return await this.prismaService.credential.findMany({
+      const data = await this.prismaService.credential.findMany({
         where: {
           OR: [
             { graduatedName: { contains: filter } },
@@ -43,14 +46,22 @@ export class CredentialsRepository {
           ],
         },
       });
+      return JSON.stringify({
+        data,
+        role: user.role,
+      });
     } else {
-      return await this.prismaService.credential.findMany({ where:{ studentUuid: user.uuid } });
+      const data = await this.prismaService.credential.findMany({ where:{ studentUuid: user.uuid } });
+      return JSON.stringify({
+        data,
+        role: user.role,
+      });
     }
   }
 
-  public async getAllForInstitution(user: User, filter?: string): Promise<Credential[]> {
+  public async getAllForInstitution(user: User, filter?: string): Promise<string> {
     if (filter && filter !== "") {
-      return await this.prismaService.credential.findMany({
+      const data = await this.prismaService.credential.findMany({
         where: {
           OR: [
             { graduatedName: { contains: filter } },
@@ -62,8 +73,16 @@ export class CredentialsRepository {
           ],
         },
       });
+      return JSON.stringify({
+        data,
+        role: user.role,
+      });
     } else {
-      return await this.prismaService.credential.findMany({ where:{ institutionUuid: user.institutionUuid } });
+      const data = await this.prismaService.credential.findMany({ where:{ institutionUuid: user.institutionUuid } });
+      return JSON.stringify({
+        data,
+        role: user.role,
+      });
     }
   }
 }
