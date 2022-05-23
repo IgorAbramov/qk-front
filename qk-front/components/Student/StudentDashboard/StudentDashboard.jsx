@@ -1,3 +1,7 @@
+import { useState } from "react"
+
+import { useRouter } from "next/router"
+
 import StudentDashboardItem from "../../DashboardItem/StudentDashboardItem"
 import { IconShare } from "../../UI/_Icon"
 import Button from "../../UI/Button/Button"
@@ -6,10 +10,30 @@ import Text from "../../UI/Text/Text"
 import styles from "./StudentDashboard.module.scss"
 
 const StudentDashboard = ({ data }) => {
+
+   const router = useRouter()
+   const [searchValue, setSearchValue] = useState("")
+
+   const handleInputChange = ({ target }) => {
+      setSearchValue(target.value)
+   }
+
+   const handleSubmitSearch = e => {
+      if (searchValue.trim() !== "") {
+         if (e.key === "Enter") {
+            router.push({
+               pathname: "/dashboard",
+               query: { filter: searchValue }
+            })
+         }
+      }
+   }
+
    return (
       <>
          <div className={styles.searchShareWrapper}>
-            <Input type={"search"}/>
+            <Input type={"search"} value={searchValue} onChange={handleInputChange}
+                   onKeyDown={handleSubmitSearch}/>
             <Button blue disabled thin>
                <div className={styles.buttonRow}>
                   <IconShare/>

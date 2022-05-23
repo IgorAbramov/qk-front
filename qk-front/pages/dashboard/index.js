@@ -47,15 +47,32 @@ export default function Dashboard({ data, serverErrorMessage }) {
    )
 }
 
-export const getServerSideProps = async ({ req }) => {
-   try {
-      const response = await axios.get(`${apiUrl}/credential`, {
-         withCredentials: true,
-         headers: { Cookie: req.headers.cookie || "" }
-      })
-      const { data } = response
-      return { props: { data } }
-   } catch (error) {
-      return { props: { serverErrorMessage: error.response.statusText } }
+export const getServerSideProps = async (ctx) => {
+   const { req, query } = ctx
+   console.log(query.filter)
+   let response
+
+   if (query.filter) {
+      try {
+         response = await axios.get(`${apiUrl}/credential?filter=${query.filter}`, {
+            withCredentials: true,
+            headers: { Cookie: req.headers.cookie || "" }
+         })
+         const { data } = response
+         return { props: { data } }
+      } catch (error) {
+         return { props: { serverErrorMessage: error.response.statusText } }
+      }
+   } else {
+      try {
+         response = await axios.get(`${apiUrl}/credential`, {
+            withCredentials: true,
+            headers: { Cookie: req.headers.cookie || "" }
+         })
+         const { data } = response
+         return { props: { data } }
+      } catch (error) {
+         return { props: { serverErrorMessage: error.response.statusText } }
+      }
    }
 }

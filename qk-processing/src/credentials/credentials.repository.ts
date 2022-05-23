@@ -37,9 +37,9 @@ export class CredentialsRepository {
       const data = await this.prismaService.credential.findMany({
         where: {
           OR: [
-            { graduatedName: { contains: filter } },
-            { awardingInstitution: { contains: filter } },
-            { qualificationName: { contains: filter } },
+            { graduatedName: { contains: filter, mode: "insensitive" } },
+            { awardingInstitution: { contains: filter, mode: "insensitive" } },
+            { qualificationName: { contains: filter, mode: "insensitive" } },
           ],
           AND: [
             { studentUuid: user.uuid },
@@ -64,9 +64,9 @@ export class CredentialsRepository {
       const data = await this.prismaService.credential.findMany({
         where: {
           OR: [
-            { graduatedName: { contains: filter } },
-            { awardingInstitution: { contains: filter } },
-            { qualificationName: { contains: filter } },
+            { graduatedName: { contains: filter, mode: "insensitive" } },
+            { awardingInstitution: { contains: filter, mode: "insensitive" } },
+            { qualificationName: { contains: filter, mode: "insensitive" } },
           ],
           AND: [
             { institutionUuid: user.institutionUuid },
