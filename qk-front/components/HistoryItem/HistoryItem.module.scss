@@ -12,7 +12,7 @@
   transition: background-color 0.2s ease-in-out;
 
   @include breakpoint-max($bp-screen-sm) {
-    grid-template-columns: 1fr .2fr;
+    grid-template-columns: 1fr 0.2fr;
   }
 
   &:hover {
