@@ -63,7 +63,7 @@ export default function NewPassword() {
     */
    useEffect(() => {
       resetRepeatPasswordFormData()
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 
    return (

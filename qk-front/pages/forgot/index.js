@@ -72,7 +72,7 @@ export default function ForgotPassword() {
     */
    useEffect(() => {
       resetFormData()
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       <div className="auth">

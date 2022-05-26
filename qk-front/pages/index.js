@@ -88,14 +88,14 @@ export default function Home({ serverErrorMessage }) {
             })
             .catch(error => console.log(error))
       }
-   }, [showTwoFactor])
+   }, [showTwoFactor]) // eslint-disable-line react-hooks/exhaustive-deps
 
    /**
     * Stops showing loading in UI.
     */
    useEffect(() => {
       setLoading(false)
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
    

@@ -98,7 +98,7 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
       return () => {
          clearInterval(timerRef.current)
       }
-   }, [canBeResendAt])
+   }, [canBeResendAt]) // eslint-disable-line react-hooks/exhaustive-deps
 
    /**
     * Hides reset button and sets loading to false.

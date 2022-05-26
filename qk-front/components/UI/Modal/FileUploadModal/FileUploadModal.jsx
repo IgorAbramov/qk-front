@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 import axios from "axios"
 import { useRecoilState, useResetRecoilState } from "recoil"
@@ -178,7 +178,7 @@ const FileUploadModal = () => {
             setFileUploadModalErrorButton("")
          }
       }
-   }, [dropdownSelectionListener.length])
+   }, [dropdownSelectionListener.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
    /**
     * Remove error inside modal.
@@ -186,7 +186,7 @@ const FileUploadModal = () => {
    useEffect(() => {
       setFileUploadModalError("")
       setFileUploadModalErrorButton("")
-   }, [openModal, parsedValuesFromUpload])
+   }, [openModal, parsedValuesFromUpload]) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       uploadSuccess

@@ -69,7 +69,7 @@ const Sidebar = ({ institution }) => {
       return () => {
          document.removeEventListener("click", checkIfClickedOutside)
       }
-   }, [burgerMenuActive])
+   }, [burgerMenuActive]) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       <div className={burgerMenuActive ? styles.darken : ""}>

@@ -9,7 +9,7 @@ export const config = { api: { bodyParser: false } }
 /**
  * File upload to front-end server processing.
  **/
-export default async (req, res) => {
+export default async (req, res) => { // eslint-disable-line import/no-anonymous-default-export
    if (req.method === "POST") {
       const data = await new Promise((resolve, reject) => {
          const form = new IncomingForm()

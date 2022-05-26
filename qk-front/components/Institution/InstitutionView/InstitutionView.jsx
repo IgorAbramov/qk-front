@@ -39,7 +39,7 @@ const InstitutionView = ({ children, institution }) => {
                console.log(error)
             })
       }
-   }, [openModal])
+   }, [openModal]) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       <div className="main__wrapper">
