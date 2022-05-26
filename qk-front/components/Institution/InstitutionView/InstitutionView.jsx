@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
 import axios from "axios"
-import { useRecoilValue } from "recoil"
+import { useRecoilValue, useResetRecoilState } from "recoil"
 
 import { currentFileState, filenameState, filePrefixState, uploadModalState } from "../../../atoms"
 import { frontUrl } from "../../../utils"
@@ -10,6 +10,10 @@ import Sidebar from "../../UI/Sidebar/Sidebar"
 import Topbar from "../../UI/Topbar/Topbar"
 
 const InstitutionView = ({ children, institution }) => {
+
+   const resetCurrentFile = useResetRecoilState(currentFileState)
+   const resetFilePrefix = useResetRecoilState(filePrefixState)
+   const resetFileName = useResetRecoilState(filenameState)
 
    const openModal = useRecoilValue(uploadModalState)
    const currentFile = useRecoilValue(currentFileState)
@@ -29,8 +33,10 @@ const InstitutionView = ({ children, institution }) => {
             await axios.post(`${frontUrl}/api/file-delete`, data, { headers: { "Content-type": "application/json" } })
          }
          removeUploadedFile()
-            .then(response => {
-               console.log(response)
+            .then(() => {
+               resetCurrentFile()
+               resetFileName()
+               resetFilePrefix()
             })
             .catch(error => {
                console.log(error)

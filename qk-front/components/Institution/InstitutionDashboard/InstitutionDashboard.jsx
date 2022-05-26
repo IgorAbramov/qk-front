@@ -7,7 +7,7 @@ import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
 import styles from "./InstitutionDashboard.module.scss"
 
-const InstitutionDashboard = ({ data }) => {
+const InstitutionDashboard = ({ data, allCredentialsData }) => {
 
    const router = useRouter()
    const [searchValue, setSearchValue] = useState("")
@@ -30,8 +30,7 @@ const InstitutionDashboard = ({ data }) => {
    return (
       <>
          <div className={styles.searchWrapper}>
-            <Text blackSpan semiBold>Showing <span>5</span> from <span>{data.length}</span> results</Text>
-            {/*TODO: Ask Igor, really dva zaprosa or what?*/}
+            <Text blackSpan semiBold>Showing <span>{data.length}</span> from <span>{allCredentialsData?.data.length ? allCredentialsData.data.length : data.length}</span> results</Text>
             <Input type={"search"} onChange={handleInputChange} onKeyDown={handleSubmitSearch}/>
          </div>
          <div className={styles.contentWrapper}>

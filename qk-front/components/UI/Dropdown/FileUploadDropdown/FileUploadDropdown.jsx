@@ -4,9 +4,9 @@ import PropTypes from "prop-types"
 import { useRecoilState, useRecoilValue } from "recoil"
 
 import { credentialsState, dropdownSelectionListenerState } from "../../../../atoms"
-import { requiredMappingFields } from "../../../../utils"
 import { IconShowDropdown, IconX } from "../../_Icon"
 import styles from "./FileUploadDropdown.module.scss"
+import FileUploadDropdownItem from "./FileUploadDropdownItem"
 
 const FileUploadDropdown = ({ handleOption, valueIndex, resetDropdown }) => {
 
@@ -61,14 +61,9 @@ const FileUploadDropdown = ({ handleOption, valueIndex, resetDropdown }) => {
             </button>
             <div ref={outsideClickRef} className={styles.content} style={{ display: showDropdown ? "block" : "none" }}>
                <ul>
-                  {credentialsData.map(credential => {
-                     if (requiredMappingFields.includes(credential.value)) {
-                        return <li key={credential.value} value={credential.value}
-                                   onClick={handleChooseOptionDropdown}>{credential.title}<span>*</span></li>
-                     }
-                     return <li key={credential.value} value={credential.value}
-                                onClick={handleChooseOptionDropdown}>{credential.title}</li>
-                  })}
+                  {credentialsData.map(data => (
+                     <FileUploadDropdownItem key={data.value} data={data} handleChooseOptionDropdown={handleChooseOptionDropdown}/>
+                  ))}
                </ul>
             </div>
          </div>
