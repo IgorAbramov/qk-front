@@ -92,11 +92,6 @@
   height: 4.5rem;
   position: relative;
   width: 4.5rem;
-  + p {
-    @include breakpoint-max($bp-screen-sm) {
-      display: none;
-    }
-  }
 }
 
 .userWrapper {
