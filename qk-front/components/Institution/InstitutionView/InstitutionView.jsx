@@ -22,9 +22,6 @@ const InstitutionView = ({ children, institution }) => {
 
    /**
     * File deletion processing.
-    * @desc When modal is closed deletes just uploaded file from /uploads folder.
-    * @returns Logs success response.
-    * @throws Logs error response.
     **/
    useEffect(() => {
       if (currentFile) {

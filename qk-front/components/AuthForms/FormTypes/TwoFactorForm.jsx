@@ -30,14 +30,18 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
    const [pinError, setPinError] = useState(false)
    const [loading, setLoading] = useState(false)
 
+   /**
+    * Countdown setter logic.
+    **/
    const timerRef = useRef(0)
    const timerCallback = useCallback(() => {
       setDuration(calculateDuration(canBeResendAt))
       setHideResendButton(false)
    }, [canBeResendAt])
 
-   console.log(duration)
-
+   /**
+    * Form submit handling.
+    **/
    const handleSubmitForm = event => {
       event.preventDefault()
       const validation = () => {
@@ -86,6 +90,9 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
       }
    }
 
+   /**
+    * Countdown updater logic.
+    **/
    useEffect(() => {
       timerRef.current = setInterval(timerCallback, 1000)
       return () => {
@@ -93,6 +100,9 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
       }
    }, [canBeResendAt])
 
+   /**
+    * Hides reset button and sets loading to false.
+    **/
    useEffect(() => {
       setHideResendButton(true)
       return () => {

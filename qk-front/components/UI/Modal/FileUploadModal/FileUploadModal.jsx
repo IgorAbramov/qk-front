@@ -38,11 +38,7 @@ const FileUploadModal = () => {
    //TODO: Make scroll to chosen option dropdown row so it is more user friendly.
 
    /**
-    * File upload processing.
-    * @desc Validates file type and sends to api/ endpoint request to parse file.
-    * @param event Click event.
-    * @returns Parsed data from uploaded file.
-    * @throws Shows error response in UI.
+    * File upload to front-end processing.
     **/
    const uploadFileToClient = async event => {
       const fileType = event.target.files[0]?.type
@@ -65,12 +61,18 @@ const FileUploadModal = () => {
       }
    }
 
+   /**
+    * Close modal handler.
+    */
    const closeModal = () => {
       setOpenModal(false)
       resetCredentialsFields()
       setDropdownSelectionListener([])
    }
 
+   /**
+    * Allows to close modal by clicking outside.
+    */
    const closeModalOutside = event => {
       closeModal()
       event.stopPropagation()
@@ -78,10 +80,6 @@ const FileUploadModal = () => {
 
    /**
     * Creates array with chosen values.
-    * @desc Sets chosen values to array in the order of mapped data.
-    * @param event Choose option event.
-    * @param index Index of chosen option.
-    * @returns Array of mapped data.
     **/
    const handleOption = (event, index) => {
       let dropdownTitle = event.target.innerText
@@ -97,9 +95,6 @@ const FileUploadModal = () => {
 
    /**
     * Resets dropdown.
-    * @desc Resets dropdown values by adding chosen value back to dropdown array.
-    * @param index Index of chosen option.
-    * @returns New array of sorted data for dropdown.
     **/
    const resetDropdown = (index) => {
       if (mappingToValues[index].value !== "graduatedName") {
@@ -112,10 +107,7 @@ const FileUploadModal = () => {
    }
 
    /**
-    * Sends upload request to processing.
-    * @desc Validates chosen values, sends upload request to processing and delete file request to /api/ endpoint.
-    * @returns Success state to be shown in UI.
-    * @throws Logs request or shows in UI validation errors.
+    * Sends upload request to processing and delete file from front-end folder.
     **/
    const handleSubmitMapping = async () => {
       const arrayOfValues = mappingToValues.map(mapping => mapping?.value)
@@ -162,8 +154,6 @@ const FileUploadModal = () => {
 
    /**
     * Creates new array when data is parsed.
-    * @desc Create array of the same length as parsed keys.
-    * @returns Fixed length new empty array.
     **/
    useEffect(() => {
       setMappingToValues(new Array(parsedValuesFromUpload.length))
@@ -171,9 +161,6 @@ const FileUploadModal = () => {
 
    /**
     * Removes chosen items from dropdown.
-    * @desc Filters dropdown array on a certain condition.
-    * @desc Listens to another array which receives inside every change in dropdown selections.
-    * @returns New filtered array.
     **/
    useEffect(() => {
       if (dropdownSelectionListener.length !== 0) {
@@ -195,7 +182,6 @@ const FileUploadModal = () => {
 
    /**
     * Remove error inside modal.
-    * @desc Sets error to empty string when modal open/close or when uploaded file is mapped.
     **/
    useEffect(() => {
       setFileUploadModalError("")

@@ -12,10 +12,16 @@ const InstitutionDashboard = ({ data, allCredentialsData }) => {
    const router = useRouter()
    const [searchValue, setSearchValue] = useState("")
 
+   /**
+    * Input value handling.
+    **/
    const handleInputChange = ({ target }) => {
       setSearchValue(target.value)
    }
 
+   /**
+    * Search input handling.
+    **/
    const handleSubmitSearch = e => {
       if (searchValue.trim() !== "") {
          if (e.key === "Enter") {

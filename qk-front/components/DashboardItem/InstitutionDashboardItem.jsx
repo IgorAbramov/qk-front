@@ -86,6 +86,9 @@ const InstitutionDashboardItem = ({ data }) => {
    const details = useRecoilValue(credentialsDetailsState)
    const [showCredentialsHistory, setShowCredentialsHistory] = useState(false)
 
+   /**
+    * Credential history dropdown handling.
+    **/
    const handleShowDropdown = () => {
       if (showCredentialsHistory) {
          setShowCredentialsHistory(false)

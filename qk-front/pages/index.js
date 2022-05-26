@@ -25,6 +25,9 @@ export default function Home({ serverErrorMessage }) {
    const [showTwoFactor, setShowTwoFactor] = useState(false)
    const [canBeResendAt, setCanBeResendAt] = useState(null)
 
+   /**
+    * Input value handling.
+    **/
    const handleLoginFormChange = ({ target }) => {
       const { name, value, type, checked } = target
       if (type !== "checkbox") {
@@ -42,10 +45,6 @@ export default function Home({ serverErrorMessage }) {
 
    /**
     * Login processing.
-    * @desc Validates inputs and sends request to server.
-    * @param event Submit event.
-    * @returns Redirect to dashboard page.
-    * @throws Shows error in UI.
     **/
    const handleLoginFormSubmit = async event => {
       event.preventDefault()
@@ -74,6 +73,9 @@ export default function Home({ serverErrorMessage }) {
       }
    }
 
+   /**
+    * Gets OTP from server.
+    */
    useEffect(() => {
       if (showTwoFactor) {
          axios.post(`${processingUrl}/auth/otp`, { email: formData.email })
@@ -90,7 +92,6 @@ export default function Home({ serverErrorMessage }) {
 
    /**
     * Stops showing loading in UI.
-    * @desc Sets loading state to false.
     */
    useEffect(() => {
       setLoading(false)
