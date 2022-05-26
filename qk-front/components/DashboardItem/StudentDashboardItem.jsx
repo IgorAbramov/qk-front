@@ -105,7 +105,10 @@ const StudentDashboardItem = ({ data }) => {
                }
             </div>
          </div>
-         <div style={{ display: showCredentialsHistory ? "block" : "none", borderRadius: "0 0 15px 15px" }}>
+         <div className={styles.historyWrapper} style={{
+            display: showCredentialsHistory
+               ? "block" : "none", borderRadius: "0 0 15px 15px"
+         }}>
             <div className={styles.history}>
                <div className={styles.left}>
                   <Text bold large>Credentials History</Text>

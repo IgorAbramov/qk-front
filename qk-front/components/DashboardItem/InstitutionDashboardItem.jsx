@@ -131,9 +131,8 @@ const InstitutionDashboardItem = ({ data }) => {
             </div>
          </div>
          <div className={styles.historyWrapper} style={{
-            display: showCredentialsHistory ? "block" : "none", borderRadius: "0 0" +
-               " 15px" +
-               " 15px" 
+            display: showCredentialsHistory
+               ? "block" : "none", borderRadius: "0 0 15px 15px"
          }}>
             <div className={styles.history}>
                <div className={styles.left}>

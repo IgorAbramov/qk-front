@@ -225,7 +225,7 @@
     grid-template-columns: 0.2fr 0.6fr 1.3fr 0.8fr 0.7fr;
 
     @include breakpoint-max($bp-screen-md) {
-      grid-template-columns: 0.2fr 0.6fr 1.3fr 0.3fr 0.7fr;
+      grid-template-columns: 0.2fr 1.3fr 0.3fr 0.7fr;
     }
 
     > *:not(:last-child) {
@@ -234,6 +234,12 @@
 
     > div:nth-child(2) {
       padding-left: 3rem !important;
+    }
+
+    @include breakpoint-max($bp-screen-md) {
+      >span:nth-child(2) {
+        display: none !important;
+      }
     }
   }
 }
@@ -414,7 +420,13 @@
     }
 
     @include breakpoint-max($bp-screen-md) {
-      grid-template-columns: 0.6fr 1.3fr 0.3fr 1.3fr;
+      grid-template-columns: 1.3fr 0.3fr 1.3fr;
+    }
+
+    >span:nth-child(1) {
+      @include breakpoint-max($bp-screen-md) {
+        display: none !important;
+      }
     }
 
     > div:nth-child(3) {
