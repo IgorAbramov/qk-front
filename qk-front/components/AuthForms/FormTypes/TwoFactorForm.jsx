@@ -31,11 +31,12 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
    const [loading, setLoading] = useState(false)
 
    const timerRef = useRef(0)
-
    const timerCallback = useCallback(() => {
       setDuration(calculateDuration(canBeResendAt))
       setHideResendButton(false)
    }, [canBeResendAt])
+
+   console.log(duration)
 
    const handleSubmitForm = event => {
       event.preventDefault()
@@ -117,7 +118,7 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
                   hideResendButton ? <Text transparent>-</Text>
                      : duration.minutes() === 0 && duration.seconds() === 0
                         ? <Text grey>Resend code</Text>
-                        : <Text grey>{`${duration.minutes()}:${duration.seconds()}`}</Text>
+                        : <Text grey>{`${duration.minutes()}:${duration.seconds() < 10 ? "0" + duration.seconds() : duration.seconds()}`}</Text>
                }
             </form>
          </div>
