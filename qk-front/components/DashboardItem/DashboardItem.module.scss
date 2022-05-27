@@ -131,12 +131,18 @@
 }
 
 .status {
+  position: relative;
   align-items: center;
   display: flex;
   gap: 0.8rem;
 
+  &:hover {
+    > div {
+      display: block;
+    }
+  }
+
   > svg {
-    cursor: pointer;
     @include breakpoint-max($bp-screen-sm) {
       width: 2.5rem;
       height: 2.5rem;
@@ -161,6 +167,10 @@
         display: block;
       }
     }
+  }
+
+  &.student {
+    cursor: pointer;
   }
 }
 

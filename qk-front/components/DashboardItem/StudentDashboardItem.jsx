@@ -11,6 +11,7 @@ import { validateStatus, validateStatusStyles } from "../../utils"
 import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
 import StudentHistoryItem from "../HistoryItem/StudentHistoryItem"
 import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShare, IconShowDropdownBig, IconWarning } from "../UI/_Icon"
+import HoverInfo from "../UI/HoverInfo/HoverInfo"
 import Input from "../UI/Input/Input"
 import Text from "../UI/Text/Text"
 import styles from "./DashboardItem.module.scss"
@@ -83,15 +84,17 @@ const StudentDashboardItem = ({ data }) => {
                <IconAcademicCap/>
                <Text semiBold>{data.qualificationName}</Text>
             </div>
-            <div className={`${styles.status} ${validateStatusStyles(data.status, true)}`}>
+            <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
                      <IconWarning/>
                      <Text bold>{validateStatus(data.status, true)}</Text>
+                     <HoverInfo status={data.status}/>
                   </>
                   : <>
                      <IconInfo/>
                      <Text bold>{validateStatus(data.status, true)}</Text>
+                     <HoverInfo status={data.status}/>
                   </>}
             </div>
             <div className={`${styles.actions} ${styles.student}`}>

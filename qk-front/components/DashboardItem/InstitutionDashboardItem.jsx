@@ -13,6 +13,7 @@ import { validateStatus, validateStatusStyles } from "../../utils"
 import InstitutionDetailsItem from "../DetailsItem/InstitutionDetailsItem"
 import InstitutionHistoryItem from "../HistoryItem/InstitutionHistoryItem"
 import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShowDropdownBig } from "../UI/_Icon"
+import HoverInfo from "../UI/HoverInfo/HoverInfo"
 import Text from "../UI/Text/Text"
 import styles from "./DashboardItem.module.scss"
 
