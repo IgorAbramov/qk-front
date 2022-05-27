@@ -4,14 +4,17 @@
 .wrapper {
   display: none;
   position: absolute;
-  top: -8rem;
+  top: -7rem;
   left: 50%;
   transform: translateX(-50%);
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   width: 30rem;
   z-index: 9999;
   background-color: $color-highlight;
   border-radius: 15px;
+  @include breakpoint-max($bp-screen-xl) {
+    top: -7.5rem;
+  }
   &:after {
     border-color: transparent transparent $color-highlight transparent;
     border-style: solid;
@@ -23,6 +26,7 @@
     transform: translateX(-50%) rotate(180deg);
   }
   > p {
-    color: $color-secondary;
+    color: $color-secondary !important;
+    font-size: 1.35rem;
   }
 }

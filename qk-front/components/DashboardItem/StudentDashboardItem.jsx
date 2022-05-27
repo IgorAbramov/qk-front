@@ -87,14 +87,18 @@ const StudentDashboardItem = ({ data }) => {
             <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
-                     <IconWarning/>
+                     <div className={styles.iconWrapper}>
+                        <IconWarning/>
+                        <HoverInfo status={data.status}/>
+                     </div>
                      <Text bold>{validateStatus(data.status, true)}</Text>
-                     <HoverInfo status={data.status}/>
                   </>
                   : <>
-                     <IconInfo/>
+                     <div className={styles.iconWrapper}>
+                        <IconInfo/>
+                        <HoverInfo status={data.status}/>
+                     </div>
                      <Text bold>{validateStatus(data.status, true)}</Text>
-                     <HoverInfo status={data.status}/>
                   </>}
             </div>
             <div className={`${styles.actions} ${styles.student}`}>
