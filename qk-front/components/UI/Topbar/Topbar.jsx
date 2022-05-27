@@ -125,7 +125,11 @@ const Topbar = ({ institution }) => {
                   <ul>
                      <li>
                         <IconAcademicCap/>
-                        <Text>Dashboard</Text>
+                        <Link href="/dashboard">
+                           <a>
+                              <Text>Dashboard</Text>
+                           </a>
+                        </Link>
                      </li>
                      <li>
                         <IconSettings/>
