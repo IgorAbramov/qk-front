@@ -5,12 +5,15 @@ import { BullModule } from "@nestjs/bull";
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { EventEmitterModule } from "@nestjs/event-emitter";
+import { ScheduleModule } from "@nestjs/schedule";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { Role } from "@prisma/client";
 import { DMMFClass } from "@prisma/client/runtime";
 import AdminJS, { buildFeature, CurrentAdmin } from "adminjs";
 import * as bcrypt from "bcryptjs";
+import { CommandModule } from "nestjs-command";
 
+import { ActionModule } from "./action/action.module";
 import { AuthModule } from "./auth/auth.module";
 import { AwsModule } from "./aws/aws.module";
 import { AwsSesService } from "./aws/aws.ses.service";
@@ -151,6 +154,7 @@ AdminJS.registerAdapter({ Database, Resource });
       },
     }),
     BullModule.registerQueue({ name: "credentials-create" }),
+    ScheduleModule.forRoot(),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -162,6 +166,8 @@ AdminJS.registerAdapter({ Database, Resource });
     UploadModule,
     AwsModule,
     HederaModule,
+    CommandModule,
+    ActionModule,
   ],
 })
 export class AppModule {
