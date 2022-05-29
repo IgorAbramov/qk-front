@@ -14,11 +14,11 @@ import Error from "./../_error"
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
-export default function Dashboard({ data, allCredentialsData, serverErrorMessage }) {
+export default function Dashboard({ data, allCredentialsData, userData, serverErrorMessage }) {
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
-   const { role, data: credentialData } = data
+   const { role } = userData
 
    if (role === userRoles.institution) return (
       <>
@@ -28,7 +28,7 @@ export default function Dashboard({ data, allCredentialsData, serverErrorMessage
          <InstitutionView institution>
             <Heading blue h1 xxl>University Dashboard</Heading>
             <Text large>browse all credential records</Text>
-            <InstitutionDashboard allCredentialsData={allCredentialsData} data={credentialData}/>
+            <InstitutionDashboard allCredentialsData={allCredentialsData} data={data}/>
          </InstitutionView>
       </>
    )
@@ -41,7 +41,7 @@ export default function Dashboard({ data, allCredentialsData, serverErrorMessage
          <StudentView>
             <Heading blue h1 xxl>Credentials Dashboard</Heading>
             <Text large>view, share and manage your credentials</Text>
-            <StudentDashboard data={credentialData}/>
+            <StudentDashboard data={data}/>
          </StudentView>
       </>
    )
@@ -51,6 +51,7 @@ export const getServerSideProps = async (ctx) => {
    const { req, query } = ctx
    let response
    let responseAllCredentials
+   let responseUser
 
    if (query.filter) {
       try {
@@ -62,9 +63,14 @@ export const getServerSideProps = async (ctx) => {
             withCredentials: true,
             headers: { Cookie: req.headers.cookie || "" }
          })
+         responseUser = await axios.get(`${apiUrl}/user/me`, {
+            withCredentials: true,
+            headers: { Cookie: req.headers.cookie || "" }
+         })
          const { data } = response
          const { data: allCredentialsData } = responseAllCredentials
-         return { props: { data, allCredentialsData } }
+         const { data: userData } = responseUser
+         return { props: { data, allCredentialsData, userData } }
       } catch (error) {
          return { props: { serverErrorMessage: error.response.statusText } }
       }
@@ -74,8 +80,13 @@ export const getServerSideProps = async (ctx) => {
             withCredentials: true,
             headers: { Cookie: req.headers.cookie || "" }
          })
+         responseUser = await axios.get(`${apiUrl}/user/me`, {
+            withCredentials: true,
+            headers: { Cookie: req.headers.cookie || "" }
+         })
          const { data } = response
-         return { props: { data } }
+         const { data: userData } = responseUser
+         return { props: { data, userData } }
       } catch (error) {
          return { props: { serverErrorMessage: error.response ? error.response.statusText : "Something went wrong" } }
       }

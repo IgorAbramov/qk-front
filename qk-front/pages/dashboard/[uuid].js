@@ -18,13 +18,13 @@ import Error from "../_error"
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
-export default function CredentialsView({ data, serverErrorMessage }) {
+export default function CredentialsView({ data, userData, serverErrorMessage }) {
 
    const showEditCredentials = useRecoilValue(showEditCredentialsState)
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
-   const { role, data: credentialsData } = data[0]
+   const { role } = userData
 
    if (role === userRoles.institution) return (
       <>
@@ -34,10 +34,10 @@ export default function CredentialsView({ data, serverErrorMessage }) {
          <InstitutionView>
             <Heading blue h1>View Credentials</Heading>
             <Text large>browse all credential records</Text>
-            <InstitutionViewCredentialsItem data={credentialsData}/>
+            <InstitutionViewCredentialsItem data={data[0]}/>
             {!showEditCredentials
-               ? <CredentialsInfo data={credentialsData}/>
-               : <InstitutionEditCredentials data={credentialsData}/>}
+               ? <CredentialsInfo data={data[0]}/>
+               : <InstitutionEditCredentials data={data[0]}/>}
             <div className="withdraw__button">
                <Text grey>- Withdraw Credentials -</Text>
             </div>
@@ -53,8 +53,8 @@ export default function CredentialsView({ data, serverErrorMessage }) {
          <StudentView>
             <Heading blue h1>View Credentials</Heading>
             <Text large>view, share and manage your credentials</Text>
-            <StudentViewCredentialsItem data={credentialsData}/>
-            <CredentialsInfo data={credentialsData}/>
+            <StudentViewCredentialsItem data={data[0]}/>
+            <CredentialsInfo data={data[0]}/>
             <div className="withdraw__button">
                <Text grey>- Delete Credentials -</Text>
             </div>
@@ -71,8 +71,13 @@ export const getServerSideProps = async (ctx) => {
          withCredentials: true,
          headers: { Cookie: req.headers.cookie || "" }
       })
+      const responseUser = await axios.get(`${apiUrl}/user/me`, {
+         withCredentials: true,
+         headers: { Cookie: req.headers.cookie || "" }
+      })
+      const { data: userData } = responseUser
       const { data } = response
-      return { props: { data } }
+      return { props: { data, userData } }
    } catch (error) {
       return { props: { serverErrorMessage: error.response ? error.response.statusText : "Something went wrong" } }
    }
