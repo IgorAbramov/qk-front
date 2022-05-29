@@ -16,7 +16,9 @@ import BurgerButton from "../BurgerButton/BurgerButton"
 import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
-const Topbar = ({ institution }) => {
+const Topbar = ({ institution, userData }) => {
+
+   const { firstName, lastName } = userData
    
    const { pathname, push } = useRouter()
 
@@ -119,7 +121,7 @@ const Topbar = ({ institution }) => {
                   <Image alt="user" className={styles.user} layout="fill"
                          quality={100} src={avatar}/>
                </div>
-               <Text semiBold>John Reed</Text>
+               <Text semiBold>{firstName} {lastName}</Text>
                <IconHideDropdownBig/>
                <div ref={outsideClickRef} className={styles.menu} style={{ display: showMenu ? "block" : "none" }}>
                   <ul>

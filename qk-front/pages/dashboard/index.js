@@ -25,7 +25,7 @@ export default function Dashboard({ data, allCredentialsData, userData, serverEr
          <Head>
             <title>University Dashboard | QualKey</title>
          </Head>
-         <InstitutionView institution>
+         <InstitutionView institution userData={userData}>
             <Heading blue h1 xxl>University Dashboard</Heading>
             <Text large>browse all credential records</Text>
             <InstitutionDashboard allCredentialsData={allCredentialsData} data={data}/>
@@ -38,7 +38,7 @@ export default function Dashboard({ data, allCredentialsData, userData, serverEr
          <Head>
             <title>Credentials Dashboard | QualKey</title>
          </Head>
-         <StudentView>
+         <StudentView userData={userData}>
             <Heading blue h1 xxl>Credentials Dashboard</Heading>
             <Text large>view, share and manage your credentials</Text>
             <StudentDashboard data={data}/>

@@ -31,7 +31,7 @@ export default function CredentialsView({ data, userData, serverErrorMessage }) 
          <Head>
             <title>View Credentials | QualKey</title>
          </Head>
-         <InstitutionView>
+         <InstitutionView userData={userData}>
             <Heading blue h1>View Credentials</Heading>
             <Text large>browse all credential records</Text>
             <InstitutionViewCredentialsItem data={data[0]}/>
@@ -50,7 +50,7 @@ export default function CredentialsView({ data, userData, serverErrorMessage }) 
          <Head>
             <title>View Credentials | QualKey</title>
          </Head>
-         <StudentView>
+         <StudentView userData={userData}>
             <Heading blue h1>View Credentials</Heading>
             <Text large>view, share and manage your credentials</Text>
             <StudentViewCredentialsItem data={data[0]}/>

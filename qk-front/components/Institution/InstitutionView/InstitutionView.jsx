@@ -9,7 +9,7 @@ import FileUploadModal from "../../UI/Modal/FileUploadModal/FileUploadModal"
 import Sidebar from "../../UI/Sidebar/Sidebar"
 import Topbar from "../../UI/Topbar/Topbar"
 
-const InstitutionView = ({ children, institution }) => {
+const InstitutionView = ({ children, institution, userData }) => {
 
    const resetCurrentFile = useResetRecoilState(currentFileState)
    const resetFilePrefix = useResetRecoilState(filePrefixState)
@@ -44,7 +44,7 @@ const InstitutionView = ({ children, institution }) => {
    return (
       <div className="main__wrapper">
          <Sidebar institution={institution}/>
-         <Topbar institution={institution}/>
+         <Topbar institution={institution} userData={userData}/>
          <div className="dashboard">
             {children}
          </div>
