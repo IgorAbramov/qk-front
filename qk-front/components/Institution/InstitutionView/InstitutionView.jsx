@@ -3,8 +3,9 @@ import { useEffect } from "react"
 import axios from "axios"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 
-import { currentFileState, filenameState, filePrefixState, uploadModalState } from "../../../atoms"
+import { confirmUploadModalState, currentFileState, filenameState, filePrefixState, uploadModalState } from "../../../atoms"
 import { frontUrl } from "../../../utils"
+import ConfirmUploadModal from "../../UI/Modal/ConfirmUploadModal/ConfirmUploadModal"
 import FileUploadModal from "../../UI/Modal/FileUploadModal/FileUploadModal"
 import Sidebar from "../../UI/Sidebar/Sidebar"
 import Topbar from "../../UI/Topbar/Topbar"
@@ -19,6 +20,8 @@ const InstitutionView = ({ children, institution, userData, notificationsData })
    const currentFile = useRecoilValue(currentFileState)
    const filePrefix = useRecoilValue(filePrefixState)
    const fileName = useRecoilValue(filenameState)
+   
+   const confirmUploadModal = useRecoilValue(confirmUploadModalState)
 
    /**
     * File deletion processing.
@@ -49,6 +52,7 @@ const InstitutionView = ({ children, institution, userData, notificationsData })
             {children}
          </div>
          {openModal && <FileUploadModal/>}
+         {confirmUploadModal && <ConfirmUploadModal/>}
       </div>
    )
 }
