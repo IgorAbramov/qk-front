@@ -97,7 +97,7 @@ const Topbar = ({ institution, userData }) => {
          {checkIfPathIncludesView() && <div className={styles.routes}>
             <Link href="/dashboard">
                <a>
-                  <Text grey>University Dashboard</Text>
+                  <Text grey>Dashboard</Text>
                </a>
             </Link>
             <IconArrowLeft/>
