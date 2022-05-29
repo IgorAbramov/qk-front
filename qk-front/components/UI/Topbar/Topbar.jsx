@@ -16,11 +16,13 @@ import BurgerButton from "../BurgerButton/BurgerButton"
 import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
-const Topbar = ({ institution, userData }) => {
+const Topbar = ({ institution, userData, notificationsData }) => {
 
    const { firstName, lastName } = userData
    
    const { pathname, push } = useRouter()
+
+   console.log(notificationsData, "notificationsData")
 
    const checkIfPathIncludesView = () => {
       if (pathname.includes("[uuid]")) return true
@@ -108,8 +110,8 @@ const Topbar = ({ institution, userData }) => {
             <div className={styles.imageWrapperNotification} onClick={handleShowNotifications}>
                <Image alt="bell" layout="fill" quality={100}
                       src={bell}/>
-               <span className={styles.notification}>3</span>
-               <NotificationWrapper setShow={setShowNotifications} show={showNotifications}/>
+               {notificationsData.length ? <span className={styles.notification}>{notificationsData.length}</span> : null}
+               <NotificationWrapper notificationsData={notificationsData} setShow={setShowNotifications} show={showNotifications}/>
             </div>
             {institution && <div className={styles.imageWrapperLogo}>
                <Image alt="uni" className={styles.logo} layout="fill"

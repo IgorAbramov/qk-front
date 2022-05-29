@@ -18,7 +18,7 @@ import Error from "../_error"
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
-export default function CredentialsView({ data, userData, serverErrorMessage }) {
+export default function CredentialsView({ data, userData, notificationsData, serverErrorMessage }) {
 
    const showEditCredentials = useRecoilValue(showEditCredentialsState)
 
@@ -75,10 +75,16 @@ export const getServerSideProps = async (ctx) => {
          withCredentials: true,
          headers: { Cookie: req.headers.cookie || "" }
       })
-      const { data: userData } = responseUser
+      const responseNotifications = await axios.get(`${apiUrl}/action`, {
+         withCredentials: true,
+         headers: { Cookie: req.headers.cookie || "" }
+      })
       const { data } = response
-      return { props: { data, userData } }
+      const { data: userData } = responseUser
+      const { data: notificationsData } = responseNotifications
+      return { props: { data, userData, notificationsData } }
    } catch (error) {
+      console.log(error)
       return { props: { serverErrorMessage: error.response ? error.response.statusText : "Something went wrong" } }
    }
 }
