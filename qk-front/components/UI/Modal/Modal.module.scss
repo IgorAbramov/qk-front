@@ -200,13 +200,16 @@
 .credentials {
   padding: 2.5rem;
   margin: 2.5rem auto;
-  width: 80%;
+  width: calc(70% - 2.5rem - 2.5rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 1px solid #E5E5E5;
   box-shadow: 0 4px 34px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
+  @include breakpoint-max($bp-screen-md) {
+    width: calc(100% - 2.5rem - 2.5rem);
+  }
   svg {
     width: 4.5rem;
     height: 4.5rem;

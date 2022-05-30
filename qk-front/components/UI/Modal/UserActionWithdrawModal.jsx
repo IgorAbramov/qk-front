@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -23,6 +23,7 @@ const UserActionWithdrawModal = () => {
    const [step, setStep] = useState(1)
    const [error, setError] = useState("")
    const [rejected, setRejected] = useState(false)
+   const [credentialData, setCredentialData] = useState({})
 
    /**
     * Close modal.
@@ -36,6 +37,18 @@ const UserActionWithdrawModal = () => {
       setError("")
       setStep(1)
    }
+   
+   useEffect(() => {
+      axios.get(`${processingUrl}/credential?uuid=${uploadDecision.credentialsUuid}`, { withCredentials: true })
+         .then(response => {
+            if (response.status === 200) {
+               setCredentialData(response.data[0])
+            }
+         })
+         .catch(error => {
+            setError(error.response.statusText)
+         })
+   }, [])
 
    /**
     * Allows to close modal by clicking outside.
@@ -112,11 +125,11 @@ const UserActionWithdrawModal = () => {
                         ? <div className={styles.credentials}>
                            <div className={styles.credsItem}>
                               <IconAcademicCapPerson/>
-                              <Text semiBold>Some name</Text>
+                              <Text semiBold>{credentialData.graduatedName}</Text>
                            </div>
                            <div className={styles.credsItem}>
                               <IconAcademicCap/>
-                              <Text semiBold>Some qualifiaction</Text>
+                              <Text semiBold>{credentialData.qualificationName}</Text>
                            </div>
                         </div>
                         : null
