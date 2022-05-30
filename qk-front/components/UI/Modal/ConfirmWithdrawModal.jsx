@@ -53,15 +53,13 @@ const ConfirmWithdrawModal = () => {
          })
          .catch(error => {
             if (error.response.status === 409) {
-               setError("Already Requested")
+               setError("Credential withdrawal already requested")
             } else {
                setError(error.response.statusText)
             }
             setLoading(false)
          })
    }
-
-   console.log(error)
 
    return (
       <div className={styles.modal} onClick={closeModalOutside}>
@@ -81,26 +79,35 @@ const ConfirmWithdrawModal = () => {
                      ?
                      <Text semiBold>You will be notified as soon as the Head of Registrars approves this action. You may
                         now return to Dashboard</Text>
-                     : <Text semiBold>This action will be first approved by the Head of Registrars before it takes
-                        effect.</Text>}
+                     : error
+                        ? <Text error semiBold>Error: {error}.</Text>
+                        : <Text semiBold>This action will be first approved by the Head of Registrars before it takes
+                           effect.</Text>}
                   {step === 2
                      ? <Button blue thin onClick={closeModal}>
                         Return to Dashboard
                      </Button>
-                     : <div className={`${styles.stepWrapper} ${styles.approved}`}>
-                        {loading
-                           ? <Button disabled>
-                              <IconLoading/>
+                     : error
+                        ? <div className={`${styles.stepWrapper} ${styles.approved}`}>
+                           <Button blue outline thin
+                                   onClick={closeModal}>
+                              <Text semiBold>Go Back</Text>
                            </Button>
-                           : <Button errorModal thin onClick={handleWithdrawRequest}>
-                              <Text semiBold>{error ? error : "Withdraw"}</Text>
+                        </div>
+                        : <div className={`${styles.stepWrapper} ${styles.approved}`}>
+                           {loading
+                              ? <Button disabled>
+                                 <IconLoading/>
+                              </Button>
+                              : <Button errorModal thin onClick={handleWithdrawRequest}>
+                                 <Text semiBold>Withdraw</Text>
+                              </Button>
+                           }
+                           <Button blue outline thin
+                                   onClick={closeModal}>
+                              <Text semiBold>Go Back</Text>
                            </Button>
-                        }
-                        <Button blue outline thin
-                                onClick={closeModal}>
-                           <Text semiBold>Go Back</Text>
-                        </Button>
-                     </div>}
+                        </div>}
                </div>
             </div>
          </div>
