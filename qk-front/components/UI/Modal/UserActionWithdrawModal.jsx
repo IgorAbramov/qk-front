@@ -37,7 +37,10 @@ const UserActionWithdrawModal = () => {
       setError("")
       setStep(1)
    }
-   
+
+   /**
+    * Gets credential data when modal opens.
+    */
    useEffect(() => {
       axios.get(`${processingUrl}/credential?uuid=${uploadDecision.credentialsUuid}`, { withCredentials: true })
          .then(response => {
@@ -58,6 +61,9 @@ const UserActionWithdrawModal = () => {
       event.stopPropagation()
    }
 
+   /**
+    * Confirm user action handler.
+    */
    const handleApproveRequest = async () => {
       await axios.post(`${processingUrl}/action`, {
          actionId: uploadDecision.id.toString(),
@@ -75,6 +81,9 @@ const UserActionWithdrawModal = () => {
          })
    }
 
+   /**
+    * Reject user action handler.
+    */
    const handleReject = async () => {
       await axios.post(`${processingUrl}/action`, {
          actionId: uploadDecision.id.toString(),

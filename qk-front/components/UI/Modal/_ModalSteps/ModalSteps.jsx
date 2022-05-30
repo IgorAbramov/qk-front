@@ -5,7 +5,10 @@ import styles from "./ModalSteps.module.scss"
 const ModalSteps = ({ step, totalSteps }) => {
    
    const [stepCount, setStepCount] = useState([])
-   
+
+   /**
+    * Creates empty array with length of totalSteps.
+    */
    useEffect(() => {
       setStepCount(new Array(totalSteps).fill(""))
       return () => {

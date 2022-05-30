@@ -13,6 +13,9 @@ const NotificationsItem = ({ data }) => {
    const [, setWithdrawModal] = useRecoilState(userActionWithdrawModalState)
    const [uploadDecision, setUploadDecision] = useRecoilState(userActionUploadDecisionState)
 
+   /**
+    * Opens particular modal according to condition.
+    */
    const handleShowModal = () => {
       if (data.type === "REVIEW_UPLOAD") {
          setConfirmUploadModal(true)

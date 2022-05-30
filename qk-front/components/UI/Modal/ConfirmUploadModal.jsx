@@ -77,12 +77,18 @@ const ConfirmUploadModal = () => {
       event.stopPropagation()
    }
 
+   /**
+    * Confirm button handler.
+    */
    const handleConfirm = () => {
       setStep(prevState => prevState + 1)
       setConfirmed(true)
       setRejected(false)
    }
 
+   /**
+    * Confirm user action handler.
+    */
    const handleConfirmRequest = async () => {
       await axios.post(`${processingUrl}/action`, {
          actionId: uploadDecision.id.toString(),
@@ -101,6 +107,9 @@ const ConfirmUploadModal = () => {
          })
    }
 
+   /**
+    * Reject user action handler.
+    */
    const handleReject = async () => {
       await axios.post(`${processingUrl}/action`, {
          actionId: uploadDecision.id.toString(),
@@ -120,6 +129,9 @@ const ConfirmUploadModal = () => {
          })
    }
 
+   /**
+    * Go Back button handler.
+    */
    const handleGoBack = () => {
       setStep(prevState => prevState - 1)
       setConfirmed(false)

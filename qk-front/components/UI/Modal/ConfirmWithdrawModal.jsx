@@ -42,6 +42,9 @@ const ConfirmWithdrawModal = () => {
       event.stopPropagation()
    }
 
+   /**
+    * Request to withdraw credentials handler.
+    */
    const handleWithdrawRequest = async () => {
       setLoading(true)
       await axios.post(`${processingUrl}/credential/withdraw`,
