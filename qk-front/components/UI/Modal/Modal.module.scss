@@ -38,16 +38,23 @@
 
     &.confirmUpload {
       padding-bottom: 6rem;
+      button {
+        align-items: center;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin: 4rem auto 0;
+        padding: 1.2rem 2rem;
+        width: fit-content;
+      }
     }
-
-    button {
+    button:last-child {
       align-items: center;
       display: flex;
       gap: 1rem;
       justify-content: center;
       margin: 4rem auto 0;
-      padding: 1.2rem 2rem;
-      width: fit-content;
+      padding: 1.2rem 0;
     }
   }
 }
@@ -81,6 +88,7 @@
         margin-bottom: 1.5rem;
         + button {
           margin-top: 2rem;
+          padding: 1rem 1.2rem;
         }
       }
     }
@@ -152,9 +160,9 @@
   gap: 1.5rem;
   justify-content: center;
   button {
-    width: 20rem;
-    margin-left: 0;
-    margin-right: 0;
+    width: 20rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     border: 1px solid transparent;
     &:last-child {
       background-color: transparent;
@@ -163,6 +171,18 @@
       transition: background-color .2s ease-in-out, color .2s ease-in-out;
       svg path {
         stroke: $color-error;
+        transition: stoke .2s ease-in-out;
+      }
+    }
+  }
+  &.approved {
+    button:last-child {
+      background-color: transparent;
+      border: 1px solid $color-highlight;
+      color: $color-highlight;
+      transition: background-color .2s ease-in-out, color .2s ease-in-out;
+      svg path {
+        stroke: $color-highlight;
         transition: stoke .2s ease-in-out;
       }
     }

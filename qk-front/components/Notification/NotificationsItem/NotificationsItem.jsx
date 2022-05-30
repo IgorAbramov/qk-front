@@ -2,7 +2,7 @@ import moment from "moment"
 import PropTypes from "prop-types"
 import { useRecoilState } from "recoil"
 
-import { confirmUploadModalState, fileIdState } from "../../../atoms"
+import { confirmUploadModalState, userActionUploadDecisionState } from "../../../atoms"
 import { validateNotificationDescription, validateNotificationTitle, validateNotificationType } from "../../../utils"
 import Text from "../../UI/Text/Text"
 import styles from "./NotificationsItem.module.scss"
@@ -10,12 +10,15 @@ import styles from "./NotificationsItem.module.scss"
 const NotificationsItem = ({ data }) => {
 
    const [, setConfirmUploadModal] = useRecoilState(confirmUploadModalState)
-   const [, setFileId] = useRecoilState(fileIdState)
+   const [uploadDecision, setUploadDecision] = useRecoilState(userActionUploadDecisionState)
 
    const handleShowModal = () => {
       if (data.type === "REVIEW_UPLOAD") {
          setConfirmUploadModal(true)
-         setFileId(data.subjectUuid)
+         setUploadDecision({
+            ...uploadDecision,
+            ...data
+         })
       }
    }
 
@@ -28,7 +31,7 @@ const NotificationsItem = ({ data }) => {
                <Text medium>{`${validateNotificationDescription(data.type).slice(0, 90).trim()}...`}</Text>
             </div>
          </div>
-         <Text grey medium>{moment(data.createdAt).format("DD.MM.YYYY")}</Text>
+         <Text grey medium>{moment.utc(data.createdAt).format("DD.MM.YYYY")}</Text>
       </div>
    )
 }
