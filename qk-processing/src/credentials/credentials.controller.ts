@@ -126,23 +126,11 @@ export class CredentialsController {
   async getCredentialsViewData(
       @GetUser() user: User,
       @Param("did") did: string,
-      @Query("shareUuid") shareUuid: string,
-      @Query("password") password: string,
   ): Promise<CredentialViewDataDto> {
     const credentials = await this.credentialsRepository.getByDid(did);
     const credentialsChange = await this.credentialsChangeRepository.getLastByCredentialsUuid(credentials.uuid);
 
-    if (user.uuid === credentials.studentUuid) return new CredentialViewDataDto(credentials, credentialsChange);
-
-    if (! password || ! shareUuid) throw new ForbiddenException();
-
-    const credentialsShare = await this.credentialsShareRepository.getByUuid(shareUuid);
-    // if expired throw exception
-    if (credentialsShare.expiresAt < new Date()) throw new CredentialsShareExpiredException();
-    // if password is incorrect throw exception
-    if (password !== credentialsShare.temporaryPassword) throw new ForbiddenException();
-
-    // TODO: return only allowed to show fields
+    if (user.uuid !== credentials.studentUuid) throw new ForbiddenException();
     return new CredentialViewDataDto(credentials, credentialsChange);
   }
 
