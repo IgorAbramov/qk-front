@@ -1,9 +1,6 @@
-import { useState } from "react"
-
 import axios from "axios"
 import getConfig from "next/config"
 import Head from "next/head"
-import { useRouter } from "next/router"
 import { useRecoilState, useRecoilValue } from "recoil"
 
 import { confirmWithdrawModalState, showEditCredentialsState } from "../../atoms"
@@ -16,15 +13,14 @@ import StudentView from "../../components/Student/StudentView/StudentView"
 import Heading from "../../components/UI/Heading/Heading"
 import ConfirmWithdrawModal from "../../components/UI/Modal/ConfirmWithdrawModal"
 import Text from "../../components/UI/Text/Text"
-import { processingUrl, userRoles } from "../../utils"
+import { userRoles } from "../../utils"
 import Error from "../_error"
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
 export default function CredentialsView({ data, userData, notificationsData, serverErrorMessage }) {
-
-   const { query } = useRouter()
+   
    const [withdrawModal, setWithdrawModal] = useRecoilState(confirmWithdrawModalState)
 
    const showEditCredentials = useRecoilValue(showEditCredentialsState)

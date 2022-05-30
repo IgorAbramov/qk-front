@@ -30,6 +30,8 @@ const ConfirmWithdrawModal = () => {
          router.reload(window.location.pathname)
       }
       setWithdrawModal(false)
+      setError("")
+      setStep(1)
    }
 
    /**
