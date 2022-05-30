@@ -14,7 +14,7 @@ const ModalSteps = ({ step, totalSteps }) => {
       return () => {
          setStepCount([])
       }
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
    
    return (
       <div className={styles.wrapper}>

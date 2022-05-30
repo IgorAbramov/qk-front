@@ -51,7 +51,7 @@ const UserActionWithdrawModal = () => {
          .catch(error => {
             setError(error.response.statusText)
          })
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
    /**
     * Allows to close modal by clicking outside.
