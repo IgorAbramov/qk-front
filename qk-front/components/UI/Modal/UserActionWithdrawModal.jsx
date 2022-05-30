@@ -55,7 +55,6 @@ const UserActionWithdrawModal = () => {
          .then(response => {
             if (response.status === 200) {
                setStep(prevState => prevState + 1)
-               setRejected(true)
             }
          })
          .catch(error => {
@@ -72,6 +71,7 @@ const UserActionWithdrawModal = () => {
       }, { withCredentials: true })
          .then(response => {
             if (response.status === 200) {
+               setRejected(true)
                setStep(prevState => prevState + 1)
             }
          })
@@ -88,14 +88,13 @@ const UserActionWithdrawModal = () => {
             <div className={`${styles.top} ${styles.confirmUpload}`}>
                <div className={`${styles.wrapperInner} ${styles.confirmUpload} ${styles.confirmWithdraw}`}>
                   {
-                     step === 2
+                     rejected && step === 2
                         ? <Heading blue h2 modal>
-                           Credentials withdrawn successfully
+                           Withdrawal request declined
                         </Heading>
-                        : rejected && step === 2
+                        : step === 2
                            ? <Heading blue h2 modal>
-                              Withdrawal request declined
-
+                              Credentials withdrawn successfully
                            </Heading>
                            : <Heading blue h2 modal>
                               Credential withdrawal request. Your action is required.
