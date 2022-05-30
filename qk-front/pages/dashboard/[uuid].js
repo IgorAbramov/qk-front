@@ -1,9 +1,12 @@
+import { useState } from "react"
+
 import axios from "axios"
 import getConfig from "next/config"
 import Head from "next/head"
-import { useRecoilValue } from "recoil"
+import { useRouter } from "next/router"
+import { useRecoilState, useRecoilValue } from "recoil"
 
-import { showEditCredentialsState } from "../../atoms"
+import { confirmWithdrawModalState, showEditCredentialsState } from "../../atoms"
 import CredentialsInfo from "../../components/CredentialsInfo/CredentialsInfo"
 import InstitutionViewCredentialsItem from "../../components/DashboardItem/InstitutionViewCredentialsItem"
 import StudentViewCredentialsItem from "../../components/DashboardItem/StudentViewCredentialsItem"
@@ -11,8 +14,9 @@ import InstitutionEditCredentials from "../../components/Institution/Institution
 import InstitutionView from "../../components/Institution/InstitutionView/InstitutionView"
 import StudentView from "../../components/Student/StudentView/StudentView"
 import Heading from "../../components/UI/Heading/Heading"
+import ConfirmWithdrawModal from "../../components/UI/Modal/ConfirmWithdrawModal"
 import Text from "../../components/UI/Text/Text"
-import { userRoles } from "../../utils"
+import { processingUrl, userRoles } from "../../utils"
 import Error from "../_error"
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
@@ -20,11 +24,18 @@ const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
 export default function CredentialsView({ data, userData, notificationsData, serverErrorMessage }) {
 
+   const { query } = useRouter()
+   const [withdrawModal, setWithdrawModal] = useRecoilState(confirmWithdrawModalState)
+
    const showEditCredentials = useRecoilValue(showEditCredentialsState)
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
    const { role } = userData
+
+   const handleWithdrawalRequest = async () => {
+      setWithdrawModal(true)
+   }
 
    if (role === userRoles.institution) return (
       <>
@@ -38,9 +49,10 @@ export default function CredentialsView({ data, userData, notificationsData, ser
             {!showEditCredentials
                ? <CredentialsInfo data={data[0]}/>
                : <InstitutionEditCredentials data={data[0]}/>}
-            <div className="withdraw__button">
+            <div className="withdraw__button" onClick={handleWithdrawalRequest}>
                <Text grey>- Withdraw Credentials -</Text>
             </div>
+            {withdrawModal && <ConfirmWithdrawModal/>}
          </InstitutionView>
       </>
    )

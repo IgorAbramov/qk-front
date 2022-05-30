@@ -48,6 +48,14 @@
         width: fit-content;
       }
     }
+    &.confirmWithdraw {
+      button {
+        margin-top: 1rem;
+        &:last-child {
+          margin-top: 1rem;
+        }
+      }
+    }
     button:last-child {
       align-items: center;
       display: flex;

@@ -5,8 +5,8 @@ import { useRecoilValue, useResetRecoilState } from "recoil"
 
 import { confirmUploadModalState, currentFileState, filenameState, filePrefixState, uploadModalState } from "../../../atoms"
 import { frontUrl } from "../../../utils"
-import ConfirmUploadModal from "../../UI/Modal/ConfirmUploadModal/ConfirmUploadModal"
-import FileUploadModal from "../../UI/Modal/FileUploadModal/FileUploadModal"
+import ConfirmUploadModal from "../../UI/Modal/ConfirmUploadModal"
+import FileUploadModal from "../../UI/Modal/FileUploadModal"
 import Sidebar from "../../UI/Sidebar/Sidebar"
 import Topbar from "../../UI/Topbar/Topbar"
 
