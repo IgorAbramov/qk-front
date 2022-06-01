@@ -110,10 +110,10 @@
       + p {
         margin-bottom: 1.5rem;
 
-        + button {
-          margin-top: 2rem;
-          padding: 1rem 1.2rem;
-        }
+        //+ button {
+        //  margin-top: 2rem;
+        //  padding: 1rem 1.2rem;
+        //}
       }
     }
 
@@ -218,12 +218,21 @@
   display: flex;
   gap: 1.5rem;
   justify-content: center;
+  @include breakpoint-max($bp-screen-sm) {
+    flex-direction: column;
+  }
 
   button {
     border: 1px solid transparent;
     margin-left: 0 !important;
     margin-right: 0 !important;
     width: 20rem !important;
+
+    p, span {
+      @include breakpoint-max($bp-screen-md) {
+        font-size: 1.45rem;
+      }
+    }
 
     &:last-child {
       background-color: transparent;
@@ -258,6 +267,9 @@
   &.request {
     button {
       width: fit-content !important;
+      @include breakpoint-max($bp-screen-sm) {
+        width: 90% !important;
+      }
     }
   }
 }
