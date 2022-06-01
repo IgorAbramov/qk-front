@@ -68,6 +68,14 @@
       justify-content: center;
       margin: 4rem auto 0;
       padding: 1.4rem 2rem;
+      @include breakpoint-max($bp-screen-sm) {
+        font-size: 1.45rem;
+      }
+      > span{
+        @include breakpoint-max($bp-screen-sm) {
+          font-size: 1.45rem;
+        }
+      }
     }
   }
 }
@@ -85,7 +93,7 @@
     text-align: center;
 
     @include breakpoint-max($bp-screen-md) {
-      font-size: 4rem;
+      font-size: 3.5rem;
     }
 
     + p {
@@ -130,8 +138,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: fit-content;
-    padding: 1.2rem 2rem;
+    width: 50%;
+    padding: 1.2rem 0;
 
     @include breakpoint-max($bp-screen-md) {
       width: 80%;
@@ -148,6 +156,11 @@
       transform: translateX(-50%);
       z-index: 999;
     }
+    > p {
+      @include breakpoint-max($bp-screen-sm) {
+        font-size: 1.45rem;
+      }
+    }
   }
 }
 
@@ -158,6 +171,19 @@
   overflow: hidden;
   overflow-y: scroll;
   padding: 2rem 4rem;
+  @include breakpoint-max($bp-screen-md) {
+    padding: 1rem 1.5rem;
+  }
+  @include breakpoint-max($bp-screen-sm) {
+    flex-direction: column;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  span, input, p {
+    @include breakpoint-max($bp-screen-md) {
+      font-size: 1.45rem;
+    }
+  }
 }
 
 .row {
@@ -168,10 +194,21 @@
   svg {
     display: block !important;
   }
+  input {
+    @include breakpoint-max($bp-screen-md) {
+      padding: 1rem 0;
+    }
+  }
 
   &.confirmUpload {
     gap: 1rem;
     margin-bottom: 0;
+  }
+
+  &.massUpload {
+    @include breakpoint-max($bp-screen-sm) {
+      flex-direction: column;
+    }
   }
 }
 

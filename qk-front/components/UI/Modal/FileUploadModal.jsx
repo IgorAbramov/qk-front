@@ -31,9 +31,9 @@ const FileUploadModal = () => {
    const [fileName, setFileName] = useRecoilState(filenameState)
    const [parsedValuesFromUpload, setParsedValuesFromUpload] = useState([])
    const [mappingToValues, setMappingToValues] = useState([])
-   const [uploadSuccess, setUploadSuccess] = useState(false)
+   const [uploadSuccess, setUploadSuccess] = useState(true)
    const [loading, setLoading] = useState(false)
-   const [step, setStep] = useState(1)
+   const [step, setStep] = useState(3)
 
    //TODO: Make active field in dropdown according to figma ui — BLUE?
 
@@ -232,7 +232,7 @@ const FileUploadModal = () => {
                      && <>
                         <div className={styles.middle}>
                            {parsedValuesFromUpload.map((value, index) => (
-                              <div key={value} className={styles.row}>
+                              <div key={value} className={`${styles.row} ${styles.massUpload}`}>
                                  <Input readOnly inputName={value} type={"text"}
                                         value={value}/>
                                  <FileUploadDropdown key={value} handleOption={handleOption}
