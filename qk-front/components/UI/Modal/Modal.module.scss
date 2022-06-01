@@ -67,7 +67,7 @@
       gap: 1rem;
       justify-content: center;
       margin: 4rem auto 0;
-      padding: 1.2rem 2rem;
+      padding: 1.4rem 2rem;
     }
   }
 }
@@ -165,6 +165,9 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+  svg {
+    display: block !important;
+  }
 
   &.confirmUpload {
     gap: 1rem;
@@ -198,6 +201,9 @@
   }
 
   &.approved {
+    button {
+      flex: 1 1 0px;
+    }
     button:last-child {
       background-color: transparent;
       border: 1px solid $color-highlight;
@@ -208,6 +214,12 @@
         stroke: $color-highlight;
         transition: stoke 0.2s ease-in-out;
       }
+    }
+  }
+
+  &.request {
+    button {
+      width: fit-content !important;
     }
   }
 }
