@@ -75,7 +75,7 @@ const Sidebar = ({ institution }) => {
       return () => {
          setBurgerMenuActive(false)
       }
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       <div className={burgerMenuActive ? styles.darken : ""}>
