@@ -18,15 +18,15 @@
   }
 
   @include breakpoint-max($bp-screen-sm) {
-    width: 25rem;
-    top: -6.1rem;
     left: -1.5rem;
+    top: -6.1rem;
+    width: 25rem;
   }
 
   @include breakpoint-max($bp-screen-xxs) {
-    width: 18rem;
-    top: -7.7rem;
     left: 2rem;
+    top: -7.7rem;
+    width: 18rem;
   }
 
   &::after {
@@ -38,6 +38,7 @@
     left: 50%;
     position: absolute;
     transform: translateX(-50%) rotate(180deg);
+
     @include breakpoint-max($bp-screen-sm) {
       left: initial;
       right: 8rem;
@@ -47,6 +48,7 @@
   > p {
     color: $color-secondary !important;
     font-size: 1.35rem;
+
     @include breakpoint-max($bp-screen-sm) {
       font-size: 1.1rem !important;
     }
