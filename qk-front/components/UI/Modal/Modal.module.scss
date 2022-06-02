@@ -39,6 +39,10 @@
     &.confirmUpload {
       padding-bottom: 6rem;
 
+      @include breakpoint-max($bp-screen-xxs) {
+        padding-bottom: 1rem;
+      }
+
       button {
         align-items: center;
         display: flex;

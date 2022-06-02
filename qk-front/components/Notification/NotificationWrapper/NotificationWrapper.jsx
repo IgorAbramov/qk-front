@@ -26,7 +26,7 @@ const NotificationWrapper = ({ show, setShow, notificationsData }) => {
    }, [show]) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
-      <div ref={outsideClickRef} className={styles.wrapper} style={{ display: show ? "block" : "none", height: notificationsData.length ? "55rem" : "" }}>
+      <div ref={outsideClickRef} className={styles.wrapper} style={{ display: show ? "block" : "none", height: notificationsData.length ? "30rem" : "" }}>
          <div className={styles.top}>
             <Text bold large>Notifications</Text>
             <IconTrash/>
