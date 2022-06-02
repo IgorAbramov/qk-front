@@ -477,6 +477,11 @@
 
 .viewActions {
   border-left: none;
+  > svg:first-child {
+    @include breakpoint-max($bp-screen-sm) {
+      display: block;
+    }
+  }
 }
 
 .viewCredentialWrapper {
