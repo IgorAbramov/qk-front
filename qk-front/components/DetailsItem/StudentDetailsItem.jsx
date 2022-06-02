@@ -5,8 +5,6 @@ import styles from "./DetailsItem.module.scss"
 
 const StudentDetailsItem = ({ data }) => {
 
-   //TODO: Add reshare functionality from design
-
    return (
       <div className={styles.detailsItem}>
          <Text blackSpan>Shared with: <span>{data.sharedWith}</span></Text>

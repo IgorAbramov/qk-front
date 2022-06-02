@@ -219,6 +219,7 @@
     grid-template-columns: 0.9fr 1.5fr 0.4fr 1.05fr 0.5fr;
   }
   @include breakpoint-max($bp-screen-sm) {
+    height: 7rem;
     grid-template-columns: 0.9fr 1.5fr 0.4fr 0.5fr;
     padding: 0 1rem;
     width: calc(100% - 1rem - 1rem);
@@ -383,6 +384,12 @@
     width: fit-content;
     padding: 1rem 2rem;
   }
+
+  p {
+    @include breakpoint-max($bp-screen-sm) {
+      display: none;
+    }
+  }
 }
 
 .history {
@@ -393,6 +400,7 @@
   height: 30rem;
   padding: 0 3rem;
   width: calc(100% - 3rem - 3rem);
+  border-right: none;
 
   @include breakpoint-max($bp-screen-lg) {
     padding: 0 2rem;
@@ -407,11 +415,25 @@
   @include breakpoint-max($bp-screen-sm) {
     grid-template-columns: 1fr 1fr;
   }
+
+  &.student {
+    @include breakpoint-max($bp-screen-sm) {
+      width: 125%;
+    }
+  }
 }
 
 .historyWrapper {
   @include breakpoint-max($bp-screen-xs) {
     width: 47.4rem;
+  }
+
+  &.student {
+    @include breakpoint-max($bp-screen-sm) {
+      overflow: hidden;
+      width: initial;
+      overflow-x: scroll;
+    }
   }
 }
 
@@ -468,11 +490,19 @@
     }
 
     @include breakpoint-max($bp-screen-md) {
-      grid-template-columns: 1.3fr 0.3fr 1.3fr;
+      grid-template-columns: 0.7fr 1.3fr 0.3fr 1.3fr;
+    }
+
+    @include breakpoint-max($bp-screen-sm) {
+      grid-template-columns: 0.7fr 1.3fr 0.3fr 0.3fr;
+    }
+
+    @include breakpoint-max($bp-screen-xxs) {
+      grid-template-columns: 1.3fr 0.3fr 0.3fr;
     }
 
     >span:nth-child(1) {
-      @include breakpoint-max($bp-screen-md) {
+      @include breakpoint-max($bp-screen-xxs) {
         display: none !important;
       }
     }

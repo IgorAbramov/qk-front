@@ -6,7 +6,7 @@
   display: flex;
   gap: 2rem;
   justify-content: flex-end;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 
   @include breakpoint-max($bp-screen-sm) {
     flex-direction: column;
@@ -52,6 +52,14 @@
   overflow: hidden;
   overflow-y: scroll;
   padding-top: 5rem;
+
+  @include breakpoint-max($bp-screen-xxs) {
+    padding-top: 6rem;
+  }
+
+  @include breakpoint-max-vertical($bp-vertical-680) {
+    height: 35%;
+  }
 
   @include breakpoint-max-vertical($bp-vertical-570) {
     height: 22%;
