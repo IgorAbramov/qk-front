@@ -27,6 +27,9 @@
   > button {
     padding: 1rem 2rem;
     width: fit-content;
+    @include breakpoint-max($bp-screen-sm) {
+      display: none;
+    }
 
     p {
       @include breakpoint-max($bp-screen-md) {
@@ -48,7 +51,7 @@
 }
 
 .contentWrapper {
-  height: 62%;
+  height: 58%;
   overflow: hidden;
   overflow-y: scroll;
   padding-top: 5rem;
@@ -58,11 +61,11 @@
   }
 
   @include breakpoint-max-vertical($bp-vertical-680) {
-    height: 35%;
+    height: 45%;
   }
 
   @include breakpoint-max-vertical($bp-vertical-570) {
-    height: 22%;
+    height: 35%;
   }
 
   p {

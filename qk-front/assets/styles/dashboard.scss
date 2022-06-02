@@ -51,4 +51,19 @@
       margin-bottom: 1rem;
     }
   }
+
+  > button {
+    display: none;
+    margin-bottom: 2rem;
+    width: 100%;
+    @include breakpoint-max($bp-screen-sm) {
+      display: block;
+    }
+  }
+}
+
+.buttonRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
