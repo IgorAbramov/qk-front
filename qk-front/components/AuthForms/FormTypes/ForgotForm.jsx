@@ -1,4 +1,5 @@
 import { useRouter } from "next/router"
+import PropTypes from "prop-types"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 
 import { forgotFormState, formValidationErrorsState, loadingState } from "../../../atoms"
@@ -63,3 +64,9 @@ const ForgotForm = ({ changeFormHandler, submitFormHandler, buttonError }) => {
 }
 
 export default ForgotForm
+
+ForgotForm.propTypes = {
+   changeFormHandler: PropTypes.func,
+   submitFormHandler: PropTypes.func,
+   buttonError: PropTypes.string
+}

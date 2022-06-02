@@ -45,4 +45,4 @@ export default NotificationWrapper
 
 NotificationWrapper.displayName = "NotificationWrapper"
 
-NotificationWrapper.propTypes = { show: PropTypes.bool }
+NotificationWrapper.propTypes = { show: PropTypes.bool, setShow: PropTypes.func, notificationsData: PropTypes.array }

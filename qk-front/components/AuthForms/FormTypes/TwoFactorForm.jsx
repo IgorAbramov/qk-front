@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import axios from "axios"
 import moment from "moment"
 import { useRouter } from "next/router"
+import PropTypes from "prop-types"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 
 import { forgotFormState, loginFormState } from "../../../atoms"
@@ -153,3 +154,8 @@ const TwoFactorForm = ({ canBeResendAt, forgotPassword }) => {
 }
 
 export default TwoFactorForm
+
+TwoFactorForm.propTypes = {
+   canBeResendAt: PropTypes.number,
+   forgotPassword: PropTypes.bool
+}

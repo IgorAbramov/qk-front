@@ -1,4 +1,5 @@
 import Image from "next/image"
+import PropTypes from "prop-types"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
 import { validateStatus, validateStatusStyles } from "../../utils"
@@ -38,3 +39,5 @@ const StudentViewCredentialsItem = ({ data }) => {
 }
 
 export default StudentViewCredentialsItem
+
+StudentViewCredentialsItem.propTypes = { data: PropTypes.object.isRequired }

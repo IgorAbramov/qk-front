@@ -3,6 +3,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import PropTypes from "prop-types"
 import { useRecoilValue } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
@@ -141,3 +142,5 @@ const StudentDashboardItem = ({ data }) => {
 }
 
 export default StudentDashboardItem
+
+StudentDashboardItem.propTypes = { data: PropTypes.object.isRequired }
