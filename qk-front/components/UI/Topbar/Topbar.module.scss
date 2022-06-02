@@ -187,3 +187,10 @@
 .burger {
   margin-left: 3.5rem;
 }
+
+.backRow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
