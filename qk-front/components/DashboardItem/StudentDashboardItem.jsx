@@ -71,7 +71,7 @@ const StudentDashboardItem = ({ data }) => {
    }
 
    return (
-      <div className={styles.wrapper} style={{ borderRadius: "15px 15px 15px 15px" }}>
+      <div className={`${styles.wrapper} ${styles.student}`} style={{ borderRadius: "15px 15px 15px 15px" }}>
          <div className={`${styles.credentialWrapper} ${styles.student}`} style={{
             borderRadius: !showCredentialsHistory
                ? "15px 15px 15px 15px"
