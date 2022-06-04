@@ -1,19 +1,19 @@
+import { Elements, PaymentElement } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { useRecoilState } from "recoil"
 
-import { paymentFormState, showPaymentModalState } from "../../../atoms"
-import { formatPaymentInputs } from "../../../utils"
+import { showPaymentModalState } from "../../../atoms"
 import { IconClose } from "../_Icon"
 import Button from "../Button/Button"
-import PaymentDropdown from "../Dropdown/PaymentDropdown/PaymentDropdown"
 import Heading from "../Heading/Heading"
-import Input from "../Input/Input"
 import Text from "../Text/Text"
 import styles from "./Modal.module.scss"
+
+const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRAPI_PUBLISHABLE_KEY}`)
 
 const PaymentModal = () => {
 
    const [, setShowPaymentModal] = useRecoilState(showPaymentModalState)
-   const [formData, setFormData] = useRecoilState(paymentFormState)
 
    const closeModal = () => {
       setShowPaymentModal(false)
@@ -24,41 +24,7 @@ const PaymentModal = () => {
       event.stopPropagation()
    }
 
-   /**
-    * Input value handling.
-    **/
-   const handleLoginFormChange = ({ target }) => {
-      const { name, value } = target
-      if (name === "cardNumber") {
-         setFormData({
-            ...formData,
-            [name]: formatPaymentInputs(value, name)
-         })
-      } else if (name === "expiry") {
-         setFormData({
-            ...formData,
-            [name]: formatPaymentInputs(value, name)
-         })
-      } else if (name === "cvc") {
-         setFormData({
-            ...formData,
-            [name]: formatPaymentInputs(value, name)
-         })
-      } else {
-         setFormData({
-            ...formData,
-            [name]: value
-         })
-      }
-   }
-
-   /**
-    * Form submit handler
-    */
-   const handleFormSubmit = event => {
-      event.preventDefault()
-      console.log(formData)
-   }
+   const stripeOptions = { clientSecret: `${process.env.NEXT_PUBLIC_STRAPI_SECRET_KEY}` }
 
    return (
       <div className={styles.modal} onClick={closeModalOutside}>
@@ -73,47 +39,12 @@ const PaymentModal = () => {
                      <Text big>Total Amount:</Text>
                      <Text big>£39,99</Text>
                   </div>
-                  <form onSubmit={handleFormSubmit}>
-                     <div className={styles.paymentInput}>
-                        <Text grey small>Name on card</Text>
-                        <Input inputName="name" placeholder="John Reed" type="text"
-                               value={formData.name}
-                               onChange={handleLoginFormChange}/>
-                     </div>
-                     <div className={styles.paymentInput}>
-                        <Text grey small>Card number</Text>
-                        <Input inputName="cardNumber" placeholder="1234 1234 1234 1234"
-                               type="text"
-                               value={formData.cardNumber} onChange={handleLoginFormChange} onKeyPress={(event) => {
-                                  if (!/\d/.test(event.key)) {
-                                     event.preventDefault()
-                                  }
-                               }}/>
-                        {/*TODO: Add card logo*/}
-                     </div>
-                     <div className={styles.paymentInputRow}>
-                        <div className={styles.paymentInput}>
-                           <Text grey small>Expiry date</Text>
-                           <Input inputName="expiry" placeholder="MM / YY" type="text"
-                                  value={formData.expiry}
-                                  onChange={handleLoginFormChange}/>
-                        </div>
-                        <div className={styles.paymentInput}>
-                           <Text grey small>CVC</Text>
-                           <Input inputName="cvc" maxLength={3}
-                                  placeholder="011" type="text"
-                                  value={formData.cvc} onChange={handleLoginFormChange}/>
-                        </div>
-                     </div>
-                     <PaymentDropdown/>
-                     <div className={styles.paymentInput}>
-                        <Text grey small>Post code of billing address</Text>
-                        <Input inputName="zip" placeholder="1234"
-                               type="text"
-                               value={formData.zip} onChange={handleLoginFormChange}/>
-                     </div>
-                     <Button blue thin>Confirm your purchase</Button>
-                  </form>
+                  <Elements options={stripeOptions} stripe={stripePromise}>
+                     <form>
+                        <PaymentElement/>
+                        <Button blue thin>Submit</Button>
+                     </form>
+                  </Elements>
                </div>
             </div>
          </div>
