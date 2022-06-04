@@ -19,6 +19,10 @@ const StudentViewCredentialsItem = ({ data }) => {
       setViewCertificateModal(true)
    }
 
+   const handleOpenPaymentModal = () => {
+      console.log("ok")
+   }
+
    return (
       <div className={`${styles.wrapper} ${styles.viewWrapper} ${styles.student}`}
            style={{ borderRadius: "15px 15px 15px 15px" }}>
@@ -32,8 +36,9 @@ const StudentViewCredentialsItem = ({ data }) => {
                   <Text bold>{data.qualificationName}</Text>
                </div>
             </div>
-            
-            <div className={`${styles.status} ${validateStatusStyles(data.status, true)}`}>
+
+            <div className={`${styles.status} ${validateStatusStyles(data.status, true)}`}
+                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handleOpenPaymentModal : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
                      <div className={styles.iconWrapper}>

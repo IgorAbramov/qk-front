@@ -71,6 +71,10 @@ const StudentDashboardItem = ({ data }) => {
       }
    }
 
+   const handleOpenPaymentModal = () => {
+      console.log("ok")
+   }
+
    return (
       <div className={`${styles.wrapper} ${styles.student}`} style={{ borderRadius: "15px 15px 15px 15px" }}>
          <div className={`${styles.credentialWrapper} ${styles.student}`} style={{
@@ -85,7 +89,8 @@ const StudentDashboardItem = ({ data }) => {
                <IconAcademicCap/>
                <Text semiBold>{data.qualificationName}</Text>
             </div>
-            <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}>
+            <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}
+                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handleOpenPaymentModal : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
                      <div className={styles.iconWrapper}>
