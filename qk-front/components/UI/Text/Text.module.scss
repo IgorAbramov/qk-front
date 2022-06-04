@@ -142,3 +142,11 @@
     color: $color-primary;
   }
 }
+
+.blueSpan {
+  color: $color-primary-light;
+
+  span {
+    color: $color-highlight;
+  }
+}
