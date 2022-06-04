@@ -15,8 +15,6 @@ import styles from "./Modal.module.scss"
 
 const ViewCertificateModal = ({ data }) => {
 
-   console.log(data)
-
    const [, setViewCertificateModal] = useRecoilState(viewCertificateModalState)
 
    const closeModal = () => {

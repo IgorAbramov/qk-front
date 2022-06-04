@@ -12,8 +12,14 @@
 }
 
 .uploaded {
+  border: 1px solid $color-pending;
+  border-radius: 15px;
+  @include breakpoint-max($bp-screen-md) {
+    border: none;
+  }
   p {
     color: $color-pending;
+    cursor: pointer;
   }
 
   path {
@@ -88,6 +94,7 @@
   p {
     color: $color-highlight;
   }
+
   path {
     stroke: $color-highlight;
   }
@@ -130,6 +137,7 @@
   @include breakpoint-max($bp-screen-xs) {
     overflow-x: scroll;
   }
+
   &.student {
     @include breakpoint-max($bp-screen-xs) {
       overflow-x: initial;
@@ -168,6 +176,7 @@
       display: none;
     }
   }
+
   &.viewStatus {
     + p {
       @include breakpoint-max($bp-screen-sm) {
@@ -177,12 +186,15 @@
   }
 
   &.student {
-    cursor: pointer;
+    svg {
+      cursor: pointer;
+    }
   }
 }
 
 .iconWrapper {
   position: relative;
+
   &:hover {
     > div {
       display: block;
@@ -272,7 +284,7 @@
     }
 
     > *:not(:last-child) {
-      padding: 0 1rem !important;
+      padding: 1rem 1rem !important;
       @include breakpoint-max($bp-screen-xxs) {
         padding: 0.5rem !important;
       }
@@ -283,7 +295,7 @@
     }
 
     @include breakpoint-max($bp-screen-sm) {
-      >span:nth-child(2) {
+      > span:nth-child(2) {
         display: none !important;
       }
     }
@@ -367,6 +379,7 @@
   }
 
   &.student {
+    margin-left: 2rem;
     > svg {
       height: 3.5rem;
       width: 3.5rem;
@@ -486,6 +499,7 @@
 
 .viewActions {
   border-left: none;
+
   > svg:first-child {
     @include breakpoint-max($bp-screen-sm) {
       display: block;
@@ -515,10 +529,14 @@
       grid-template-columns: 1.3fr 0.3fr 0.3fr;
     }
 
-    >span:nth-child(1) {
+    > span:nth-child(1) {
       @include breakpoint-max($bp-screen-xxs) {
         display: none !important;
       }
+    }
+
+    > div:nth-child(2) {
+      justify-self: center;
     }
 
     > div:nth-child(3) {
