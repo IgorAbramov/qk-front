@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import styles from "./Text.module.scss"
 
-const Text = ({ blue, lightBlue, grey, white, transparent, small, medium, large, underline, link, error, success, bold, semiBold, sidebar, sidebarMin, active, blackSpan, blueSpan, children, ...otherProps }) => {
+const Text = ({ blue, lightBlue, grey, white, transparent, small, medium, large, underline, link, error, success, bold, semiBold, sidebar, sidebarMin, active, blackSpan, blueSpan, children, big, ...otherProps }) => {
    if (link) return (
       <Link href={link}>
          <a className={`${styles.text} ${styles.link}
@@ -21,6 +21,7 @@ const Text = ({ blue, lightBlue, grey, white, transparent, small, medium, large,
          ${sidebar ? styles.sidebar : ""}
          ${sidebarMin ? styles.sidebarMin : ""}
          ${active ? styles.active : ""}
+         ${big ? styles.big : ""}
          ${blueSpan ? styles.blueSpan : ""}
          ${blackSpan ? styles.blackSpan : ""}`}>
             {children}
@@ -48,6 +49,7 @@ const Text = ({ blue, lightBlue, grey, white, transparent, small, medium, large,
       ${sidebarMin ? styles.sidebarMin : ""}
       ${active ? styles.active : ""}
       ${blueSpan ? styles.blueSpan : ""}
+      ${big ? styles.big : ""}
       ${blackSpan ? styles.blackSpan : ""}`}>
          {children}
       </p>
@@ -73,5 +75,7 @@ Text.propTypes = {
    sidebar: PropTypes.bool,
    sidebarMin: PropTypes.bool,
    active: PropTypes.bool,
-   blackSpan: PropTypes.bool
+   blackSpan: PropTypes.bool,
+   blueSpan: PropTypes.bool,
+   big: PropTypes.bool
 }

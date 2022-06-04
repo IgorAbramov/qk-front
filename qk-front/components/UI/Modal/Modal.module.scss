@@ -64,7 +64,7 @@
       }
     }
 
-    button:last-child {
+    > button:last-child {
       width: fit-content;
       align-items: center;
       display: flex;
@@ -80,6 +80,17 @@
         @include breakpoint-max($bp-screen-sm) {
           font-size: 1.45rem;
         }
+      }
+    }
+
+    &.payment {
+      padding: 4rem 6rem;
+      > h2 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+      > p {
+        margin-bottom: 5rem;
       }
     }
   }
@@ -387,4 +398,55 @@
   align-items: center;
   gap: 1rem;
   justify-content: center;
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+  > p:last-child {
+    font-size: 3rem;
+  };
+  + form {
+    > button:last-child {
+      display: flex;
+      margin: 4rem auto 0;
+      justify-content: center;
+    }
+  }
+}
+
+.paymentInput {
+  > p {
+    margin-bottom: .5rem;
+  }
+  > input {
+    padding: 1.5rem 3rem;
+    width: calc(100% - 3rem - 3rem - 2px);
+    margin: 0 auto 2rem;
+    border: 1px solid $color-primary-light;
+    &:focus {
+      border: 1px solid $color-highlight;
+    }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type=number] {
+      -moz-appearance:textfield;
+    }
+  }
+}
+
+.paymentInputRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5rem;
+  > div {
+    flex: 1 1 50%;
+  }
 }

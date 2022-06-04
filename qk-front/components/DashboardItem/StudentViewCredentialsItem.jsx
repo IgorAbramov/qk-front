@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useRecoilState } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
-import { viewCertificateModalState } from "../../atoms"
+import { showPaymentModalState, viewCertificateModalState } from "../../atoms"
 import { validateStatus, validateStatusStyles } from "../../utils"
 import { IconAcademicCap, IconCertificate, IconInfo, IconWarning } from "../UI/_Icon"
 import Button from "../UI/Button/Button"
@@ -14,13 +14,17 @@ import styles from "./DashboardItem.module.scss"
 const StudentViewCredentialsItem = ({ data }) => {
 
    const [, setViewCertificateModal] = useRecoilState(viewCertificateModalState)
-
+   const [, setShowPaymentModal] = useRecoilState(showPaymentModalState)
+   
    const handleViewCertificate = () => {
       setViewCertificateModal(true)
    }
 
+   /**
+    * Payment modal handler
+    */
    const handleOpenPaymentModal = () => {
-      console.log("ok")
+      setShowPaymentModal(true)
    }
 
    return (
