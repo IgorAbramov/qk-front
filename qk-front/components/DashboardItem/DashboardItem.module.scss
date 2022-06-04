@@ -251,7 +251,11 @@
   }
 
   > div:nth-child(3) {
-    @include breakpoint-max($bp-screen-md) {
+    margin-left: 4rem;
+    @include breakpoint-max($bp-screen-xxl) {
+      margin-left: 0;
+    }
+     @include breakpoint-max($bp-screen-md) {
       justify-self: center;
     }
   }
