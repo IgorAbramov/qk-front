@@ -5,8 +5,9 @@ import { useRecoilState } from "recoil"
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
 import { viewCertificateModalState } from "../../atoms"
 import { validateStatus, validateStatusStyles } from "../../utils"
-import { IconAcademicCap, IconCertificate, IconInfo } from "../UI/_Icon"
+import { IconAcademicCap, IconCertificate, IconInfo, IconWarning } from "../UI/_Icon"
 import Button from "../UI/Button/Button"
+import HoverInfo from "../UI/HoverInfo/HoverInfo"
 import Text from "../UI/Text/Text"
 import styles from "./DashboardItem.module.scss"
 
@@ -31,9 +32,23 @@ const StudentViewCredentialsItem = ({ data }) => {
                   <Text bold>{data.qualificationName}</Text>
                </div>
             </div>
+            
             <div className={`${styles.status} ${validateStatusStyles(data.status, true)}`}>
-               <IconInfo/>
-               <Text bold>{validateStatus(data.status, true)}</Text>
+               {data.status === "UPLOADED_TO_BLOCKCHAIN"
+                  ? <>
+                     <div className={styles.iconWrapper}>
+                        <IconWarning/>
+                        <HoverInfo status={data.status}/>
+                     </div>
+                     <Text bold>{validateStatus(data.status, true)}</Text>
+                  </>
+                  : <>
+                     <div className={styles.iconWrapper}>
+                        <IconInfo/>
+                        <HoverInfo status={data.status}/>
+                     </div>
+                     <Text bold>{validateStatus(data.status, true)}</Text>
+                  </>}
             </div>
             <div className={styles.actions}>
                <Button blue thin disabled={data.status !== "ACTIVATED"}
