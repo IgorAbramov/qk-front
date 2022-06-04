@@ -360,6 +360,12 @@
     }
   }
 
+  button:disabled {
+    > div > p {
+      color: $color-secondary;
+    }
+  }
+
   &.student {
     > svg {
       height: 3.5rem;

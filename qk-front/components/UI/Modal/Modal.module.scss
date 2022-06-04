@@ -85,10 +85,10 @@
   }
 
   &.viewCertificate {
-    height: calc(100vh - 3rem - 3rem);
+    height: 100vh;
     overflow-y: scroll;
     @include breakpoint-max($bp-screen-lg) {
-      width: calc(95% - 6rem - 6rem);
+      width: 95%;
     }
   }
 }
@@ -318,7 +318,6 @@
 }
 
 .viewCertificate {
-  padding: 3rem 6rem;
   > h2 {
     margin-bottom: 4rem;
   }
