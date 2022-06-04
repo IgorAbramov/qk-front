@@ -244,7 +244,10 @@
   }
 
   > *:not(:last-child) {
-    padding: 0 0.6rem !important;
+    padding: 1rem 0.6rem !important;
+    @include breakpoint-max($bp-screen-sm) {
+      padding: 0 0.5rem !important;
+    }
   }
 
   > div:nth-child(3) {
@@ -355,8 +358,13 @@
     }
   }
 
+  > svg {
+    display: flex;
+  }
+
   > a {
     > svg {
+      display: flex;
       @include breakpoint-max($bp-screen-xl) {
         height: 3.5rem;
         width: 3.5rem;
