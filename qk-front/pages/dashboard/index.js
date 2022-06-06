@@ -1,15 +1,12 @@
 import axios from "axios"
 import getConfig from "next/config"
 import Head from "next/head"
-import { useRecoilValue } from "recoil"
 
-import { showPaymentModalState } from "../../atoms"
 import InstitutionDashboard from "../../components/Institution/InstitutionDashboard/InstitutionDashboard"
 import InstitutionView from "../../components/Institution/InstitutionView/InstitutionView"
 import StudentDashboard from "../../components/Student/StudentDashboard/StudentDashboard"
 import StudentView from "../../components/Student/StudentView/StudentView"
 import Heading from "../../components/UI/Heading/Heading"
-import PaymentModal from "../../components/UI/Modal/PaymentModal"
 import Text from "../../components/UI/Text/Text"
 import { userRoles } from "../../utils"
 import Error from "./../_error"
@@ -18,8 +15,6 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl
 
 export default function Dashboard({ data, allCredentialsData, userData, notificationsData, serverErrorMessage }) {
-   
-   const showPaymentModal = useRecoilValue(showPaymentModalState)
 
    if (serverErrorMessage) return <Error serverErrorMessage={serverErrorMessage}/>
 
@@ -47,7 +42,6 @@ export default function Dashboard({ data, allCredentialsData, userData, notifica
             <Heading blue h1 xxl>Credentials Dashboard</Heading>
             <Text large>view, share and manage your credentials</Text>
             <StudentDashboard data={data}/>
-            {showPaymentModal && <PaymentModal/>}
          </StudentView>
       </>
    )

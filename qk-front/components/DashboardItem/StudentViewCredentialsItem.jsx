@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useRecoilState } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
-import { showPaymentModalState, viewCertificateModalState } from "../../atoms"
+import { viewCertificateModalState } from "../../atoms"
 import { validateStatus, validateStatusStyles } from "../../utils"
 import { IconAcademicCap, IconCertificate, IconInfo, IconWarning } from "../UI/_Icon"
 import Button from "../UI/Button/Button"
@@ -14,17 +14,13 @@ import styles from "./DashboardItem.module.scss"
 const StudentViewCredentialsItem = ({ data }) => {
 
    const [, setViewCertificateModal] = useRecoilState(viewCertificateModalState)
-   const [, setShowPaymentModal] = useRecoilState(showPaymentModalState)
    
    const handleViewCertificate = () => {
       setViewCertificateModal(true)
    }
-
-   /**
-    * Payment modal handler
-    */
-   const handleOpenPaymentModal = () => {
-      setShowPaymentModal(true)
+   
+   const handlePaymentRequest = () => {
+      console.log("ok")
    }
 
    return (
@@ -42,7 +38,7 @@ const StudentViewCredentialsItem = ({ data }) => {
             </div>
 
             <div className={`${styles.status} ${validateStatusStyles(data.status, true)}`}
-                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handleOpenPaymentModal : null}>
+                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handlePaymentRequest : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
                      <div className={styles.iconWrapper}>

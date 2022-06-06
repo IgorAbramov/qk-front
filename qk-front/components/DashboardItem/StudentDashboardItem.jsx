@@ -4,10 +4,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilValue } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
-import { credentialsDetailsState, credentialsShowDetailsState, showPaymentModalState } from "../../atoms"
+import { credentialsDetailsState, credentialsShowDetailsState } from "../../atoms"
 import { validateStatus, validateStatusStyles } from "../../utils"
 import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
 import StudentHistoryItem from "../HistoryItem/StudentHistoryItem"
@@ -58,7 +58,6 @@ const StudentDashboardItem = ({ data }) => {
 
    const showDetails = useRecoilValue(credentialsShowDetailsState)
    const details = useRecoilValue(credentialsDetailsState)
-   const [, setShowPaymentModal] = useRecoilState(showPaymentModalState)
    const [showCredentialsHistory, setShowCredentialsHistory] = useState(false)
 
    /**
@@ -72,11 +71,8 @@ const StudentDashboardItem = ({ data }) => {
       }
    }
 
-   /**
-    * Payment modal handler
-    */
-   const handleOpenPaymentModal = () => {
-      setShowPaymentModal(true)
+   const handlePaymentRequest = () => {
+      console.log("ok")
    }
 
    return (
@@ -94,7 +90,7 @@ const StudentDashboardItem = ({ data }) => {
                <Text semiBold>{data.qualificationName}</Text>
             </div>
             <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}
-                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handleOpenPaymentModal : null}>
+                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handlePaymentRequest : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
                      <div className={styles.iconWrapper}>

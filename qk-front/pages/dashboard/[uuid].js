@@ -3,7 +3,7 @@ import getConfig from "next/config"
 import Head from "next/head"
 import { useRecoilState, useRecoilValue } from "recoil"
 
-import { confirmWithdrawModalState, showEditCredentialsState, showPaymentModalState, viewCertificateModalState } from "../../atoms"
+import { confirmWithdrawModalState, showEditCredentialsState, viewCertificateModalState } from "../../atoms"
 import CredentialsInfo from "../../components/CredentialsInfo/CredentialsInfo"
 import InstitutionViewCredentialsItem from "../../components/DashboardItem/InstitutionViewCredentialsItem"
 import StudentViewCredentialsItem from "../../components/DashboardItem/StudentViewCredentialsItem"
@@ -14,7 +14,6 @@ import { IconShare } from "../../components/UI/_Icon"
 import Button from "../../components/UI/Button/Button"
 import Heading from "../../components/UI/Heading/Heading"
 import ConfirmWithdrawModal from "../../components/UI/Modal/ConfirmWithdrawModal"
-import PaymentModal from "../../components/UI/Modal/PaymentModal"
 import ViewCertificateModal from "../../components/UI/Modal/ViewCertificateModal"
 import Text from "../../components/UI/Text/Text"
 import { userRoles } from "../../utils"
@@ -27,7 +26,6 @@ export default function CredentialsView({ data, userData, notificationsData, ser
    
    const viewCertificateModal = useRecoilValue(viewCertificateModalState)
    const showEditCredentials = useRecoilValue(showEditCredentialsState)
-   const showPaymentModal = useRecoilValue(showPaymentModalState)
 
    const [withdrawModal, setWithdrawModal] = useRecoilState(confirmWithdrawModalState)
 
@@ -80,7 +78,6 @@ export default function CredentialsView({ data, userData, notificationsData, ser
                <Text grey>- Delete Credentials -</Text>
             </div>
             {viewCertificateModal && <ViewCertificateModal data={data[0]}/>}
-            {showPaymentModal && <PaymentModal/>}
          </StudentView>
       </>
    )
