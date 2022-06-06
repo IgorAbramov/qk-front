@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -8,7 +9,7 @@ import { useRecoilValue } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
 import { credentialsDetailsState, credentialsShowDetailsState } from "../../atoms"
-import { validateStatus, validateStatusStyles } from "../../utils"
+import { processingUrl, validateStatus, validateStatusStyles } from "../../utils"
 import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
 import StudentHistoryItem from "../HistoryItem/StudentHistoryItem"
 import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShare, IconShowDropdownBig, IconWarning } from "../UI/_Icon"
@@ -54,7 +55,7 @@ const mockDataHistory = [
 
 const StudentDashboardItem = ({ data }) => {
 
-   const { pathname } = useRouter()
+   const { pathname, push } = useRouter()
 
    const showDetails = useRecoilValue(credentialsShowDetailsState)
    const details = useRecoilValue(credentialsDetailsState)
@@ -71,8 +72,14 @@ const StudentDashboardItem = ({ data }) => {
       }
    }
 
-   const handlePaymentRequest = () => {
-      console.log("ok")
+   const handlePaymentRequest = async id => {
+      await axios.post(`${processingUrl}/payment`,
+         { credentialUuids: [id] },
+         { withCredentials: true })
+         .then(response => {
+            push(response.data)
+         })
+         .catch(error => console.log(error))
    }
 
    return (
@@ -90,7 +97,7 @@ const StudentDashboardItem = ({ data }) => {
                <Text semiBold>{data.qualificationName}</Text>
             </div>
             <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}
-                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? handlePaymentRequest : null}>
+                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? () => handlePaymentRequest(data.uuid) : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? <>
                      <div className={styles.iconWrapper}>
