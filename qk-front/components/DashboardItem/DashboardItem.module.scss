@@ -25,6 +25,20 @@
   path {
     stroke: $color-pending;
   }
+
+  &.student {
+    + div {
+      > svg {
+        &:first-child {
+          pointer-events: none;
+
+          path {
+            stroke: $color-additional-medium;
+          }
+        }
+      }
+    }
+  }
 }
 
 .expired {
@@ -98,6 +112,20 @@
   path {
     stroke: $color-highlight;
   }
+  &.student {
+    + div {
+      > svg {
+        &:first-child {
+          pointer-events: none;
+
+          path {
+            stroke: $color-additional-medium;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .activateCredentials {
@@ -570,4 +598,12 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.loading {
+  > svg {
+    padding: 0.7rem 0;
+    margin: 0 auto;
+    fill: $color-pending;
+  }
 }

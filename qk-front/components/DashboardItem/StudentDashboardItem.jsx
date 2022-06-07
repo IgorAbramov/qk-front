@@ -12,7 +12,7 @@ import { credentialsDetailsState, credentialsShowDetailsState } from "../../atom
 import { processingUrl, validateStatus, validateStatusStyles } from "../../utils"
 import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
 import StudentHistoryItem from "../HistoryItem/StudentHistoryItem"
-import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconOpenViewPage, IconShare, IconShowDropdownBig, IconWarning } from "../UI/_Icon"
+import { IconAcademicCap, IconHideDropdownBig, IconInfo, IconLoading, IconOpenViewPage, IconShare, IconShowDropdownBig, IconWarning } from "../UI/_Icon"
 import HoverInfo from "../UI/HoverInfo/HoverInfo"
 import Input from "../UI/Input/Input"
 import Text from "../UI/Text/Text"
@@ -60,26 +60,28 @@ const StudentDashboardItem = ({ data }) => {
    const showDetails = useRecoilValue(credentialsShowDetailsState)
    const details = useRecoilValue(credentialsDetailsState)
    const [showCredentialsHistory, setShowCredentialsHistory] = useState(false)
+   const [loading, setLoading] = useState(false)
 
    /**
     * Credential history dropdown handling.
     **/
    const handleShowDropdown = () => {
-      if (showCredentialsHistory) {
-         setShowCredentialsHistory(false)
-      } else {
-         setShowCredentialsHistory(true)
-      }
+      setShowCredentialsHistory(prevState => !prevState)
    }
 
    const handlePaymentRequest = async id => {
+      setLoading(true)
       await axios.post(`${processingUrl}/payment`,
          { credentialUuids: [id] },
          { withCredentials: true })
          .then(response => {
+            setLoading(false)
             push(response.data)
          })
-         .catch(error => console.log(error))
+         .catch(error => {
+            setLoading(false)
+            console.log(error)
+         })
    }
 
    return (
@@ -96,16 +98,18 @@ const StudentDashboardItem = ({ data }) => {
                <IconAcademicCap/>
                <Text semiBold>{data.qualificationName}</Text>
             </div>
-            <div className={`${styles.status} ${validateStatusStyles(data.status, true)} ${styles.student}`}
+            <div className={`${styles.status} ${loading ? styles.loading : ""} ${validateStatusStyles(data.status, true)} ${styles.student}`}
                  onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? () => handlePaymentRequest(data.uuid) : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
-                  ? <>
-                     <div className={styles.iconWrapper}>
-                        <IconWarning/>
-                        <HoverInfo status={data.status}/>
-                     </div>
-                     <Text bold>{validateStatus(data.status, true)}</Text>
-                  </>
+                  ? loading
+                     ? <IconLoading/>
+                     : <>
+                        <div className={styles.iconWrapper}>
+                           <IconWarning/>
+                           <HoverInfo status={data.status}/>
+                        </div>
+                        <Text bold>{validateStatus(data.status, true)}</Text>
+                     </>
                   : <>
                      <div className={styles.iconWrapper}>
                         <IconInfo/>
