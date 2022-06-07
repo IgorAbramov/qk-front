@@ -1,7 +1,6 @@
 import { GoneException, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { OneTimePassword, User, SystemSettings } from "@prisma/client";
-import { response } from "express";
 
 import { OtpResponseDto } from "../../../src/auth/dto";
 import { OtpService } from "../../../src/auth/otp.service";
@@ -41,8 +40,8 @@ describe("OtpService Unit Test", () => {
     firstName: "A",
     lastName: "K",
     institutionUuid: "413989c5-151b-4b18-980c-a5ecf78028dc",
-    currency: "",
-    stripeCustomerId: "",
+    currency: "GBP",
+    stripeCustomerId: null,
   };
   
   const systemSettingsMock: SystemSettings = {
