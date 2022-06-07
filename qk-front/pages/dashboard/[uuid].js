@@ -67,10 +67,10 @@ export default function CredentialsView({ data, userData, notificationsData, ser
             <Heading blue h1>View Credentials</Heading>
             <Text large>view, share and manage your credentials</Text>
             <StudentViewCredentialsItem data={data[0]}/>
-            <Button blue thin>
+            <Button blue thin disabled={data[0].status !== "ACTIVATED"}>
                <div className="buttonRow">
                   <IconShare/>
-                  <Text semiBold>Share Credential</Text>
+                  <Text semiBold style={{ color: data[0].status !== "ACTIVATED" ? "white" : "" }}>Share Credential</Text>
                </div>
             </Button>
             <CredentialsInfo data={data[0]}/>
