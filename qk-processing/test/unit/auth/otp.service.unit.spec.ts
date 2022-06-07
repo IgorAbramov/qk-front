@@ -80,7 +80,7 @@ describe("OtpService Unit Test", () => {
   });
 
   it("Should be defined", () => {
-    expect(service).toBeDefined();
+    expect(service).toBeDefined();git; 
   });
 
   describe("sendOtp() - unit", () => {
