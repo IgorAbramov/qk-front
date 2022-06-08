@@ -12,7 +12,7 @@ import { CredentialsService } from "../../../src/credentials/credentials.service
 import { PrismaService } from "../../../src/prisma/prisma.service";
 import { UploadService } from "../../../src/upload/upload.service";
 
-describe("UploadService Unit Test", () => {
+describe("ActionService Unit Test", () => {
   let service: ActionService;
   let actionRepository: ActionRepository;
   let uploadService: UploadService;
