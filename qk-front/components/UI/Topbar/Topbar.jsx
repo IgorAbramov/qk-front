@@ -19,13 +19,14 @@ import styles from "./Topbar.module.scss"
 const Topbar = ({ institution, userData, notificationsData }) => {
 
    const { firstName, lastName } = userData
-   
+
    const { pathname, push } = useRouter()
 
    const checkIfPathIncludesView = () => {
-      if (pathname.includes("[uuid]")) return true
+      if (pathname.includes("[uuid]")) return "uuid"
+      else if (pathname.includes("settings")) return "settings"
    }
-   
+
    const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
    const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
 
@@ -36,7 +37,7 @@ const Topbar = ({ institution, userData, notificationsData }) => {
     * Logout handler.
     */
    const handleLogout = () => {
-      axios.post(`${processingUrl}/auth/logout`, {}, { withCredentials: true } )
+      axios.post(`${processingUrl}/auth/logout`, {}, { withCredentials: true })
          .then(response => {
             push(response.data)
          })
@@ -101,10 +102,17 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                </a>
             </Link>
             <IconArrowLeft/>
-            <Text>View Credentials</Text>
+            {
+               checkIfPathIncludesView() === "uuid"
+                  ? <Text>View Credentials</Text>
+                  : checkIfPathIncludesView() === "settings"
+                     ? <Text>Settings</Text>
+                     : null
+            }
          </div>}
          {checkIfPathIncludesView() && isScreenLg
-            ? <div className={styles.backRow} style={{ marginLeft: lgMarginLeft || mdMarginLeft }} onClick={() => push("/dashboard")}>
+            ? <div className={styles.backRow} style={{ marginLeft: lgMarginLeft || mdMarginLeft }}
+                   onClick={() => push("/dashboard")}>
                <IconBackLeft/>
                <Text>Back</Text>
             </div>
@@ -113,8 +121,10 @@ const Topbar = ({ institution, userData, notificationsData }) => {
             <div className={styles.imageWrapperNotification} onClick={handleShowNotifications}>
                <Image alt="bell" layout="fill" quality={100}
                       src={bell}/>
-               {notificationsData.length ? <span className={styles.notification}>{notificationsData.length}</span> : null}
-               <NotificationWrapper notificationsData={notificationsData} setShow={setShowNotifications} show={showNotifications}/>
+               {notificationsData.length ?
+                  <span className={styles.notification}>{notificationsData.length}</span> : null}
+               <NotificationWrapper notificationsData={notificationsData} setShow={setShowNotifications}
+                                    show={showNotifications}/>
             </div>
             {institution && <div className={styles.imageWrapperLogo}>
                <Image alt="uni" className={styles.logo} layout="fill"
@@ -130,18 +140,22 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                <IconHideDropdownBig/>
                <div ref={outsideClickRef} className={styles.menu} style={{ display: showMenu ? "block" : "none" }}>
                   <ul>
-                     <li>
-                        <IconAcademicCap/>
-                        <Link href="/dashboard">
-                           <a>
+                     <Link href="/dashboard">
+                        <a>
+                           <li>
+                              <IconAcademicCap/>
                               <Text>Dashboard</Text>
-                           </a>
-                        </Link>
-                     </li>
-                     <li>
-                        <IconSettings/>
-                        <Text>Settings</Text>
-                     </li>
+                           </li>
+                        </a>
+                     </Link>
+                     <Link href="/settings">
+                        <a>
+                           <li>
+                              <IconSettings/>
+                              <Text>Settings</Text>
+                           </li>
+                        </a>
+                     </Link>
                      <li>
                         <IconMessage/>
                         <Text>Give feedback</Text>

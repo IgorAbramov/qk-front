@@ -170,7 +170,7 @@
       }
     }
 
-    &:first-child {
+    > &:first-child {
       svg {
         path {
           stroke-width: 2;
@@ -178,7 +178,7 @@
       }
     }
 
-    &:last-child {
+    > &:last-child {
       border-radius: 0 0 15px 15px;
     }
   }
