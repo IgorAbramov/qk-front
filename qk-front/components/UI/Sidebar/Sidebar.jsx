@@ -4,6 +4,7 @@ import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import PropTypes from "prop-types"
 import { useMediaQuery } from "react-responsive"
 import { useRecoilState } from "recoil"
 
@@ -17,7 +18,7 @@ import styles from "./Sidebar.module.scss"
 
 const Sidebar = ({ institution }) => {
    
-   const { push } = useRouter()
+   const { push, pathname } = useRouter()
 
    const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
    const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
@@ -92,7 +93,7 @@ const Sidebar = ({ institution }) => {
                   <div className={styles.menu}>
                      <Link href="/dashboard">
                         <a>
-                           <Text bold sidebar active={!openModal}>
+                           <Text bold sidebar active={pathname === "/dashboard" ? !openModal : pathname === "dashboard"}>
                               <IconAcademicCapPerson/>
                               {institution ? <span>University Dashboard</span> : <span>Credentials Dashboard</span>}
                            </Text>
@@ -137,3 +138,5 @@ const Sidebar = ({ institution }) => {
 }
 
 export default Sidebar
+
+Sidebar.propTypes = { institution: PropTypes.bool }
