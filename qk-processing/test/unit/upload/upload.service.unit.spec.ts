@@ -1,4 +1,4 @@
-import { ForbiddenException, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Logger, NotFoundException } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Upload, UploadStatus, User, UserActions } from "@prisma/client";
@@ -238,6 +238,9 @@ describe("UploadService Unit Test", () => {
 
       jest
         .spyOn(eventEmitter, "emit");
+      
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      jest.spyOn(Logger, "error").mockImplementation(() => {});
 
       await expect(async () => service.processUpload(mockUploadData.filename, mockUploadData.originalFilename, mockUploadData.mapping, mockUploadedBy)).rejects.toThrowError(
         new NotFoundException(`Upload failed for file ${mockUploadData.filename}: institution not found`),
