@@ -1,3 +1,103 @@
 @import "../../assets/styles/helpers/variables";
 @import "../../assets/styles/helpers/mixins";
 
+.wrapper {
+  margin-top: 3.5rem;
+  width: 75%;
+  height: 80%;
+  display: grid;
+  background-color: $color-secondary;
+  border-radius: 12px;
+  box-shadow: 0 4px 34px rgba(0, 0, 0, 0.15);
+  grid-template-columns: .6fr 1fr;
+}
+
+.left {
+  background-color: $color-additional-light;
+  border-radius: 12px;
+  padding: 4rem 0 3rem 0;
+}
+
+.topLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.right {
+  padding: 4rem 3rem;
+  position: relative;
+}
+
+.imageWrapperUser {
+  height: 7.5rem;
+  position: relative;
+  width: 7.5rem;
+  margin-bottom: 2rem;
+}
+
+.user {
+  border: 1px solid $color-additional-medium-dark;
+  border-radius: 50%;
+}
+
+.handlers {
+  li {
+    padding: 1rem 0 1rem 3rem;
+    cursor: pointer;
+    transition: background-color .2s ease-in-out, color .2s ease-in-out;
+    &:hover,
+    &.active {
+      background-color: $color-highlight;
+      color: $color-secondary;
+    }
+  }
+}
+
+.form {
+  margin-top: 3rem;
+  input {
+    margin-bottom: 1.5rem;
+    width: calc(100% - 3rem - 3rem);
+    border-width: 1px;
+    &::placeholder {
+      color: $color-primary;
+    }
+    > &:last-child {
+      margin-bottom: 0;
+    }
+    &:focus {
+      border-width: 1px;
+    }
+  }
+  > button {
+    width: fit-content;
+    padding: 1rem 2rem;
+    position: absolute;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.security {
+  margin-top: 3rem;
+  > div {
+    margin-bottom: 1.5rem;
+  }
+  > button {
+    width: fit-content;
+    padding: 1rem 2rem;
+    position: absolute;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.buttonRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
