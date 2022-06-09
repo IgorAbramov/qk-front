@@ -126,5 +126,5 @@ Input.propTypes = {
    pinError: PropTypes.bool,
    loading: PropTypes.bool,
    checkboxSolo: PropTypes.bool,
-   hideEye: PropTypes.string
+   hideEye: PropTypes.bool
 }

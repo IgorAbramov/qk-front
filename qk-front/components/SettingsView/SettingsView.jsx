@@ -16,8 +16,6 @@ const SettingsView = ({ institution, userData }) => {
 
    const [view, setView] = useState(1)
 
-   console.log(userData)
-
    return (
       <div className={styles.wrapper}>
          <div className={styles.left}>
@@ -49,14 +47,18 @@ const SettingsView = ({ institution, userData }) => {
                      <Text big bold>Account</Text>
                      <form className={styles.form}>
                         <Text grey small>First Name</Text>
-                        <Input inputName="firstName" placeholder={firstName} type="text"/>
+                        <Input disabled={institution} inputName="firstName" placeholder={firstName}
+                               type="text"/>
                         <Text grey small>Last Name</Text>
-                        <Input inputName="lastName" placeholder={lastName} type="text"/>
+                        <Input disabled={institution} inputName="lastName" placeholder={lastName}
+                               type="text"/>
                         <Text grey small>Email Address</Text>
-                        <Input inputName="email" placeholder={email} type="text"/>
+                        <Input disabled={institution} inputName="email" placeholder={email}
+                               type="text"/>
                         {institution && <>
                            <Text grey small>Organization</Text>
-                           <Input inputName="organization" placeholder="ENDPOINT REQUIRED" type="text"/>
+                           <Input disabled={institution} inputName="organization" placeholder="ENDPOINT REQUIRED"
+                                  type="text"/>
                         </>}
                         <Button blue thin>
                            <div className={styles.buttonRow}>
@@ -88,8 +90,10 @@ const SettingsView = ({ institution, userData }) => {
                         ? <>
                            <Text big bold>Security & Privacy</Text>
                            <form className={styles.security}>
-                              <Input checkboxText="Receive news and other updates through email" inputName="newsAndUpdates" type="checkbox"/>
-                              <Input checkboxText="Receive deals and sales information through email" inputName="dealsAndSales" type="checkbox"/>
+                              <Input checkboxText="Receive news and other updates through email" inputName="newsAndUpdates"
+                                     type="checkbox"/>
+                              <Input checkboxText="Receive deals and sales information through email"
+                                     inputName="dealsAndSales" type="checkbox"/>
                               <Button blue thin>
                                  <div className={styles.buttonRow}>
                                     <IconCheckMark/>
