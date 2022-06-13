@@ -8,7 +8,6 @@ import { useMediaQuery } from "react-responsive"
 
 import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
-import uniLogo from "../../../assets/images/mockUniLogo.webp"
 import { processingUrl } from "../../../utils"
 import NotificationWrapper from "../../Notification/NotificationWrapper/NotificationWrapper"
 import { IconAcademicCap, IconArrowLeft, IconBackLeft, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
@@ -132,10 +131,10 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                <NotificationWrapper notificationsData={notificationsData} setShow={setShowNotifications}
                                     show={showNotifications}/>
             </div>
-            {institution && <div className={styles.imageWrapperLogo}>
+            {userData.institution.logoUrl && institution && <div className={styles.imageWrapperLogo}>
                <Image alt="uni" className={styles.logo} layout="fill"
                       objectFit={"contain"}
-                      quality={100} src={uniLogo}/>
+                      quality={100} src={userData.institution.logoUrl}/>
             </div>}
             <div className={styles.userWrapper} onClick={handleShowMenu}>
                <div className={styles.imageWrapperUser}>
