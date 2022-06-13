@@ -106,7 +106,7 @@ const SettingsView = ({ institution, userData }) => {
                                type="text"/>
                         {institution && <>
                            <Text grey small>Organization</Text>
-                           <Input disabled inputName="organization" placeholder="ENDPOINT REQUIRED"
+                           <Input disabled inputName="organization" placeholder={userData.institution.name}
                                   type="text"/>
                         </>}
                         <Button blue disabled thin>
