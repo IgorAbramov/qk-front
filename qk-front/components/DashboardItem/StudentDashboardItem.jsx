@@ -53,7 +53,7 @@ const mockDataHistory = [
    }
 ]
 
-const StudentDashboardItem = ({ data }) => {
+const StudentDashboardItem = ({ data, deleteCredentialToShare, handleCredentialsToShare }) => {
 
    const { pathname, push } = useRouter()
 
@@ -69,6 +69,10 @@ const StudentDashboardItem = ({ data }) => {
       setShowCredentialsHistory(prevState => !prevState)
    }
 
+   /**
+    *
+    * Stripe payment handler
+    */
    const handlePaymentRequest = async id => {
       setLoading(true)
       await axios.post(`${processingUrl}/payment`,
@@ -84,6 +88,17 @@ const StudentDashboardItem = ({ data }) => {
          })
    }
 
+   /**
+    * Input share handler
+    */
+   const handleInputShareChange = ({ target }) => {
+      if (target.checked) {
+         handleCredentialsToShare(data.uuid)
+      } else {
+         deleteCredentialToShare(data.uuid)
+      }
+   }
+
    return (
       <div className={`${styles.wrapper} ${styles.student}`} style={{ borderRadius: "15px 15px 15px 15px" }}>
          <div className={`${styles.credentialWrapper} ${styles.student}`} style={{
@@ -91,7 +106,8 @@ const StudentDashboardItem = ({ data }) => {
                ? "15px 15px 15px 15px"
                : "15px 15px 0 0"
          }}>
-            <Input checkboxSolo disabled={data.status !== "ACTIVATED"} type="checkbox"/>
+            <Input checkboxSolo disabled={data.status !== "ACTIVATED"} type="checkbox"
+                   onChange={handleInputShareChange}/>
             <Image alt="school name" className={styles.studentSchoolLogo} height={64}
                    objectFit="contain" src={schoolLogo} width={196}/>
             <div className={`${styles.itemWrapper} ${data.status === "EXPIRED" ? styles.expired : ""}`}>
@@ -99,7 +115,7 @@ const StudentDashboardItem = ({ data }) => {
                <Text semiBold>{data.qualificationName}</Text>
             </div>
             <div className={`${styles.status} ${loading ? styles.loading : ""} ${validateStatusStyles(data.status, true)} ${styles.student}`}
-                 onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? () => handlePaymentRequest(data.uuid) : null}>
+               onClick={data.status === "UPLOADED_TO_BLOCKCHAIN" ? () => handlePaymentRequest(data.uuid) : null}>
                {data.status === "UPLOADED_TO_BLOCKCHAIN"
                   ? loading
                      ? <IconLoading/>

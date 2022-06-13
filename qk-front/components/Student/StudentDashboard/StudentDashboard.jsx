@@ -14,6 +14,7 @@ const StudentDashboard = ({ data }) => {
 
    const router = useRouter()
    const [searchValue, setSearchValue] = useState("")
+   const [formShare, setFormShare] = useState([])
 
    /**
     * Input value handling.
@@ -36,21 +37,39 @@ const StudentDashboard = ({ data }) => {
       }
    }
 
+   /**
+    * Add share credential handler
+    */
+   const handleCredentialsToShare = id => {
+      setFormShare([
+         ...formShare, id
+      ])
+   }
+
+   /**
+    * Delete share credential handler
+    */
+   const deleteCredentialToShare = id => {
+      const newArray = formShare.filter(item => item !== id)
+      setFormShare(newArray)
+   }
+
    return (
       <>
          <div className={styles.searchShareWrapper}>
             <Input type={"search"} value={searchValue} onChange={handleInputChange}
                    onKeyDown={handleSubmitSearch}/>
-            <Button blue disabled thin>
+            <Button blue thin disabled={formShare.length === 0}>
                <div className={styles.buttonRow}>
                   <IconShare/>
-                  <Text bold>Share Selected</Text>
+                  <Text bold>Share Selected {formShare.length !== 0 ? `(${formShare.length})` : null}</Text>
                </div>
             </Button>
          </div>
          <div className={styles.contentWrapper}>
             {data.map(data => (
-               <StudentDashboardItem key={data.uuid} data={data}/>
+               <StudentDashboardItem key={data.uuid} data={data} deleteCredentialToShare={deleteCredentialToShare}
+                                     handleCredentialsToShare={handleCredentialsToShare}/>
             ))}
          </div>
       </>
