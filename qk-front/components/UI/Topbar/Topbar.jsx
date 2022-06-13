@@ -77,6 +77,8 @@ const Topbar = ({ institution, userData, notificationsData }) => {
       setShowNotifications(prevState => !prevState)
    }
 
+   console.log(checkIfPathIncludesView() && isScreenLg)
+
    /**
     * Allows to close sidebar on click outside.
     */
@@ -116,7 +118,13 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                <IconBackLeft/>
                <Text>Back</Text>
             </div>
-            : <BurgerButton style={{ marginLeft: lgMarginLeft || mdMarginLeft }}/>}
+            : checkIfPathIncludesView() && isScreenMd
+               ? <div className={styles.backRow} style={{ marginLeft: lgMarginLeft || mdMarginLeft }}
+               onClick={() => push("/dashboard")}>
+                  <IconBackLeft/>
+                  <Text>Back</Text>
+               </div>
+               : <BurgerButton style={{ marginLeft: lgMarginLeft || mdMarginLeft }}/>}
          <div className={styles.right}>
             <div className={styles.imageWrapperNotification} onClick={handleShowNotifications}>
                <Image alt="bell" layout="fill" quality={100}
