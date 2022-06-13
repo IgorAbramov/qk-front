@@ -77,8 +77,6 @@ const Topbar = ({ institution, userData, notificationsData }) => {
       setShowNotifications(prevState => !prevState)
    }
 
-   console.log(checkIfPathIncludesView() && isScreenLg)
-
    /**
     * Allows to close sidebar on click outside.
     */
