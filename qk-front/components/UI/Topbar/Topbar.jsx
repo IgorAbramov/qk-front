@@ -131,11 +131,11 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                <NotificationWrapper notificationsData={notificationsData} setShow={setShowNotifications}
                                     show={showNotifications}/>
             </div>
-            {userData.institution.logoUrl && institution && <div className={styles.imageWrapperLogo}>
+            {institution && userData.institution.logoUrl ? <div className={styles.imageWrapperLogo}>
                <Image alt="uni" className={styles.logo} layout="fill"
                       objectFit={"contain"}
                       quality={100} src={userData.institution.logoUrl}/>
-            </div>}
+            </div> : null}
             <div className={styles.userWrapper} onClick={handleShowMenu}>
                <div className={styles.imageWrapperUser}>
                   <Image alt="user" className={styles.user} layout="fill"
