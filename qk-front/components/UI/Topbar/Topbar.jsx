@@ -24,6 +24,11 @@ const Topbar = ({ institution, userData, notificationsData }) => {
    const checkIfPathIncludesView = () => {
       if (pathname.includes("[uuid]")) return "uuid"
       else if (pathname.includes("settings")) return "settings"
+      else if (pathname.includes("help")) return "help"
+      else if (pathname.includes("contact")) return "contact"
+      else if (pathname.includes("about")) return "about"
+      else if (pathname.includes("policy")) return "policy"
+      else if (pathname.includes("feedback")) return "feedback"
    }
 
    const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
@@ -106,7 +111,17 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                   ? <Text>View Credentials</Text>
                   : checkIfPathIncludesView() === "settings"
                      ? <Text>Settings</Text>
-                     : null
+                     : checkIfPathIncludesView() === "help"
+                        ? <Text>Help & FAQ</Text>
+                        : checkIfPathIncludesView() === "contact"
+                           ? <Text>Contact Us</Text>
+                           : checkIfPathIncludesView() === "about"
+                              ? <Text>About Us</Text>
+                              : checkIfPathIncludesView() === "policy"
+                                 ? <Text>Privacy Policy</Text>
+                                 : checkIfPathIncludesView() === "feedback"
+                                    ? <Text>Give Feedback</Text>
+                                    : null
             }
          </div>}
          {checkIfPathIncludesView() && isScreenLg
@@ -161,10 +176,14 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                            </li>
                         </a>
                      </Link>
-                     <li>
-                        <IconMessage/>
-                        <Text>Give feedback</Text>
-                     </li>
+                     <Link href="/feedback">
+                        <a>
+                           <li>
+                              <IconMessage/>
+                              <Text>Give feedback</Text>
+                           </li>
+                        </a>
+                     </Link>
                      <li onClick={handleLogout}>
                         <IconLogout/>
                         <Text>Log out</Text>

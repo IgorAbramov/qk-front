@@ -46,7 +46,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 4rem - 4rem);
+  height: calc(100% - 4rem - 1.5rem);
   justify-content: space-between;
 
   @include breakpoint-max-vertical($bp-vertical-400) {
@@ -95,5 +95,14 @@
 }
 
 .helpers {
+  width: 100%;
   padding-top: 2rem;
+  p:last-child {
+    padding: 1.5rem 0;
+    justify-content: center;
+  }
+  a p {
+    padding: 1.5rem 0;
+    justify-content: center;
+  }
 }

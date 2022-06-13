@@ -109,22 +109,38 @@ const Sidebar = ({ institution }) => {
                <div className={styles.bottom}>
                   <hr className={styles.hr}/>
                   <div className={styles.helpers}>
-                     <Text sidebar sidebarMin>
-                        <IconQuestion/>
-                        <span>Help & FAQ</span>
-                     </Text>
-                     <Text sidebar sidebarMin>
-                        <IconMessage/>
-                        <span>Contact Us</span>
-                     </Text>
-                     <Text sidebar sidebarMin>
-                        <IconKey/>
-                        <span>About Us</span>
-                     </Text>
-                     <Text sidebar sidebarMin>
-                        <IconPolicy/>
-                        <span>Privacy Policy</span>
-                     </Text>
+                     <Link href="/help">
+                        <a>
+                           <Text sidebar sidebarMin active={pathname === "/help"}>
+                              <IconQuestion/>
+                              <span>Help & FAQ</span>
+                           </Text>
+                        </a>
+                     </Link>
+                     <Link href="/contact">
+                        <a>
+                           <Text sidebar sidebarMin active={pathname === "/contact" || pathname === "/feedback"}>
+                              <IconMessage/>
+                              <span>Contact Us</span>
+                           </Text>
+                        </a>
+                     </Link>
+                     <Link href="/about">
+                        <a>
+                           <Text sidebar sidebarMin active={pathname === "/about"}>
+                              <IconKey/>
+                              <span>About Us</span>
+                           </Text>
+                        </a>
+                     </Link>
+                     <Link href="/policy">
+                        <a>
+                           <Text sidebar sidebarMin active={pathname === "/policy"}>
+                              <IconPolicy/>
+                              <span>Privacy Policy</span>
+                           </Text>
+                        </a>
+                     </Link>
                      <Text sidebar sidebarMin onClick={handleLogout}>
                         <IconLogout/>
                         <span>Log Out</span>
