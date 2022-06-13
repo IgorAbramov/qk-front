@@ -145,6 +145,11 @@
     @include breakpoint-max-vertical($bp-vertical-875) {
       bottom: -10rem;
     }
+    &:disabled {
+      > div > p {
+        color: $color-secondary;
+      }
+    }
   }
 }
 
@@ -164,7 +169,12 @@
       bottom: 2rem;
     }
     @include breakpoint-max-vertical($bp-vertical-875) {
-      bottom: 0rem;
+      bottom: 0;
+    }
+    &:disabled {
+      > div > p {
+        color: $color-secondary;
+      }
     }
   }
 }

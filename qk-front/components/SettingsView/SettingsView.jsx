@@ -1,20 +1,69 @@
 import { useState } from "react"
 
+import axios from "axios"
 import Image from "next/image"
 import PropTypes from "prop-types"
 
 import avatar from "../../assets/images/avatarMock.webp"
-import { IconCheckMark } from "../UI/_Icon"
+import { processingUrl } from "../../utils"
+import { IconCheckMark, IconLoading } from "../UI/_Icon"
 import Button from "../UI/Button/Button"
 import Input from "../UI/Input/Input"
 import Text from "../UI/Text/Text"
 import styles from "./SettingsView.module.scss"
+
+const changePassInitialState = { oldPassword: "", password: "", passwordRepeat: "" }
 
 const SettingsView = ({ institution, userData }) => {
 
    const { firstName, lastName, email } = userData
 
    const [view, setView] = useState(1)
+   const [formChangePass, setFormChangePass] = useState(changePassInitialState)
+   const [error, setError] = useState("")
+   const [loading, setLoading] = useState(false)
+   const [success, setSuccess] = useState(false)
+
+   const handleFormChange = ({ target }) => {
+      const { name, value } = target
+      setFormChangePass({
+         ...formChangePass,
+         [name]: value
+      })
+   }
+
+   const handleFormSubmitChangePass = async e => {
+      e.preventDefault()
+      if (formChangePass.password !== formChangePass.passwordRepeat) {
+         setError("Password no match")
+      } else {
+         setLoading(true)
+         await axios.post(`${processingUrl}/auth/password-reset`, {
+            oldPassword: formChangePass.oldPassword,
+            newPassword: formChangePass.password
+         }, { withCredentials: true })
+            .then(response => {
+               setLoading(false)
+               if (response.status === 200) {
+                  setError("")
+                  setFormChangePass(changePassInitialState)
+                  setSuccess(true)
+               }
+            })
+            .catch(error => {
+               console.log(error)
+               setLoading(false)
+               setError(error.response.data.message)
+            })
+      }
+   }
+
+   const viewSetter = value => {
+      setView(value)
+      setError("")
+      setSuccess(false)
+      setFormChangePass(changePassInitialState)
+   }
 
    return (
       <div className={styles.wrapper}>
@@ -28,13 +77,13 @@ const SettingsView = ({ institution, userData }) => {
             </div>
             <div className={styles.handlers}>
                <ul>
-                  <li className={view === 1 ? styles.active : ""} onClick={() => setView(1)}>
+                  <li className={view === 1 ? styles.active : ""} onClick={() => viewSetter(1)}>
                      <Text semiBold>Account</Text>
                   </li>
-                  <li className={view === 2 ? styles.active : ""} onClick={() => setView(2)}>
+                  <li className={view === 2 ? styles.active : ""} onClick={() => viewSetter(2)}>
                      <Text semiBold>Change Password</Text>
                   </li>
-                  {!institution && <li className={view === 3 ? styles.active : ""} onClick={() => setView(3)}>
+                  {!institution && <li className={view === 3 ? styles.active : ""} onClick={() => viewSetter(3)}>
                      <Text semiBold>Security & Privacy</Text>
                   </li>}
                </ul>
@@ -47,20 +96,20 @@ const SettingsView = ({ institution, userData }) => {
                      <Text big bold>Account</Text>
                      <form className={styles.form}>
                         <Text grey small>First Name</Text>
-                        <Input disabled={institution} inputName="firstName" placeholder={firstName}
+                        <Input disabled inputName="firstName" placeholder={firstName}
                                type="text"/>
                         <Text grey small>Last Name</Text>
-                        <Input disabled={institution} inputName="lastName" placeholder={lastName}
+                        <Input disabled inputName="lastName" placeholder={lastName}
                                type="text"/>
                         <Text grey small>Email Address</Text>
-                        <Input disabled={institution} inputName="email" placeholder={email}
+                        <Input disabled inputName="email" placeholder={email}
                                type="text"/>
                         {institution && <>
                            <Text grey small>Organization</Text>
-                           <Input disabled={institution} inputName="organization" placeholder="ENDPOINT REQUIRED"
+                           <Input disabled inputName="organization" placeholder="ENDPOINT REQUIRED"
                                   type="text"/>
                         </>}
-                        <Button blue thin>
+                        <Button blue disabled thin>
                            <div className={styles.buttonRow}>
                               <IconCheckMark/>
                               <Text>Save Changes</Text>
@@ -71,19 +120,38 @@ const SettingsView = ({ institution, userData }) => {
                   : view === 2
                      ? <>
                         <Text big bold>Change Password</Text>
-                        <form className={styles.form}>
+                        <form className={styles.form} onSubmit={handleFormSubmitChangePass}>
                            <Text grey small>Old Password</Text>
-                           <Input hideEye inputName="oldPassword" type="password"/>
+                           <Input hideEye inputName="oldPassword" type="password"
+                                  value={formChangePass.oldPassword} onChange={handleFormChange}/>
                            <Text grey small>New Password</Text>
-                           <Input hideEye type="password"/>
+                           <Input hideEye type="password" value={formChangePass.password}
+                                  onChange={handleFormChange}/>
                            <Text grey small>Repeat new password</Text>
-                           <Input hideEye passwordRepeat type="password"/>
-                           <Button blue thin>
-                              <div className={styles.buttonRow}>
-                                 <IconCheckMark/>
-                                 <Text>Save Changes</Text>
-                              </div>
-                           </Button>
+                           <Input hideEye passwordRepeat type="password"
+                                  value={formChangePass.passwordRepeat} onChange={handleFormChange}/>
+                           {
+                              error
+                                 ? <Button error thin>
+                                    <div className={styles.buttonRow}>
+                                       <IconCheckMark/>
+                                       <Text>{error}</Text>
+                                    </div>
+                                 </Button>
+                                 : <Button blue thin>
+                                    <div className={styles.buttonRow}>
+                                       <IconCheckMark/>
+                                       <Text>
+                                          {loading
+                                             ? <IconLoading/>
+                                             : success
+                                                ? "Success!"
+                                                : "Save Changes"
+                                          }
+                                       </Text>
+                                    </div>
+                                 </Button>
+                           }
                         </form>
                      </>
                      : view === 3
@@ -94,7 +162,7 @@ const SettingsView = ({ institution, userData }) => {
                                      type="checkbox"/>
                               <Input checkboxText="Receive deals and sales information through email"
                                      inputName="dealsAndSales" type="checkbox"/>
-                              <Button blue thin>
+                              <Button blue disabled thin>
                                  <div className={styles.buttonRow}>
                                     <IconCheckMark/>
                                     <Text>Save Changes</Text>
