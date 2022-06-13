@@ -20,6 +20,12 @@
     display: block;
     position: relative;
   }
+  @include breakpoint-max-vertical($bp-vertical-875) {
+    height: 44rem;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 4rem;
+  }
 }
 
 .left {
@@ -136,6 +142,9 @@
     @include breakpoint-max($bp-screen-sm) {
       bottom: 2rem;
     }
+    @include breakpoint-max-vertical($bp-vertical-875) {
+      bottom: -10rem;
+    }
   }
 }
 
@@ -153,6 +162,9 @@
     transform: translateX(-50%);
     @include breakpoint-max($bp-screen-sm) {
       bottom: 2rem;
+    }
+    @include breakpoint-max-vertical($bp-vertical-875) {
+      bottom: 0rem;
     }
   }
 }
