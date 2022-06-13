@@ -1,15 +1,16 @@
 import stream from "stream";
 
 import { Injectable, Logger } from "@nestjs/common";
+import { User } from "@prisma/client";
 import * as csv from "csv-parser";
 
-import { CredentialsHashableDataDto } from "../../credentials/dto";
+import { CredentialsDataDto } from "../../credentials/dto";
 
 @Injectable()
 export class CsvParser {
 
-  public async parseCsv(stream: stream.Readable, mapping: string[]): Promise<CredentialsHashableDataDto[]> {
-    const credentialDtoArray: CredentialsHashableDataDto[] = [];
+  public async parseCsv(stream: stream.Readable, authenticatedBy: User, mapping: string[]): Promise<CredentialsDataDto[]> {
+    const credentialDtoArray: CredentialsDataDto[] = [];
 
     return new Promise((resolve, reject) => {
       stream.pipe(csv({
@@ -18,15 +19,14 @@ export class CsvParser {
       }))
         .on("data", function (data) {
           try {
-            const dto = new CredentialsHashableDataDto();
+            const dto = new CredentialsDataDto();
+            dto.institutionUuid = authenticatedBy.institutionUuid;
             dto.email = data.email;
             dto.certificateId = data.certificateId;
             dto.graduatedName = data.graduatedName;
-            dto.authenticatedBy = data.authenticatedBy;
             dto.qualificationName = data.qualificationName;
             dto.majors = data.majors;
             dto.minors = data.minors;
-            dto.authenticatedTitle = data.authenticatedTitle;
             dto.awardingInstitution = data.awardingInstitution;
             dto.qualificationLevel = data.qualificationLevel;
             dto.awardLevel = data.awardLevel;
@@ -34,7 +34,9 @@ export class CsvParser {
             dto.info = data.info;
             dto.gpaFinalGrade = data.gpaFinalGrade;
 
-            dto.authenticatedAt = (!data.authenticatedAt) ? undefined : new Date(data.authenticatedAt);
+            dto.authenticatedBy = (authenticatedBy.firstName + " " + authenticatedBy.lastName).trim();
+            dto.authenticatedTitle = authenticatedBy.title;
+            dto.authenticatedAt = new Date();
             dto.studyStartedAt = (!data.studyStartedAt) ? undefined : new Date(data.studyStartedAt);
             dto.studyEndedAt = (!data.studyEndedAt) ? undefined : new Date(data.studyEndedAt);
             dto.graduatedAt = (!data.graduatedAt) ? undefined : new Date(data.graduatedAt);
