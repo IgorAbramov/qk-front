@@ -93,6 +93,12 @@
         margin-bottom: 5rem;
       }
     }
+
+    &.share {
+      > p {
+        margin-top: -1rem;
+      }
+    }
   }
 
   &.viewCertificate {
@@ -448,5 +454,136 @@
   gap: 5rem;
   > div {
     flex: 1 1 50%;
+  }
+}
+
+.emailForm {
+  width: 80%;
+  margin: 0 auto 2rem auto;
+}
+
+.shareEmail {
+  padding: 1.5rem 2rem;
+  background-color: $color-additional-light;
+  border-radius: 15px;
+  border: 1px solid $color-additional-medium-dark;
+  margin-bottom: 2rem;
+  > input {
+    margin: 0;
+    font-size: 1.4rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $color-additional-medium-dark;
+    width: 100%;
+    font-family: $font-primary;
+  }
+}
+
+.message {
+  margin-top: 2rem;
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $color-additional-medium-dark;
+    font-family: $font-primary;
+    padding: 0;
+    width: 20%;
+    margin: 0 0 2rem 1rem !important;
+  }
+  > p:nth-child(2) > span {
+    font-weight: $font-weight-md;
+    color: $color-primary;
+  }
+  > p:nth-child(3) {
+    margin: 2rem 0;
+  }
+  > p:last-child {
+    font-weight: $font-weight-md;
+    color: $color-highlight;
+    margin-top: 2rem;
+  }
+}
+
+.mockButton {
+  margin: 2rem 0;
+  background-color: $color-highlight;
+  width: fit-content;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  > p {
+    color: $color-secondary;
+    font-weight: $font-weight-md;
+  }
+}
+
+.adjust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3.5rem;
+  > button {
+    width: fit-content;
+    background-color: $color-secondary;
+    border: 1px solid $color-highlight;
+    padding: 1rem 2rem;
+    > div p {
+      color: $color-highlight;
+      font-weight: $font-weight-md;
+    }
+    &:hover {
+      background-color: $color-secondary !important;
+    }
+  }
+  + button {
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+    padding: 1rem 2rem;
+    > div p {
+      font-weight: $font-weight-md;
+    }
+  }
+}
+
+.expires {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.expiresWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  > button {
+    background-color: $color-secondary;
+    border-radius: 12px;
+    border: 1px solid $color-highlight;
+    padding: 1rem;
+    font-family: $font-primary;
+  }
+}
+
+.showExpires {
+  display: none;
+  background-color: $color-secondary;
+  width: calc(100% - 2px);
+  border: 1px solid $color-highlight;
+  border-radius: 0 0 12px 12px;
+  border-top: none;
+  padding-top: 1rem;
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  li {
+    padding: .5rem 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-additional-light;
+    }
+    &:last-child {
+      border-radius: 0 0 12px 12px;
+    }
   }
 }

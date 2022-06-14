@@ -2,7 +2,9 @@ import { useState } from "react"
 
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
+import { useRecoilState } from "recoil"
 
+import { showShareModalState } from "../../../atoms"
 import StudentDashboardItem from "../../DashboardItem/StudentDashboardItem"
 import { IconShare } from "../../UI/_Icon"
 import Button from "../../UI/Button/Button"
@@ -15,6 +17,7 @@ const StudentDashboard = ({ data }) => {
    const router = useRouter()
    const [searchValue, setSearchValue] = useState("")
    const [formShare, setFormShare] = useState([])
+   const [, setShowShareModal] = useRecoilState(showShareModalState)
 
    /**
     * Input value handling.
@@ -54,12 +57,17 @@ const StudentDashboard = ({ data }) => {
       setFormShare(newArray)
    }
 
+   const handleShowShareModal = () => {
+      setShowShareModal(true)
+   }
+
    return (
       <>
          <div className={styles.searchShareWrapper}>
             <Input type={"search"} value={searchValue} onChange={handleInputChange}
                    onKeyDown={handleSubmitSearch}/>
-            <Button blue thin disabled={formShare.length === 0}>
+            <Button blue thin disabled={formShare.length === 0}
+                    onClick={handleShowShareModal}>
                <div className={styles.buttonRow}>
                   <IconShare/>
                   <Text bold>Share Selected {formShare.length !== 0 ? `(${formShare.length})` : null}</Text>
