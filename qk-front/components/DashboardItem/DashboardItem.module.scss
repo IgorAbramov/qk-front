@@ -271,6 +271,14 @@
     overflow-x: scroll;
   }
 
+  >span:first-child,
+  >span:nth-child(2){
+    padding: 0 .6rem !important;
+    @include breakpoint-max($bp-screen-xxl) {
+      padding: 1rem .6rem;
+    }
+  }
+
   > *:not(:last-child) {
     padding: 1rem 0.6rem !important;
     @include breakpoint-max($bp-screen-sm) {
