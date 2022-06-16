@@ -22,6 +22,11 @@
   @include breakpoint-max-vertical($bp-vertical-875) {
     height: $topbar-height-lg;
   }
+
+  &.payment {
+    justify-content: flex-start;
+    padding-left: 4rem;
+  }
 }
 
 .routes {
