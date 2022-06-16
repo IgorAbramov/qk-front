@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import PropTypes from "prop-types"
 import { useRecoilState } from "recoil"
 
-import { showShareModalState } from "../../../atoms"
+import { formShareState, showShareModalState } from "../../../atoms"
 import StudentDashboardItem from "../../DashboardItem/StudentDashboardItem"
 import { IconShare } from "../../UI/_Icon"
 import Button from "../../UI/Button/Button"
@@ -16,7 +16,7 @@ const StudentDashboard = ({ data }) => {
 
    const router = useRouter()
    const [searchValue, setSearchValue] = useState("")
-   const [formShare, setFormShare] = useState([])
+   const [formShare, setFormShare] = useRecoilState(formShareState)
    const [, setShowShareModal] = useRecoilState(showShareModalState)
 
    /**
