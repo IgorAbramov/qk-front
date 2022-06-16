@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useResetRecoilState } from "recoil"
 
 import { formShareState, showShareModalState } from "../../../atoms"
 import StudentDashboardItem from "../../DashboardItem/StudentDashboardItem"
@@ -15,6 +15,7 @@ import styles from "./StudentDashboard.module.scss"
 const StudentDashboard = ({ data }) => {
 
    const router = useRouter()
+   const resetFormShare = useResetRecoilState(formShareState)
    const [searchValue, setSearchValue] = useState("")
    const [formShare, setFormShare] = useRecoilState(formShareState)
    const [, setShowShareModal] = useRecoilState(showShareModalState)
@@ -60,6 +61,12 @@ const StudentDashboard = ({ data }) => {
    const handleShowShareModal = () => {
       setShowShareModal(true)
    }
+   
+   useEffect(() => {
+      return () => {
+         resetFormShare()
+      }
+   }, [])
 
    return (
       <>
