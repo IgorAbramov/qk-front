@@ -20,7 +20,7 @@ const Topbar = ({ institution, userData, employer, notificationsData }) => {
    const { pathname, push } = useRouter()
 
    const checkIfPathIncludesView = () => {
-      if (pathname.includes("[uuid]")) return "uuid"
+      if (pathname === "dashboard/[uuid]") return "dashboard"
       else if (pathname.includes("settings")) return "settings"
       else if (pathname.includes("help")) return "help"
       else if (pathname.includes("contact")) return "contact"
@@ -112,7 +112,7 @@ const Topbar = ({ institution, userData, employer, notificationsData }) => {
                </Link>}
             <IconArrowLeft/>
             {
-               checkIfPathIncludesView() === "uuid"
+               checkIfPathIncludesView() === "dashboard"
                   ? <Text>View Credentials</Text>
                   : checkIfPathIncludesView() === "settings"
                      ? <Text>Settings</Text>
