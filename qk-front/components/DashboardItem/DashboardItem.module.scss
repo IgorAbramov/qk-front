@@ -336,6 +336,10 @@
       }
     }
   }
+
+  &.shared {
+    grid-template-columns: 1fr 1.2fr .8fr;
+  }
 }
 
 .itemWrapper {
@@ -451,6 +455,23 @@
   p {
     @include breakpoint-max($bp-screen-sm) {
       display: none;
+    }
+  }
+
+  &.shared {
+    svg {
+      width: 3.5rem;
+      height: 3.5rem;
+      @include breakpoint-max($bp-screen-md) {
+        height: 3rem;
+        width: 3rem;
+      }
+      path {
+        stroke: $color-primary;
+      }
+    }
+    > button {
+      height: 5.5rem;
     }
   }
 }
@@ -598,6 +619,17 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  &.shared {
+    svg {
+      width: initial;
+      height: initial;
+      path {
+        stroke: $color-secondary;
+        fill: $color-secondary;
+      }
+    }
+  }
 }
 
 .loading {
