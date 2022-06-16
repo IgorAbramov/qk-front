@@ -8,7 +8,6 @@ import { useMediaQuery } from "react-responsive"
 
 import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
-import qkLogo from "../../../assets/images/qk-logo-text-blue.svg"
 import { processingUrl } from "../../../utils"
 import NotificationWrapper from "../../Notification/NotificationWrapper/NotificationWrapper"
 import { IconAcademicCap, IconArrowLeft, IconBackLeft, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
@@ -16,12 +15,12 @@ import BurgerButton from "../BurgerButton/BurgerButton"
 import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
-const Topbar = ({ institution, userData, employer, notificationsData, payment }) => {
+const Topbar = ({ institution, userData, employer, payment, notificationsData }) => {
 
    const { pathname, push } = useRouter()
 
    const checkIfPathIncludesView = () => {
-      if (pathname === "dashboard/[uuid]") return "dashboard"
+      if (pathname === "/dashboard/[uuid]") return "uuid"
       else if (pathname.includes("settings")) return "settings"
       else if (pathname.includes("help")) return "help"
       else if (pathname.includes("contact")) return "contact"
@@ -97,7 +96,7 @@ const Topbar = ({ institution, userData, employer, notificationsData, payment })
    }, [showMenu])
 
    return (
-      <div className={`${styles.topbar} ${payment ? styles.payment : ""}`} style={{ justifyContent: checkIfPathIncludesView() ? "space-between" : "" }}>
+      <div className={styles.topbar} style={{ justifyContent: checkIfPathIncludesView() ? "space-between" : "" }}>
          {checkIfPathIncludesView() && <div className={styles.routes}>
             {!employer
                ? <Link href="/dashboard">
@@ -113,7 +112,7 @@ const Topbar = ({ institution, userData, employer, notificationsData, payment })
                </Link>}
             <IconArrowLeft/>
             {
-               checkIfPathIncludesView() === "dashboard"
+               checkIfPathIncludesView() === "uuid"
                   ? <Text>View Credentials</Text>
                   : checkIfPathIncludesView() === "settings"
                      ? <Text>Settings</Text>
@@ -138,13 +137,11 @@ const Topbar = ({ institution, userData, employer, notificationsData, payment })
             </div>
             : checkIfPathIncludesView() && isScreenMd
                ? <div className={styles.backRow} style={{ marginLeft: lgMarginLeft || mdMarginLeft }}
-                      onClick={() => push("/dashboard")}>
+               onClick={() => push("/dashboard")}>
                   <IconBackLeft/>
                   <Text>Back</Text>
                </div>
-               : !payment ? <BurgerButton style={{ marginLeft: lgMarginLeft || mdMarginLeft }}/> :
-                  <Image alt="Qualkey" height={53} src={qkLogo}
-                         width={78}/>}
+               : <BurgerButton style={{ marginLeft: lgMarginLeft || mdMarginLeft }}/>}
          {!employer && !payment ? <div className={styles.right}>
             <div className={styles.imageWrapperNotification} onClick={handleShowNotifications}>
                <Image alt="bell" layout="fill" quality={100}
@@ -164,8 +161,7 @@ const Topbar = ({ institution, userData, employer, notificationsData, payment })
                   <Image alt="user" className={styles.user} layout="fill"
                          quality={100} src={avatar}/>
                </div>
-               {userData?.firstName && userData?.lastName ?
-                  <Text semiBold>{userData.firstName[0]}. {userData.lastName}</Text> : null}
+               {userData?.firstName && userData?.lastName ? <Text semiBold>{userData.firstName[0]}. {userData.lastName}</Text> : null}
                <IconHideDropdownBig/>
                <div ref={outsideClickRef} className={styles.menu} style={{ display: showMenu ? "block" : "none" }}>
                   <ul>
