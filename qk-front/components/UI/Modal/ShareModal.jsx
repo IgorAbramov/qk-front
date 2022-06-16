@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
+import axios from "axios"
 import { useRouter } from "next/router"
 import { useRecoilState, useRecoilValue } from "recoil"
 
 import { formShareState, showShareModalState } from "../../../atoms"
+import { processingUrl } from "../../../utils"
 import { IconClose, IconLock, IconShare, IconShowDropdown } from "../_Icon"
 import Button from "../Button/Button"
 import Heading from "../Heading/Heading"
@@ -43,17 +45,33 @@ const shareData = [
    }
 ].sort((a, b) => a.title.localeCompare(b.title))
 
+const defaultShareData = [
+   "email", "awardingInstitution", "minors", "majors", "qualificationName", "graduatedName"
+]
+
+const initialValues = {
+   uuids: [],
+   recipientEmails: [],
+   sharedFields: [],
+   expiresAt: 0
+}
+
 const ShareModal = () => {
 
    const router = useRouter()
 
-   const formShare = useRecoilValue(formShareState)
+   const formUuids = useRecoilValue(formShareState)
    const [, setShowShareModal] = useRecoilState(showShareModalState)
    const [step, setStep] = useState(1)
    const [showExpires, setShowExpires] = useState(false)
    const [shareAll, setShareAll] = useState(true)
    const [shareSelection, setShareSelection] = useState(false)
    const [toCloseModal, setToCloseModal] = useState(false)
+   const [formData, setFormData] = useState(initialValues)
+   const [emailInput, setEmailInput] = useState("")
+   const [dropdownValue, setDropdownValue] = useState("")
+   const [dataToShare, setDataToShare] = useState([])
+   const [error, setError] = useState("")
 
    /**
     * Ask if modal should be closed
@@ -67,6 +85,8 @@ const ShareModal = () => {
     */
    const closeModal = () => {
       setShowShareModal(false)
+      setFormData(initialValues)
+      router.reload(window.location.pathname)
    }
 
    /**
@@ -92,6 +112,85 @@ const ShareModal = () => {
       setShareAll(false)
    }
 
+   const handleEmailInput = ({ target }) => {
+      setEmailInput(target.value)
+   }
+
+   const handleDropdownValue = ({ target }) => {
+      setDropdownValue(target.innerText)
+      setShowExpires(false)
+      const newDate = Date.now() + +(target.getAttribute("value"))
+      console.log(new Date(newDate).toISOString())
+      setFormData({
+         ...formData,
+         expiresAt: new Date(newDate).toISOString()
+      })
+   }
+
+   const handleRemoveShareData = ({ target }) => {
+      const { value, checked } = target
+      if (checked === false) {
+         const newArray = dataToShare.filter(item => item !== value)
+         setDataToShare(newArray)
+      } else {
+         const elementExists = dataToShare.filter(item => item === value)
+         if (!elementExists.length) {
+            setDataToShare([
+               ...dataToShare, value
+            ])
+         }
+      }
+   }
+
+   useEffect(() => {
+      let newArray = []
+      shareData.map(item => {
+         newArray.push(item.value)
+      })
+      setDataToShare(newArray)
+   }, [])
+
+   useEffect(() => {
+      setFormData({
+         ...formData,
+         recipientEmails: emailInput.split("; ")
+      })
+   }, [emailInput])
+
+   useEffect(() => {
+      setFormData({
+         ...formData,
+         sharedFields: [...dataToShare, ...defaultShareData]
+      })
+   }, [dataToShare.length])
+
+   useEffect(() => {
+      if (formUuids.length) {
+         setFormData({
+            ...formData,
+            uuids: [...formUuids]
+         })
+      }
+   }, [formUuids.length])
+
+   const handleFormSubmit = async event => {
+      event.preventDefault()
+      await axios.post(`${processingUrl}/credential/share`, { ...formData }, { withCredentials: true })
+         .then(response => {
+            console.log(response)
+            setError("")
+            setStep(3)
+         })
+         .catch(error => {
+            console.log(error)
+            if (error.response.data.message.includes("Values should be valid emails")) {
+               setError("Invalid email format")
+            } else {
+               setError(error.response.statusText)
+            }
+         })
+   }
+
    return (
       <div className={styles.modal} onClick={closeModalOutside}>
          <div className={`${styles.wrapper}`} onClick={event => event.stopPropagation()}>
@@ -115,13 +214,15 @@ const ShareModal = () => {
                      ? <div className={`${styles.top}`}>
                         <div className={`${styles.wrapperInner} ${styles.share}`}>
                            <Heading blue h2 modal>Review your email</Heading>
-                           <Text grey>You are sharing <span>({formShare.length})</span> credentials. Please review your
+                           <Text grey>You are sharing <span>({formUuids.length})</span> credentials. Please review your
                               email
                               and shared data.</Text>
+                           {error && <Text error>{error}</Text>}
                         </div>
-                        <form className={styles.emailForm}>
+                        <form className={styles.emailForm} onSubmit={handleFormSubmit}>
                            <div className={styles.shareEmail}>
-                              <input placeholder="To:" type="text"/>
+                              <input placeholder="To:" type="text" value={emailInput}
+                                     onChange={handleEmailInput}/>
                               <div className={styles.message}>
                                  <Text medium>Dear, <span><input type="text"/></span></Text>
                                  <Text medium><span>John Reed</span> has chosen to share their authenticated education
@@ -129,8 +230,7 @@ const ShareModal = () => {
                                  <Text medium>QualKey uses blockchain technology to provide secure and instant credential
                                     verification.</Text>
                                  <Text medium>Please follow the link below to view the credentials. This link will expire
-                                    in
-                                    48 hours.</Text>
+                                    in 48 hours.</Text>
                                  <div className={styles.mockButton}><Text medium>Link to shared credentials</Text></div>
                                  <Text medium>Kind Regards,</Text>
                                  <Text medium>Qualkey</Text>
@@ -148,21 +248,20 @@ const ShareModal = () => {
                                  <div className={styles.expiresWrapper}>
                                     <button onClick={handleShopExpiresDropdown}>
                                        <div className={styles.rowButton}>
-                                          <Text>Choose</Text>
+                                          <Text>{dropdownValue ? dropdownValue : "Choose"}</Text>
                                           <IconShowDropdown/>
                                        </div>
                                     </button>
                                     <div className={styles.showExpires} style={{ display: showExpires ? "block" : "" }}>
                                        <ul>
-                                          <li>48 Hours</li>
-                                          <li>14 Days</li>
-                                          <li>Never</li>
+                                          <li value={172800000} onClick={handleDropdownValue}>48 Hours</li>
+                                          <li value={1209600000} onClick={handleDropdownValue}>14 Days</li>
                                        </ul>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           <Button blue thin>
+                           <Button blue thin disabled={!emailInput || !dropdownValue}>
                               <div className={styles.rowButton}>
                                  <IconShare/>
                                  <Text>Share Credentials</Text>
@@ -192,16 +291,17 @@ const ShareModal = () => {
                                     <Text grey={!shareSelection}>Share a selection of credentials</Text>
                                  </div>
                               </div>
-                              <div className={styles.adjustData}>
+                              {!shareAll ? <div className={styles.adjustData}>
                                  <ul>
                                     {shareData.map(item => {
-                                       return <li key={item.value} className={styles.adjustDataItem} value={item.value}>
+                                       return <li key={item.value} className={styles.adjustDataItem}>
                                           <Text>{item.title}</Text>
-                                          <input type="checkbox"/>
+                                          <input checked={dataToShare.includes(item.value)} type="checkbox" value={item.value}
+                                                 onChange={handleRemoveShareData}/>
                                        </li>
                                     })}
                                  </ul>
-                              </div>
+                              </div> : null}
                               <Button blue thin onClick={() => setStep(prevState => prevState - 1)}>Confirm shared
                                  data</Button>
                            </div>
@@ -212,7 +312,7 @@ const ShareModal = () => {
                                  <Heading blue h2 modal>Congratulations</Heading>
                                  <Text>Your credentials have been shared! You now may close this window.</Text>
                               </div>
-                              <Button blue thin onClick={() => router.push("/")}>Return to Dashboard</Button>
+                              <Button blue thin onClick={() => router.reload(window.location.pathname)}>Return to Dashboard</Button>
                            </div>
                            : null
             }
