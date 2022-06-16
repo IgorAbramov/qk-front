@@ -95,14 +95,16 @@
 }
 
 .helpers {
-  width: 100%;
   padding-top: 2rem;
-  p:last-child {
-    padding: 1.5rem 0;
-    justify-content: center;
-  }
+  width: 100%;
+
   a p {
-    padding: 1.5rem 0;
     justify-content: center;
+    padding: 1.5rem 0;
+  }
+
+  p:last-child {
+    justify-content: center;
+    padding: 1.5rem 0;
   }
 }
