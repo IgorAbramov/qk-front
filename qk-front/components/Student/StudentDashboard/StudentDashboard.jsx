@@ -66,7 +66,7 @@ const StudentDashboard = ({ data }) => {
       return () => {
          resetFormShare()
       }
-   }, [])
+   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       <>

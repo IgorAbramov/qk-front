@@ -155,14 +155,14 @@ const ShareModal = () => {
          ...formData,
          recipientEmails: emailInput.split("; ")
       })
-   }, [emailInput])
+   }, [emailInput]) // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
       setFormData({
          ...formData,
          sharedFields: [...dataToShare, ...defaultShareData]
       })
-   }, [dataToShare.length])
+   }, [dataToShare.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
       if (formUuids.length) {
@@ -171,7 +171,7 @@ const ShareModal = () => {
             uuids: [...formUuids]
          })
       }
-   }, [formUuids.length])
+   }, [formUuids.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
    const handleFormSubmit = async event => {
       event.preventDefault()
