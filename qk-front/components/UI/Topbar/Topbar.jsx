@@ -15,9 +15,7 @@ import BurgerButton from "../BurgerButton/BurgerButton"
 import Text from "../Text/Text"
 import styles from "./Topbar.module.scss"
 
-const Topbar = ({ institution, userData, notificationsData }) => {
-
-   const { firstName, lastName } = userData
+const Topbar = ({ institution, userData, employer, notificationsData }) => {
 
    const { pathname, push } = useRouter()
 
@@ -100,11 +98,18 @@ const Topbar = ({ institution, userData, notificationsData }) => {
    return (
       <div className={styles.topbar} style={{ justifyContent: checkIfPathIncludesView() ? "space-between" : "" }}>
          {checkIfPathIncludesView() && <div className={styles.routes}>
-            <Link href="/dashboard">
-               <a>
-                  <Text grey>Dashboard</Text>
-               </a>
-            </Link>
+            {!employer
+               ? <Link href="/dashboard">
+                  <a>
+                     <Text grey>Dashboard</Text>
+                  </a>
+               </Link>
+               : <Link href="/share/test">
+                  {/*TODO: Should be dynamic link*/}
+                  <a>
+                     <Text grey>Shared Credentials</Text>
+                  </a>
+               </Link>}
             <IconArrowLeft/>
             {
                checkIfPathIncludesView() === "uuid"
@@ -137,11 +142,11 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                   <Text>Back</Text>
                </div>
                : <BurgerButton style={{ marginLeft: lgMarginLeft || mdMarginLeft }}/>}
-         <div className={styles.right}>
+         {!employer ? <div className={styles.right}>
             <div className={styles.imageWrapperNotification} onClick={handleShowNotifications}>
                <Image alt="bell" layout="fill" quality={100}
                       src={bell}/>
-               {notificationsData.length ?
+               {notificationsData?.length ?
                   <span className={styles.notification}>{notificationsData.length}</span> : null}
                <NotificationWrapper notificationsData={notificationsData} setShow={setShowNotifications}
                                     show={showNotifications}/>
@@ -156,7 +161,7 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                   <Image alt="user" className={styles.user} layout="fill"
                          quality={100} src={avatar}/>
                </div>
-               {firstName && lastName ? <Text semiBold>{firstName[0]}. {lastName}</Text> : null}
+               {userData?.firstName && userData?.lastName ? <Text semiBold>{userData.firstName[0]}. {userData.lastName}</Text> : null}
                <IconHideDropdownBig/>
                <div ref={outsideClickRef} className={styles.menu} style={{ display: showMenu ? "block" : "none" }}>
                   <ul>
@@ -191,7 +196,7 @@ const Topbar = ({ institution, userData, notificationsData }) => {
                   </ul>
                </div>
             </div>
-         </div>
+         </div> : null}
       </div>
    )
 }
