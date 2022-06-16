@@ -120,7 +120,6 @@ const ShareModal = () => {
       setDropdownValue(target.innerText)
       setShowExpires(false)
       const newDate = Date.now() + +(target.getAttribute("value"))
-      console.log(new Date(newDate).toISOString())
       setFormData({
          ...formData,
          expiresAt: new Date(newDate).toISOString()

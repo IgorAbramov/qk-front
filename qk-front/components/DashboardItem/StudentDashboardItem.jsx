@@ -5,10 +5,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
-import { credentialsDetailsState, credentialsShowDetailsState } from "../../atoms"
+import { credentialsDetailsState, credentialsShowDetailsState, formShareState, showShareModalState } from "../../atoms"
 import { processingUrl, validateStatus, validateStatusStyles } from "../../utils"
 import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
 import StudentHistoryItem from "../HistoryItem/StudentHistoryItem"
@@ -59,6 +59,8 @@ const StudentDashboardItem = ({ data, deleteCredentialToShare, handleCredentials
 
    const showDetails = useRecoilValue(credentialsShowDetailsState)
    const details = useRecoilValue(credentialsDetailsState)
+   const [, setShowShareModal] = useRecoilState(showShareModalState)
+   const [formShare, setFormShare] = useRecoilState(formShareState)
    const [showCredentialsHistory, setShowCredentialsHistory] = useState(false)
    const [loading, setLoading] = useState(false)
 
@@ -99,6 +101,16 @@ const StudentDashboardItem = ({ data, deleteCredentialToShare, handleCredentials
       }
    }
 
+   /**
+    * Shows share modal
+    */
+   const handleShowShareModal = () => {
+      setShowShareModal(true)
+      setFormShare([
+         ...formShare, data.uuid
+      ])
+   }
+
    return (
       <div className={`${styles.wrapper} ${styles.student}`} style={{ borderRadius: "15px 15px 15px 15px" }}>
          <div className={`${styles.credentialWrapper} ${styles.student}`} style={{
@@ -135,7 +147,7 @@ const StudentDashboardItem = ({ data, deleteCredentialToShare, handleCredentials
                   </>}
             </div>
             <div className={`${styles.actions} ${styles.student}`}>
-               <IconShare/>
+               <IconShare onClick={handleShowShareModal}/>
                <Link passHref href={`${pathname}/${data.uuid}`}>
                   <a>
                      <IconOpenViewPage/>
