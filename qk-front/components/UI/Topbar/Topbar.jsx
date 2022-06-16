@@ -97,7 +97,7 @@ const Topbar = ({ institution, userData, employer, notificationsData, payment })
    }, [showMenu])
 
    return (
-      <div className={`${styles.topbar} ${styles.payment}`} style={{ justifyContent: checkIfPathIncludesView() ? "space-between" : "" }}>
+      <div className={`${styles.topbar} ${payment ? styles.payment : ""}`} style={{ justifyContent: checkIfPathIncludesView() ? "space-between" : "" }}>
          {checkIfPathIncludesView() && <div className={styles.routes}>
             {!employer
                ? <Link href="/dashboard">
