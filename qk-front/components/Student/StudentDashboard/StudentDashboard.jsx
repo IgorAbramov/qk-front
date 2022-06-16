@@ -58,10 +58,16 @@ const StudentDashboard = ({ data }) => {
       setFormShare(newArray)
    }
 
+   /**
+    * Shows share modal
+    */
    const handleShowShareModal = () => {
       setShowShareModal(true)
    }
-   
+
+   /**
+    * Reset form on component unmount
+    */
    useEffect(() => {
       return () => {
          resetFormShare()

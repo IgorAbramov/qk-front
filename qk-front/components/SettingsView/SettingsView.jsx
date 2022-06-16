@@ -24,6 +24,9 @@ const SettingsView = ({ institution, userData }) => {
    const [loading, setLoading] = useState(false)
    const [success, setSuccess] = useState(false)
 
+   /**
+    * Input value handling
+    */
    const handleFormChange = ({ target }) => {
       const { name, value } = target
       setFormChangePass({
@@ -32,6 +35,9 @@ const SettingsView = ({ institution, userData }) => {
       })
    }
 
+   /**
+    * Submit change password form
+    */
    const handleFormSubmitChangePass = async e => {
       e.preventDefault()
       if (formChangePass.password !== formChangePass.passwordRepeat) {
@@ -58,6 +64,9 @@ const SettingsView = ({ institution, userData }) => {
       }
    }
 
+   /**
+    * Sets particular for according to flow
+    */
    const viewSetter = value => {
       setView(value)
       setError("")

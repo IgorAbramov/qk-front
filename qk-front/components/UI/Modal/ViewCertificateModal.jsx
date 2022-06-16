@@ -17,10 +17,16 @@ const ViewCertificateModal = ({ data }) => {
 
    const [, setViewCertificateModal] = useRecoilState(viewCertificateModalState)
 
+   /**
+    * Close modal
+    */
    const closeModal = () => {
       setViewCertificateModal(false)
    }
 
+   /**
+    * Close modal by clicking outside
+    */
    const closeModalOutside = event => {
       closeModal()
       event.stopPropagation()

@@ -42,6 +42,9 @@ const SharedCredentialsItem = () => {
    
    const [showData, setShowData] = useState(false)
 
+   /**
+    * Show credential data handler
+    */
    const handleExpandData = () => {
       setShowData(prevState => !prevState)
    }

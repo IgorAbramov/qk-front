@@ -22,10 +22,16 @@ const StudentViewCredentialsItem = ({ data }) => {
    const [, setViewCertificateModal] = useRecoilState(viewCertificateModalState)
    const [loading, setLoading] = useState(false)
 
+   /**
+    * View certificate handler
+    */
    const handleViewCertificate = () => {
       setViewCertificateModal(true)
    }
 
+   /**
+    * Stripe payment handler
+    */
    const handlePaymentRequest = async id => {
       setLoading(true)
       await axios.post(`${processingUrl}/payment`,
