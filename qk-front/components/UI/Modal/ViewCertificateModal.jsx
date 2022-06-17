@@ -69,7 +69,7 @@ const ViewCertificateModal = ({ data }) => {
                               <Text semiBold small>{data.authenticatedBy ? data.authenticatedBy : "-"}</Text>
                            </div>
                            <div>
-                              <Text grey small>Authenticated by:</Text>
+                              <Text grey small>Authenticated Title:</Text>
                               <Text semiBold small>{data.authenticatedTitle ? data.authenticatedTitle : "-"}</Text>
                            </div>
                            <div>

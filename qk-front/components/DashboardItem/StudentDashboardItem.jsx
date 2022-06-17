@@ -111,6 +111,8 @@ const StudentDashboardItem = ({ data, deleteCredentialToShare, handleCredentials
       ])
    }
 
+   console.log(data)
+
    return (
       <div className={`${styles.wrapper} ${styles.student}`} style={{ borderRadius: "15px 15px 15px 15px" }}>
          <div className={`${styles.credentialWrapper} ${styles.student}`} style={{
