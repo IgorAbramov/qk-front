@@ -23,8 +23,6 @@ const Topbar = ({ institution, userData, employer, payment, notificationsData })
 
    const shareState = useRecoilValue(queryShareState)
 
-   console.log(userData)
-
    const checkIfPathIncludesView = () => {
       if (pathname === "/dashboard/[uuid]") return "uuid"
       else if (pathname.includes("settings")) return "settings"

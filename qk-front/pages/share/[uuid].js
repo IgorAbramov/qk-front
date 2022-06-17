@@ -49,7 +49,6 @@ export default function ShareCredentialsPage({ shareData, serverErrorMessage }) 
                   <Text large>view shared credentials</Text>
                   <div className="content__wrapper">
                      {shareData.map(item => {
-                        console.log(item)
                         return <SharedCredentialsItem key={item.did} data={item}/>
                      })}
                   </div>

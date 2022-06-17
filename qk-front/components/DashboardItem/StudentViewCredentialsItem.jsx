@@ -53,7 +53,7 @@ const StudentViewCredentialsItem = ({ data }) => {
          <div className={`${styles.credentialWrapper} ${styles.viewCredentialWrapper} ${styles.student}`}
               style={{ borderRadius: "15px 15px 15px 15px" }}>
             <Image alt="school name" className={styles.studentSchoolLogo} height={64}
-                   objectFit="contain" src={schoolLogo} width={196}/>
+                   objectFit="contain" src={data.institution.logoUrl} width={196}/>
             <div className={styles.itemWrapper}>
                <IconAcademicCap/>
                <div className={styles}>

@@ -7,7 +7,6 @@ import { useRouter } from "next/router"
 import PropTypes from "prop-types"
 import { useRecoilState, useRecoilValue } from "recoil"
 
-import schoolLogo from "../../assets/images/mockUniLogo.webp"
 import { credentialsDetailsState, credentialsShowDetailsState, formShareState, showShareModalState } from "../../atoms"
 import { processingUrl, validateStatus, validateStatusStyles } from "../../utils"
 import StudentDetailsItem from "../DetailsItem/StudentDetailsItem"
@@ -123,7 +122,7 @@ const StudentDashboardItem = ({ data, deleteCredentialToShare, handleCredentials
             <Input checkboxSolo disabled={data.status !== "ACTIVATED"} type="checkbox"
                    onChange={handleInputShareChange}/>
             <Image alt="school name" className={styles.studentSchoolLogo} height={64}
-                   objectFit="contain" src={schoolLogo} width={196}/>
+                   objectFit="contain" src={data.institution.logoUrl} width={196}/>
             <div className={`${styles.itemWrapper} ${data.status === "EXPIRED" ? styles.expired : ""}`}>
                <IconAcademicCap/>
                <Text semiBold>{data.qualificationName}</Text>

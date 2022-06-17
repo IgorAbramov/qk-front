@@ -168,8 +168,6 @@ const ShareModal = () => {
       }
    }, [formUuids.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
-   console.table(formData.sharedFields)
-
    const handleFormSubmit = async event => {
       event.preventDefault()
       await axios.post(`${processingUrl}/credential/share`, { ...formData }, { withCredentials: true })
