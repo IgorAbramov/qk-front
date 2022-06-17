@@ -5,9 +5,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useMediaQuery } from "react-responsive"
+import { useRecoilValue } from "recoil"
 
 import avatar from "../../../assets/images/avatarMock.webp"
 import bell from "../../../assets/images/bell.svg"
+import { queryShareState } from "../../../atoms"
 import { processingUrl } from "../../../utils"
 import NotificationWrapper from "../../Notification/NotificationWrapper/NotificationWrapper"
 import { IconAcademicCap, IconArrowLeft, IconBackLeft, IconHideDropdownBig, IconLogout, IconMessage, IconSettings } from "../_Icon"
@@ -18,6 +20,8 @@ import styles from "./Topbar.module.scss"
 const Topbar = ({ institution, userData, employer, payment, notificationsData }) => {
 
    const { pathname, push } = useRouter()
+
+   const shareState = useRecoilValue(queryShareState)
 
    const checkIfPathIncludesView = () => {
       if (pathname === "/dashboard/[uuid]") return "uuid"
@@ -104,7 +108,7 @@ const Topbar = ({ institution, userData, employer, payment, notificationsData })
                      <Text grey>Dashboard</Text>
                   </a>
                </Link>
-               : <Link href="/share/test">
+               : <Link href={`/share/${shareState.uuid}?password=${shareState.password}`}>
                   {/*TODO: Should be dynamic link*/}
                   <a>
                      <Text grey>Shared Credentials</Text>

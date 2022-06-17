@@ -9,7 +9,7 @@ import { useMediaQuery } from "react-responsive"
 import { useRecoilState } from "recoil"
 
 import logo from "../../../assets/images/qk-logo-text.svg"
-import { burgerMenuActiveState, uploadModalState } from "../../../atoms"
+import { burgerMenuActiveState, queryShareState, uploadModalState } from "../../../atoms"
 import { processingUrl } from "../../../utils"
 import { IconAcademicCapPerson, IconKey, IconLogout, IconMessage, IconPlus, IconPolicy, IconQuestion } from "../_Icon"
 import BurgerButton from "../BurgerButton/BurgerButton"
@@ -18,7 +18,20 @@ import styles from "./Sidebar.module.scss"
 
 const Sidebar = ({ institution, employer }) => {
 
-   const { push, pathname } = useRouter()
+   const { push, pathname, query } = useRouter()
+
+   const [shareState, setShareState] = useRecoilState(queryShareState)
+
+   useEffect(() => {
+      if (pathname === "/share/[uuid]") {
+         setShareState(query.uuid)
+         setShareState({
+            ...shareState,
+            uuid: query.uuid,
+            password: query.password
+         })
+      }
+   }, [])
 
    const isScreenLg = useMediaQuery({ query: "(max-width: 991px)" })
    const isScreenMd = useMediaQuery({ query: "(max-width: 767px" })
@@ -101,8 +114,7 @@ const Sidebar = ({ institution, employer }) => {
                               </Text>
                            </a>
                         </Link> :
-                        <Link href="/share/test">
-                           {/*TODO: Should be dynamic link*/}
+                        <Link href={`/share/${shareState.uuid}?password=${shareState.password}`}>
                            <a>
                               <Text bold sidebar active={pathname === "/share/[uuid]"}>
                                  <IconAcademicCapPerson/>

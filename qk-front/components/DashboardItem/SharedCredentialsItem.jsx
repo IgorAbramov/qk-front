@@ -1,15 +1,20 @@
 import { useState } from "react"
 
 import Image from "next/image"
+import { useRecoilState } from "recoil"
 
 import schoolLogo from "../../assets/images/mockUniLogo.webp"
+import { viewCertificateModalState } from "../../atoms"
 import SharedCredentialsInfo from "../CredentialsInfo/SharedCredentialsInfo"
 import { IconAcademicCap, IconCertificate, IconHideDropdownBig, IconShowDropdownBig } from "../UI/_Icon"
 import Button from "../UI/Button/Button"
+import ViewCertificateModal from "../UI/Modal/ViewCertificateModal"
 import Text from "../UI/Text/Text"
 import styles from "./DashboardItem.module.scss"
 
 const SharedCredentialsItem = ({ data }) => {
+
+   const [viewCertificateModal, setViewCertificateModal] = useRecoilState(viewCertificateModalState)
    
    const [showData, setShowData] = useState(false)
 
@@ -35,7 +40,7 @@ const SharedCredentialsItem = ({ data }) => {
                   </div>
                </div>
                <div className={`${styles.actions} ${styles.shared}`}>
-                  <IconCertificate/>
+                  <IconCertificate onClick={() => setViewCertificateModal(true)}/>
                   <Button blue thin
                           onClick={handleExpandData}>
                      <div className={`${styles.buttonRow} ${styles.shared}`}>
@@ -47,6 +52,7 @@ const SharedCredentialsItem = ({ data }) => {
             </div>
          </div>
          {showData ? <SharedCredentialsInfo data={data}/> : null}
+         {viewCertificateModal && <ViewCertificateModal data={data}/>}
       </>
    )
 }
