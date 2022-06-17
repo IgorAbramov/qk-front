@@ -107,6 +107,11 @@
         }
       }
     }
+
+    &.password {
+      padding-top: 2rem;
+      margin-bottom: 2rem;
+    }
   }
 
   &.viewCertificate {
@@ -740,4 +745,22 @@
 
 .sureToClose {
   padding: 0 5rem;
+}
+
+.passwordForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  width: 100%;
+  margin: 0 auto;
+  input {
+    width: 100%;
+    padding: 1.2rem 1rem;
+    margin-bottom: 0;
+  }
+  button {
+    width: fit-content;
+    padding: 1rem 2rem;
+  }
 }
