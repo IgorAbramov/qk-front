@@ -18,6 +18,8 @@ export default function ShareCredentialsPage({ shareData, serverErrorMessage }) 
 
    const router = useRouter()
 
+   console.log(shareData)
+
    const [temporaryPassword, setTemporaryPassword] = useState("")
 
    const handlePassword = ({ target }) => {

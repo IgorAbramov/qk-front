@@ -48,7 +48,7 @@ const SharedCredentialsItem = ({ data }) => {
             <div className={`${styles.credentialWrapper} ${styles.viewCredentialWrapper} ${styles.shared}`}
                  style={{ borderRadius: showData ? "15px 15px 0 0" : "15px 15px 15px 15px" }}>
                <Image alt="school name" className={styles.studentSchoolLogo} height={64}
-                      objectFit="contain" src={schoolLogo} width={196}/>
+                      objectFit="contain" src={data.institutionLogoUrl} width={196}/>
                <div className={styles.itemWrapper}>
                   <IconAcademicCap/>
                   <div className={styles}>
