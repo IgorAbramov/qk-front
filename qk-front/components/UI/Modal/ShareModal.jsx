@@ -45,10 +45,6 @@ const shareData = [
    }
 ].sort((a, b) => a.title.localeCompare(b.title))
 
-const defaultShareData = [
-   "email", "awardingInstitution", "minors", "majors", "qualificationName", "graduatedName"
-]
-
 const initialValues = {
    uuids: [],
    recipientEmails: [],
@@ -159,7 +155,7 @@ const ShareModal = () => {
    useEffect(() => {
       setFormData({
          ...formData,
-         sharedFields: [...dataToShare, ...defaultShareData]
+         sharedFields: [...dataToShare]
       })
    }, [dataToShare.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -171,6 +167,8 @@ const ShareModal = () => {
          })
       }
    }, [formUuids.length]) // eslint-disable-line react-hooks/exhaustive-deps
+
+   console.table(formData.sharedFields)
 
    const handleFormSubmit = async event => {
       event.preventDefault()
