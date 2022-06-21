@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import {Credential, CredentialStatus, User, UserStatus} from "@prisma/client";
+import { Credential, CredentialStatus, User, UserStatus } from "@prisma/client";
 
 import { CredentialsNotFoundException } from "../../common/exception";
 import { PrismaService } from "../../prisma/prisma.service";
@@ -41,7 +41,8 @@ export class CredentialsRepository {
           include: {
             representatives: {
               // TODO: make type for returning only name, signatureUrl, title
-              where: { status: UserStatus.ACTIVE } },
+              where: { status: UserStatus.ACTIVE }, 
+            },
           },
         },
       },
@@ -118,9 +119,11 @@ export class CredentialsRepository {
     }
   }
 
-  public async getAllForInstitution(user: User, filter?: string): Promise<Credential[]> {
+  public async getAllForInstitution(user: User, offset: number, limit: number, filter?: string): Promise<Credential[]> {
     if (filter && filter !== "") {
       return await this.prismaService.credential.findMany({
+        skip: offset,
+        take: limit,
         where: {
           OR: [
             { graduatedName: { contains: filter, mode: "insensitive" } },
@@ -132,14 +135,24 @@ export class CredentialsRepository {
           ],
           NOT: { status: { equals: CredentialStatus.DELETED } },
         },
+        include: {
+          credentialChanges: { orderBy: { changedAt: "desc" } },
+          institution: true,
+        },
       });
     } else {
       return await this.prismaService.credential.findMany({
+        skip: offset,
+        take: limit,
         where:{
           OR: [
             { institutionUuid: user.institutionUuid },
           ],
           NOT: { status: { equals: CredentialStatus.DELETED } },
+        },
+        include: {
+          credentialChanges: { orderBy: { changedAt: "desc" } },
+          institution: true,
         },
       });
     }
