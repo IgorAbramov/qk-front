@@ -144,13 +144,16 @@ export class AuthService {
   /**
      * Reset user password
      */
-  public async resetPassword(dto: ResetPasswordRequestDto, email: string): Promise<void> {
+  public async resetPassword(dto: ResetPasswordRequestDto, email: string, response: Response): Promise<void> {
+    const frontendDomain = this.config.get<string>("FRONTEND_DOMAIN");
     const user = await this.prisma.user.findUnique({ where: { email: email } });
     if (! user) throw new UserNotFoundException(email);
 
     // check if old password match
     const pwMatches = await bcrypt.compareSync(dto.oldPassword, user.password);
     if (!pwMatches) throw new UnprocessableEntityException("Wrong password");
+
+    response.cookie("first_login", false, { httpOnly: false, domain: frontendDomain });
 
     // encrypt password and save
     await this.prisma.user.update({
@@ -162,12 +165,9 @@ export class AuthService {
   /**
    * Forgot user password logic
    */
-  public async forgotPassword(dto: ForgotPasswordRequestDto, response: Response): Promise<void> {
-    const frontendDomain = this.config.get<string>("FRONTEND_DOMAIN");
+  public async forgotPassword(dto: ForgotPasswordRequestDto): Promise<void> {
     const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (! user) throw new UserNotFoundException(dto.email);
-
-    response.cookie("first_login", false, { httpOnly: false, domain: frontendDomain });
 
     // encrypt password and save
     await this.prisma.user.update({

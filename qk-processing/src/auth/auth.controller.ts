@@ -114,8 +114,9 @@ export class AuthController {
   async resetPassword(
       @GetUser() user: User,
       @Body() dto: ResetPasswordRequestDto,
+      @Res({ passthrough: true }) response: Response,
   ): Promise<void> {
-    await this.authService.resetPassword(dto, user.email);
+    await this.authService.resetPassword(dto, user.email, response);
   }
 
   /**
@@ -124,12 +125,9 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtGuard)
   @Post("password-forgot")
-  async forgotPassword(
-      @GetUser() user: User,
-      @Body() dto: ForgotPasswordRequestDto,
-      @Res({ passthrough: true }) response: Response): Promise<void> {
+  async forgotPassword(@GetUser() user: User, @Body() dto: ForgotPasswordRequestDto): Promise<void> {
     if (user.email !== dto.email) throw new ForbiddenException();
 
-    await this.authService.forgotPassword(dto, response);
+    await this.authService.forgotPassword(dto);
   }
 }
