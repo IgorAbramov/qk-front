@@ -1,0 +1,21 @@
+@import "../../assets/styles/helpers/variables";
+@import "../../assets/styles/helpers/mixins";
+
+.wrapper {
+  margin-top: 3rem;
+  background-color: $color-secondary;
+  border-radius: 12px;
+  padding: 1.5rem 3rem;
+  height: 70vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.top {
+  padding: 1.5rem 0;
+  border-bottom: 2px solid $color-highlight;
+}
+
+.content {
+  margin-top: 2rem;
+}
