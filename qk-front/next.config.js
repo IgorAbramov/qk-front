@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+const withPreact = require("next-plugin-preact")
+
+module.exports = withPreact({
    reactStrictMode: true,
    serverRuntimeConfig: {
       // Will only be available on the server side
@@ -10,6 +13,4 @@ const nextConfig = {
       apiUrl: process.env.NEXT_PUBLIC_PROCESSING_URL
    },
    images: { domains: ["public-images-qualkey-test.s3.eu-north-1.amazonaws.com"] }
-}
-
-module.exports = nextConfig
+})
