@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 
 import { getCookie } from "cookies-next"
+import dynamic from "next/dynamic"
 import PropTypes from "prop-types"
 import { useRecoilValue } from "recoil"
 
 
 import { showShareModalState } from "../../../atoms"
-import ChangePasswordModal from "../../UI/Modal/ChangePasswordModal"
-import ShareModal from "../../UI/Modal/ShareModal"
 import Sidebar from "../../UI/Sidebar/Sidebar"
 import Topbar from "../../UI/Topbar/Topbar"
+
+const ShareModal = dynamic(() => import("../../UI/Modal/ShareModal"))
+const ChangePasswordModal = dynamic(() => import("../../UI/Modal/ChangePasswordModal"))
 
 const StudentView = ({ children, userData, notificationsData, credentials }) => {
 

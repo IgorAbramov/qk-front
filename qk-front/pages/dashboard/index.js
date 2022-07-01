@@ -2,6 +2,7 @@ import axios from "axios"
 import getConfig from "next/config"
 import Head from "next/head"
 
+
 import InstitutionDashboard from "../../components/Institution/InstitutionDashboard/InstitutionDashboard"
 import InstitutionView from "../../components/Institution/InstitutionView/InstitutionView"
 import StudentDashboard from "../../components/Student/StudentDashboard/StudentDashboard"

@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react"
 
 import axios from "axios"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
-import InfiniteScroll from "react-infinite-scroll-component"
 
 import { processingUrl } from "../../../utils"
-import InstitutionDashboardItem from "../../DashboardItem/InstitutionDashboardItem"
-import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
 import styles from "./InstitutionDashboard.module.scss"
+
+const InfiniteScroll = dynamic(() => import("react-infinite-scroll-component"))
+const InstitutionDashboardItem = dynamic(() => import("../../DashboardItem/InstitutionDashboardItem"))
+const Input = dynamic(() => import("../../UI/Input/Input"))
 
 const InstitutionDashboard = ({ data, allCredentialsData }) => {
 

@@ -2,17 +2,19 @@ import { useEffect, useState } from "react"
 
 import axios from "axios"
 import { getCookie } from "cookies-next"
+import dynamic from "next/dynamic"
 import PropTypes from "prop-types"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 
 import { confirmUploadModalState, currentFileState, filenameState, filePrefixState, uploadModalState, userActionWithdrawModalState } from "../../../atoms"
 import { frontUrl } from "../../../utils"
-import ChangePasswordModal from "../../UI/Modal/ChangePasswordModal"
-import ConfirmUploadModal from "../../UI/Modal/ConfirmUploadModal"
-import FileUploadModal from "../../UI/Modal/FileUploadModal"
-import UserActionWithdrawModal from "../../UI/Modal/UserActionWithdrawModal"
 import Sidebar from "../../UI/Sidebar/Sidebar"
 import Topbar from "../../UI/Topbar/Topbar"
+
+const ChangePasswordModal = dynamic(() => import("../../UI/Modal/ChangePasswordModal"))
+const ConfirmUploadModal = dynamic(() => import("../../UI/Modal/ConfirmUploadModal"))
+const FileUploadModal = dynamic(() => import("../../UI/Modal/FileUploadModal"))
+const UserActionWithdrawModal = dynamic(() => import("../../UI/Modal/UserActionWithdrawModal"))
 
 const InstitutionView = ({ children, institution, userData, notificationsData, credentials }) => {
 

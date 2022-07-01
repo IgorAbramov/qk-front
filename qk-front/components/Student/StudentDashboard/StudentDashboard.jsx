@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 
+import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { useRecoilState, useResetRecoilState } from "recoil"
 
 import { formShareState, showShareModalState } from "../../../atoms"
-import StudentDashboardItem from "../../DashboardItem/StudentDashboardItem"
 import { IconShare } from "../../UI/_Icon"
-import Button from "../../UI/Button/Button"
-import Input from "../../UI/Input/Input"
 import Text from "../../UI/Text/Text"
 import styles from "./StudentDashboard.module.scss"
+
+const StudentDashboardItem = dynamic(() => import("../../DashboardItem/StudentDashboardItem"))
+const Button = dynamic(() => import("../../UI/Button/Button"))
+const Input = dynamic(() => import("../../UI/Input/Input"))
 
 const StudentDashboard = ({ data }) => {
 
